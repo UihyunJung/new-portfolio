@@ -1,4 +1,5 @@
-import "../styles/common.scss";
+import "@/styles/common.scss";
+import Header from "./components/organisms/header";
 
 export const metadata = {
 	title: "Create Next App",
@@ -8,7 +9,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang="ko">
-			<body>{children}</body>
+			<body>
+				<div id="wrap">
+					<Header />
+					{children}
+				</div>
+			</body>
 		</html>
 	);
 }
