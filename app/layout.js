@@ -1,5 +1,6 @@
 import "@/styles/common.scss";
 import Header from "./components/organisms/header";
+import TopBtn from "./components/molecules/topBtn";
 
 export const metadata = {
 	title: "Create Next App",
@@ -13,6 +14,7 @@ export default function RootLayout({ children }) {
 				<div id="wrap">
 					<Header />
 					{children}
+					<TopBtn />
 				</div>
 			</body>
 		</html>
