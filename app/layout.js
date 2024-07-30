@@ -1,6 +1,7 @@
 import "@/styles/common.scss";
 import Header from "./components/organisms/header";
 import TopBtn from "./components/molecules/topBtn";
+import UIsetting from "./utils/UIsetting";
 
 export const metadata = {
 	title: "Create Next App",
@@ -11,6 +12,7 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="ko">
 			<body>
+				<UIsetting />
 				<div id="wrap">
 					<Header />
 					{children}

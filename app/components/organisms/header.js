@@ -1,15 +1,8 @@
 "use client";
 import styles from "./header.module.scss";
 import Link from "next/link";
-import { useEffect } from "react";
-import { SetInnerHeight } from "@/app/utils/SetInnerHeight";
 
 export default function Header() {
-	useEffect(() => {
-		SetInnerHeight();
-		window.addEventListener("resize", SetInnerHeight);
-	}, []);
-
 	return (
 		<header id={styles.header}>
 			<Link href="/" title="홈으로">
