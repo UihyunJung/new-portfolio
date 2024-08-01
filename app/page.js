@@ -1,13 +1,24 @@
 import Image from "next/image";
 import styles from "./page.module.scss";
 import Link from "next/link";
+import BasicButton from "./components/atom/button/basicButton/BasicButton";
 
 export default function Home() {
 	return (
 		<main>
 			<section className={styles.visual}>visual</section>
-			<section className={styles.about}>about</section>
-			<section className={styles.project}>project</section>
+			<section className={styles.about}>
+				about
+				<Link href="/about">
+					<BasicButton>더보기</BasicButton>
+				</Link>
+			</section>
+			<section className={styles.project}>
+				project
+				<Link href="/project">
+					<BasicButton>더보기</BasicButton>
+				</Link>
+			</section>
 			<section className={styles.contact}>contact</section>
 			{/* <div className={styles.description}>
 				<p>
