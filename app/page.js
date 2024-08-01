@@ -1,11 +1,15 @@
 import Image from "next/image";
-import styles from "./page.module.css";
+import styles from "./page.module.scss";
 import Link from "next/link";
 
 export default function Home() {
 	return (
-		<main className={styles.main}>
-			<div className={styles.description}>
+		<main>
+			<section className={styles.visual}>visual</section>
+			<section className={styles.about}>about</section>
+			<section className={styles.project}>project</section>
+			<section className={styles.contact}>contact</section>
+			{/* <div className={styles.description}>
 				<p>
 					Get started by editing&nbsp;
 					<code className={styles.code}>app/page.js</code>
@@ -54,7 +58,7 @@ export default function Home() {
 					</h2>
 					<p>Instantly deploy your Next.js site to a shareable URL with Vercel.</p>
 				</a>
-			</div>
+			</div> */}
 		</main>
 	);
 }

@@ -1,5 +1,6 @@
 import "@/styles/common.scss";
 import Header from "./components/organisms/header";
+import Footer from "./components/organisms/footer";
 import TopBtn from "./components/molecules/topBtn";
 import UIsetting from "./utils/UIsetting";
 
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
 				<div id="wrap">
 					<Header />
 					{children}
+					<Footer />
 					<TopBtn />
 				</div>
 			</body>

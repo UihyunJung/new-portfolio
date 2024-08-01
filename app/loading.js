@@ -1,4 +1,4 @@
-import styles from "@/styles/loading.module.scss"; // CSS 모듈 사용
+import styles from "./loading.module.scss"; // CSS 모듈 사용
 
 const Loading = () => {
 	return (
