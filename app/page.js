@@ -9,17 +9,22 @@ export default function Home() {
 			<section className={styles.visual}>visual</section>
 			<section className={styles.about}>
 				about
-				<Link href="/about">
-					<BasicButton>더보기</BasicButton>
+				<Link href="/about" className="basic-link">
+					more
 				</Link>
 			</section>
 			<section className={styles.project}>
 				project
-				<Link href="/project">
-					<BasicButton>더보기</BasicButton>
+				<Link href="/project" className="basic-link">
+					more
 				</Link>
 			</section>
-			<section className={styles.contact}>contact</section>
+			<section className={styles.contact}>
+				contact
+				<BasicButton role="button" disabled="disabled">
+					테스트
+				</BasicButton>
+			</section>
 			{/* <div className={styles.description}>
 				<p>
 					Get started by editing&nbsp;
