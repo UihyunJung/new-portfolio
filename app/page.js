@@ -1,9 +1,11 @@
-import Image from "next/image";
 import styles from "./page.module.scss";
 import Link from "next/link";
 import BasicButton from "./components/atom/button/basicButton/BasicButton";
+import projectData from "./utils/ProjectData";
 
 export default function Home() {
+	const filteredProjects = projectData.filter((project) => ["nonghyup", "kiwoom"].includes(project.id));
+
 	return (
 		<main>
 			<section className={styles.visual}>visual</section>
@@ -15,6 +17,15 @@ export default function Home() {
 			</section>
 			<section className={styles.project}>
 				project
+				<ul>
+					{filteredProjects.map((project) => (
+						<li key={project.id}>
+							{project.name}
+							{project.date}
+							<img src={`/img/project/${project.id}.jpg`} alt={project.name} />
+						</li>
+					))}
+				</ul>
 				<Link href="/project" className="basic-link">
 					more
 				</Link>
