@@ -2,6 +2,7 @@ import styles from "./page.module.scss";
 import Link from "next/link";
 import BasicButton from "./components/atom/button/basicButton/BasicButton";
 import projectData from "./utils/ProjectData";
+import { montserrat, clsj } from "./layout";
 
 export default function Home() {
 	const filteredProjects = projectData.filter((project) => ["nonghyup", "kiwoom"].includes(project.id));
@@ -9,7 +10,7 @@ export default function Home() {
 	return (
 		<main>
 			<section className={styles.visual}>visual</section>
-			<section className={styles.about}>
+			<section className={clsj(styles.about, montserrat.className)}>
 				about
 				<Link href="/about" className="basic-link">
 					more

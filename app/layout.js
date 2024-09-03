@@ -1,8 +1,27 @@
+import localFont from "next/font/local";
+import { Montserrat } from "next/font/google";
 import "@/styles/common.scss";
 import Header from "./components/organisms/header";
 import Footer from "./components/organisms/footer";
 import TopBtn from "./components/molecules/topBtn";
 import UIsetting from "./utils/UIsetting";
+
+const pretendard = localFont({
+	src: "../public/fonts/PretendardVariable.woff2",
+	display: "swap",
+	weight: "45 920",
+	variable: "--font-pretendard",
+});
+
+export const montserrat = Montserrat({
+	weight: "variable",
+	variable: "--font-montserrat",
+	subsets: ["latin"],
+});
+
+export const clsj = (...classnames) => {
+	return classnames.join(" ");
+};
 
 export const metadata = {
 	title: "Create Next App",
@@ -11,8 +30,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
 	return (
-		<html lang="ko">
-			<body>
+		<html lang="ko" className={clsj(pretendard.variable, montserrat.variable)}>
+			<body className={pretendard.className}>
 				<UIsetting />
 				<div id="wrap">
 					<Header />
