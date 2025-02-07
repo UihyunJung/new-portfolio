@@ -19,7 +19,7 @@ export default function RootLayout({
       <body className="antialiased">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Suspense fallback={<Loading />}>
-            <div className="wrap flex flex-col min-h-dvh">{children}</div>
+            <div className="wrap relative flex flex-col min-h-dvh">{children}</div>
           </Suspense>
         </ThemeProvider>
       </body>
