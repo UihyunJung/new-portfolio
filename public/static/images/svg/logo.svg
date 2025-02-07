@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="300" viewBox="0 0 300 300">
+  <defs>
+    <clipPath id="clip-logo">
+      <rect width="300" height="300"/>
+    </clipPath>
+  </defs>
+  <g id="logo" clip-path="url(#clip-logo)">
+    <text id="J_s" data-name="J’s" transform="translate(20 213)" font-size="250" font-family="Josefin Sans" font-weight="700"><tspan x="0" y="0">J’s</tspan></text>
+  </g>
+</svg>
