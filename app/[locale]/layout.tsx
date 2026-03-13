@@ -45,11 +45,7 @@ export async function generateMetadata({
     description: m.description,
     authors: [{ name: '정의현 (Uihyun Jung)' }],
     alternates: {
-      canonical: `/${locale}`,
-      languages: {
-        ko: '/ko',
-        en: '/en',
-      },
+      canonical: '/',
     },
     openGraph: {
       title: m.title,
@@ -57,7 +53,7 @@ export async function generateMetadata({
       type: 'website',
       locale: m.ogLocale,
       alternateLocale: locale === 'ko' ? 'en_US' : 'ko_KR',
-      url: `/${locale}`,
+      url: '/',
     },
     twitter: {
       card: 'summary_large_image',

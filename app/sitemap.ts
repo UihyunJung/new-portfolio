@@ -5,16 +5,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     {
-      url: `${baseUrl}/ko`,
-      lastModified: '2026-03-13',
+      url: baseUrl,
+      lastModified: '2026-03-14',
       changeFrequency: 'monthly',
       priority: 1,
-    },
-    {
-      url: `${baseUrl}/en`,
-      lastModified: '2026-03-13',
-      changeFrequency: 'monthly',
-      priority: 0.9,
     },
   ];
 }
