@@ -10,12 +10,12 @@
     "greeting": "Hello",
     "name": "Uihyun Jung",
     "title": "Frontend Developer",
-    "description": "A frontend developer who prioritizes user experience above all. With over 10 years of web development experience, I build modern web applications with a focus on performance and accessibility.",
+    "description": "A frontend developer who prioritizes user experience above all.\nWith over 10 years of web development experience,\nI build modern web apps focused on performance and accessibility.",
     "ctaAriaLabel": "Scroll to About section"
   },
   "about": {
     "heading": "About Me",
-    "bio": "From building frontend for online gaming platforms to diverse web services, I've gained extensive experience across the stack. I specialize in designing user-centric interfaces with React, Next.js, and TypeScript, with a deep interest in performance optimization and accessibility.",
+    "bio": "From building frontend for online gaming platforms to diverse web services,\nI've gained extensive experience across the stack.\nI specialize in designing user-centric interfaces with React, Next.js, and TypeScript,\nwith a deep interest in performance optimization and accessibility.",
     "highlight1": {
       "value": "10+",
       "label": "Years of Web Development"

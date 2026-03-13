@@ -16,8 +16,12 @@
   font-size: $font-size-base;
   color: var(--color-text-secondary);
   line-height: $line-height-relaxed;
-  max-width: 640px;
+  max-width: 720px;
   margin-bottom: 48px;
+
+  @include md {
+    white-space: pre-line;
+  }
 
   @include md {
     font-size: $font-size-lg;

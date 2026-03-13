@@ -100,6 +100,10 @@
   max-width: 520px;
   line-height: $line-height-relaxed;
 
+  @include md {
+    white-space: pre-line;
+  }
+
   :global([data-theme='dark']) & {
     color: #808099;
   }
