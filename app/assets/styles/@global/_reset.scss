@@ -24,6 +24,7 @@ body {
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
   line-height: $line-height-normal;
+  word-break: keep-all;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.3s ease, color 0.3s ease;

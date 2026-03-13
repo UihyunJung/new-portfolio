@@ -2,7 +2,7 @@
 
 프론트엔드 개발자 정의현의 포트폴리오 사이트.
 
-**Live**: [jung-euihyun.vercel.app](https://jung-euihyun.vercel.app)
+**Live**: [nooroong.com](https://nooroong.com)
 
 ## Tech Stack
 

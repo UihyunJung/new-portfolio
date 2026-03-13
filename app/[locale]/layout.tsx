@@ -7,6 +7,7 @@ import MotionProvider from '@/components/@layout/MotionProvider';
 import Header from '@/components/@layout/Header';
 import Footer from '@/components/@layout/Footer';
 import ScrollToTop from '@/components/@atoms/ScrollToTop';
+import { SITE_URL } from '@lib/constants';
 import '@/assets/styles/globals.scss';
 
 const wantedSans = localFont({
@@ -40,7 +41,7 @@ export async function generateMetadata({
   const m = META[locale as keyof typeof META] ?? META.ko;
 
   return {
-    metadataBase: new URL('https://jung-euihyun.vercel.app'),
+    metadataBase: new URL(SITE_URL),
     title: m.title,
     description: m.description,
     authors: [{ name: '정의현 (Uihyun Jung)' }],
@@ -104,7 +105,7 @@ export default async function LocaleLayout({
               name: '정의현',
               alternateName: 'Uihyun Jung',
               jobTitle: 'Frontend Developer',
-              url: 'https://jung-euihyun.vercel.app',
+              url: SITE_URL,
               sameAs: [
                 'https://github.com/jung-euihyun',
                 'https://linkedin.com/in/jung-euihyun',
