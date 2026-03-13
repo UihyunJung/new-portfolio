@@ -7,12 +7,12 @@ export interface SocialLink {
 export const socialLinks: SocialLink[] = [
   {
     key: 'github',
-    href: 'https://github.com/jung-euihyun',
+    href: 'https://github.com/UihyunJung',
     icon: 'github',
   },
   {
     key: 'linkedin',
-    href: 'https://linkedin.com/in/jung-euihyun',
+    href: 'https://www.linkedin.com/in/uihyunjung',
     icon: 'linkedin',
   },
   {

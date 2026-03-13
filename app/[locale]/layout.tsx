@@ -125,8 +125,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               jobTitle: 'Frontend Developer',
               url: SITE_URL,
               sameAs: [
-                'https://github.com/jung-euihyun',
-                'https://linkedin.com/in/jung-euihyun',
+                'https://github.com/UihyunJung',
+                'https://www.linkedin.com/in/uihyunjung',
               ],
             }),
           }}

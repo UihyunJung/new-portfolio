@@ -78,7 +78,7 @@ export const projects: Project[] = [
     ],
     highlightKeys: ['h1', 'h2', 'h3'],
     links: {
-      github: 'https://github.com/jung-euihyun/noopdaa-blog',
+      github: 'https://github.com/UihyunJung/noopdaa-blog',
     },
   },
 ];
