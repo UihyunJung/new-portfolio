@@ -84,7 +84,7 @@ export default function Header() {
       </div>
 
       {/* Mobile menu */}
-      <nav className={clsx(styles.mobileNav, menuOpen && styles.mobileNavOpen)} aria-hidden={!menuOpen}>
+      <nav className={clsx(styles.mobileNav, menuOpen && styles.mobileNavOpen)} inert={!menuOpen ? true : undefined}>
         <div className={styles.mobileNavInner}>
           {NAV_ITEMS.map((item) => (
             <button
