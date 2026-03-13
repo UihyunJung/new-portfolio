@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import localFont from 'next/font/local';
@@ -7,7 +8,7 @@ import MotionProvider from '@/components/@layout/MotionProvider';
 import Header from '@/components/@layout/Header';
 import Footer from '@/components/@layout/Footer';
 import ScrollToTop from '@/components/@atoms/ScrollToTop';
-import { SITE_URL } from '@lib/constants';
+import { SITE_URL, GTM_ID } from '@lib/constants';
 import '@/assets/styles/globals.scss';
 
 const wantedSans = localFont({
@@ -80,7 +81,24 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className={wantedSans.variable} suppressHydrationWarning>
+      <head>
+        <Script id="gtm" strategy="afterInteractive">
+          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${GTM_ID}');`}
+        </Script>
+      </head>
       <body>
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+          />
+        </noscript>
         <a href="#main-content" className="skip-to-content">
           Skip to content
         </a>
