@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git ls-tree:*)",
+      "Bash(grep -r \"use-api\\\\|axios\\\\|fetch\" /Users/jung-euihyun/projects/SC_LOBBY_FRONT/app/lib/hooks/*.ts | head -20)",
+      "Bash(grep -r \"ServerComponent\\\\|useServerInsertedHTML\\\\|'use client'\" /Users/jung-euihyun/projects/lobby-front/app/[locale] --include=\"*.tsx\" | grep \"use client\" | wc -l)",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__query-docs",
+      "Skill(agent-browser)"
+    ]
+  }
+}

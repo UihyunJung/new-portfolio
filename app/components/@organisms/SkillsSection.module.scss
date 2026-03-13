@@ -1,0 +1,39 @@
+@use '../../assets/styles/@utilities/mixins' as *;
+@use '../../assets/styles/@tokens/typography' as *;
+
+.heading {
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  letter-spacing: $letter-spacing-tight;
+  margin-bottom: 48px;
+
+  @include md {
+    font-size: $font-size-4xl;
+  }
+}
+
+.categories {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.category {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.categoryLabel {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}

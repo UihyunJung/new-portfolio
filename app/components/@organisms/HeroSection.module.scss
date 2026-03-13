@@ -1,0 +1,154 @@
+@use '../../assets/styles/@utilities/mixins' as *;
+@use '../../assets/styles/@tokens/typography' as *;
+
+.hero {
+  display: flex;
+  align-items: center;
+  min-height: 100dvh;
+  padding-top: 64px;
+  position: relative;
+  overflow: hidden;
+}
+
+// Video background
+.videoBg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(2px);
+
+  @include reduced-motion {
+    // Show first frame only
+    animation: none;
+  }
+}
+
+.videoOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+
+  :global([data-theme='light']) & {
+    background: rgba(255, 255, 255, 0.85);
+  }
+}
+
+.container {
+  @include container;
+  position: relative;
+  z-index: 1;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.greeting {
+  font-size: $font-size-lg;
+  color: var(--color-accent);
+  font-weight: $font-weight-semibold;
+  margin-bottom: 16px;
+  letter-spacing: $letter-spacing-wide;
+
+  @include md {
+    font-size: $font-size-xl;
+  }
+}
+
+.name {
+  font-size: $font-size-5xl;
+  font-weight: $font-weight-extrabold;
+  letter-spacing: $letter-spacing-tight;
+  margin-bottom: 8px;
+  background: var(--gradient-accent-text);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  width: fit-content;
+
+  @include md {
+    font-size: $font-size-6xl;
+  }
+
+  @include lg {
+    font-size: 4.5rem;
+  }
+}
+
+.title {
+  font-size: $font-size-xl;
+  color: var(--color-text-secondary);
+  font-weight: $font-weight-medium;
+  margin-bottom: 20px;
+
+  @include md {
+    font-size: $font-size-2xl;
+  }
+}
+
+.description {
+  font-size: $font-size-base;
+  color: #5c5c5c;
+  max-width: 520px;
+  line-height: $line-height-relaxed;
+
+  :global([data-theme='dark']) & {
+    color: #808099;
+  }
+
+  @include md {
+    font-size: $font-size-lg;
+  }
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  margin-top: 56px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-border);
+  color: var(--color-text-tertiary);
+  transition: all 0.3s ease;
+  animation: float 3s ease-in-out infinite;
+
+  &:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-glow);
+    transform: translateY(4px);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  @include reduced-motion {
+    animation: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+

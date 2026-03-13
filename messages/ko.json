@@ -1,0 +1,146 @@
+{
+  "nav": {
+    "about": "소개",
+    "skills": "기술",
+    "experience": "경력",
+    "projects": "프로젝트",
+    "contact": "연락처"
+  },
+  "hero": {
+    "greeting": "안녕하세요",
+    "name": "정의현",
+    "title": "Frontend Developer",
+    "description": "사용자 경험을 최우선으로 생각하는 프론트엔드 개발자입니다. 10년 이상의 웹 개발 경험을 바탕으로, 성능과 접근성을 고려한 모던 웹 애플리케이션을 만듭니다.",
+    "ctaAriaLabel": "소개 섹션으로 스크롤"
+  },
+  "about": {
+    "heading": "About Me",
+    "bio": "온라인 게임 플랫폼의 프론트엔드 개발부터 다양한 웹 서비스 구축까지, 폭넓은 경험을 쌓아왔습니다. React, Next.js, TypeScript를 중심으로 사용자 중심의 인터페이스를 설계하고, 성능 최적화와 접근성에 깊은 관심을 가지고 있습니다.",
+    "highlight1": {
+      "value": "10+",
+      "label": "년 웹 개발 경험"
+    },
+    "highlight2": {
+      "value": "11",
+      "label": "개 언어 다국어 지원 경험"
+    },
+    "highlight3": {
+      "value": "E2E",
+      "label": "테스트 자동화 구축"
+    }
+  },
+  "skills": {
+    "heading": "Skills",
+    "categories": {
+      "frontend": "Frontend",
+      "styling": "Styling",
+      "stateManagement": "State Management",
+      "testing": "Testing",
+      "tools": "Tools & DevOps",
+      "libraries": "Libraries"
+    }
+  },
+  "experience": {
+    "heading": "Experience",
+    "items": {
+      "doubledown": {
+        "company": "(주)더블다운게임즈",
+        "role": "Frontend Developer",
+        "description": "온라인 게임 플랫폼 로비 프론트엔드 개발. Next.js, React, TypeScript 기반의 대규모 SPA 구축 및 11개 언어 다국어 지원."
+      },
+      "darum": {
+        "company": "(주)다름",
+        "role": "Web Publisher",
+        "description": "다양한 웹 서비스의 UI 개발 및 퍼블리싱. 반응형 웹 구현, 크로스 브라우징 대응, 웹 접근성 준수."
+      },
+      "hexafactory": {
+        "company": "(주)헥사팩토리",
+        "role": "Web Publisher / Web Planner",
+        "description": "웹 퍼블리싱 및 기획 업무. 서비스 UI/UX 설계와 프론트엔드 구현."
+      },
+      "itline": {
+        "company": "(주)아이티라인",
+        "role": "Web Planner",
+        "description": "웹 서비스 기획 및 프로젝트 관리."
+      },
+      "ise": {
+        "company": "아이에스이 시스템즈",
+        "role": "Web Planner",
+        "description": "웹 서비스 기획."
+      },
+      "opinity": {
+        "company": "오피니티 에이피",
+        "role": "Web Planner",
+        "description": "웹 서비스 기획."
+      }
+    }
+  },
+  "projects": {
+    "heading": "Projects",
+    "roleLabel": "역할:",
+    "typeBadgeWork": "업무",
+    "typeBadgePersonal": "개인",
+    "items": {
+      "lobbyV2": {
+        "title": "게임 플랫폼 로비 프론트엔드 v2",
+        "description": "글로벌 온라인 게임 플랫폼의 차세대 로비 시스템. 레거시 v1의 기술 부채를 해소하고 성능·확장성·테스트 커버리지를 전면 개선한 리아키텍처링 프로젝트.",
+        "role": "프론트엔드 개발 리드",
+        "highlights": {
+          "h1": "Jotai + TanStack Query 기반 상태 관리 아키텍처 설계로 서버/클라이언트 상태 분리 및 캐시 최적화",
+          "h2": "next-intl 기반 11개 언어 i18n 파이프라인 구축, 런타임 번역 누락 감지 시스템 도입",
+          "h3": "WebSocket 기반 실시간 게임 상태 동기화 및 자동 재연결 로직 구현",
+          "h4": "Playwright E2E + Vitest 유닛 테스트 체계 수립, CI 파이프라인에 자동화 테스트 통합"
+        }
+      },
+      "lobbyV1": {
+        "title": "게임 플랫폼 로비 프론트엔드 v1",
+        "description": "온라인 게임 플랫폼 로비의 초기 프론트엔드를 제로부터 구축. 다국어 지원과 인증 시스템, 실시간 통신 등 플랫폼의 핵심 인프라를 설계하고 운영까지 담당.",
+        "role": "프론트엔드 개발",
+        "highlights": {
+          "h1": "Recoil + SWR 기반 전역 상태 관리 및 서버 데이터 페칭 아키텍처 설계",
+          "h2": "next-auth 기반 인증/인가 플로우 구현, 세션 관리 및 보안 미들웨어 설계",
+          "h3": "10개 언어 다국어 지원 체계 구축 및 지역별 콘텐츠 분기 로직 구현"
+        }
+      },
+      "publishing": {
+        "title": "대규모 웹 퍼블리싱 프로젝트",
+        "description": "6년간 다양한 기업·기관의 웹사이트와 서비스 UI를 퍼블리싱. 반응형 웹, 크로스 브라우저 호환, 웹 접근성(WCAG) 준수를 핵심 원칙으로 수십 건의 프로젝트를 수행.",
+        "role": "웹 퍼블리셔 (리드)",
+        "highlights": {
+          "h1": "시맨틱 마크업과 SCSS 기반 컴포넌트 스타일 아키텍처 설계, 재사용 가능한 UI 패턴 라이브러리 구축",
+          "h2": "IE11~최신 브라우저 크로스 브라우징 대응 및 모바일·태블릿·데스크톱 반응형 레이아웃 구현",
+          "h3": "WCAG 2.1 AA 기준 웹 접근성 준수, 키보드 네비게이션·스크린 리더 호환성 검증"
+        }
+      },
+      "noopdaaBlog": {
+        "title": "Noopdaa Blog",
+        "description": "Turborepo 모노레포 기반의 풀스택 블로그 플랫폼. 공개 블로그와 관리자 대시보드를 독립 앱으로 분리하고, 공유 패키지를 통해 타입 안전성과 코드 재사용성을 확보.",
+        "role": "풀스택 개발 (개인 프로젝트)",
+        "highlights": {
+          "h1": "Turborepo 모노레포 아키텍처로 블로그 앱 / 어드민 대시보드 / 공유 패키지(DB, UI, Config) 분리",
+          "h2": "Supabase RLS 정책 기반 보안 모델 설계, DB 트리거를 활용한 조회수 자동 집계 및 프로필 자동 생성",
+          "h3": "방문자 분석 대시보드 구축 — 디바이스, 브라우저, 리퍼러 추적 및 Recharts 기반 시각화"
+        }
+      }
+    }
+  },
+  "contact": {
+    "heading": "Contact",
+    "description": "새로운 기회나 협업에 관심이 있으시다면 편하게 연락 주세요.",
+    "copy": "복사",
+    "copied": "복사됨!"
+  },
+  "footer": {
+    "copyright": "© {year} 정의현. All rights reserved."
+  },
+  "error": {
+    "title": "문제가 발생했습니다",
+    "description": "잠시 후 다시 시도해 주세요.",
+    "retry": "다시 시도"
+  },
+  "notFound": {
+    "title": "404",
+    "description": "페이지를 찾을 수 없습니다.",
+    "home": "홈으로 돌아가기"
+  }
+}

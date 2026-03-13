@@ -1,0 +1,85 @@
+@use '../../assets/styles/@utilities/mixins' as *;
+@use '../../assets/styles/@tokens/typography' as *;
+
+.heading {
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  letter-spacing: $letter-spacing-tight;
+  margin-bottom: 24px;
+
+  @include md {
+    font-size: $font-size-4xl;
+  }
+}
+
+.bio {
+  font-size: $font-size-base;
+  color: var(--color-text-secondary);
+  line-height: $line-height-relaxed;
+  max-width: 640px;
+  margin-bottom: 48px;
+
+  @include md {
+    font-size: $font-size-lg;
+  }
+}
+
+.highlights {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+
+  @include sm {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 28px;
+  border-radius: 16px;
+  background: var(--gradient-surface);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+
+  // Gradient border effect
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    padding: 1px;
+    background: var(--gradient-card-border);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    pointer-events: none;
+  }
+
+  &:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-2px);
+  }
+}
+
+.cardValue {
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-extrabold;
+  background: var(--gradient-accent);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  width: fit-content;
+
+  @include md {
+    font-size: $font-size-4xl;
+  }
+}
+
+.cardLabel {
+  font-size: $font-size-sm;
+  color: var(--color-text-tertiary);
+}

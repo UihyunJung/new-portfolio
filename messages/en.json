@@ -1,0 +1,146 @@
+{
+  "nav": {
+    "about": "About",
+    "skills": "Skills",
+    "experience": "Experience",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hello",
+    "name": "Uihyun Jung",
+    "title": "Frontend Developer",
+    "description": "A frontend developer who prioritizes user experience above all. With over 10 years of web development experience, I build modern web applications with a focus on performance and accessibility.",
+    "ctaAriaLabel": "Scroll to About section"
+  },
+  "about": {
+    "heading": "About Me",
+    "bio": "From building frontend for online gaming platforms to diverse web services, I've gained extensive experience across the stack. I specialize in designing user-centric interfaces with React, Next.js, and TypeScript, with a deep interest in performance optimization and accessibility.",
+    "highlight1": {
+      "value": "10+",
+      "label": "Years of Web Development"
+    },
+    "highlight2": {
+      "value": "11",
+      "label": "Languages i18n Experience"
+    },
+    "highlight3": {
+      "value": "E2E",
+      "label": "Test Automation Built"
+    }
+  },
+  "skills": {
+    "heading": "Skills",
+    "categories": {
+      "frontend": "Frontend",
+      "styling": "Styling",
+      "stateManagement": "State Management",
+      "testing": "Testing",
+      "tools": "Tools & DevOps",
+      "libraries": "Libraries"
+    }
+  },
+  "experience": {
+    "heading": "Experience",
+    "items": {
+      "doubledown": {
+        "company": "Double Down Games",
+        "role": "Frontend Developer",
+        "description": "Online gaming platform lobby frontend development. Building large-scale SPA with Next.js, React, TypeScript and supporting 11 languages."
+      },
+      "darum": {
+        "company": "Darum Inc.",
+        "role": "Web Publisher",
+        "description": "UI development and publishing for various web services. Responsive web implementation, cross-browser compatibility, and web accessibility compliance."
+      },
+      "hexafactory": {
+        "company": "Hexafactory Inc.",
+        "role": "Web Publisher / Web Planner",
+        "description": "Web publishing and planning. Service UI/UX design and frontend implementation."
+      },
+      "itline": {
+        "company": "ITLine Inc.",
+        "role": "Web Planner",
+        "description": "Web service planning and project management."
+      },
+      "ise": {
+        "company": "ISE Systems",
+        "role": "Web Planner",
+        "description": "Web service planning."
+      },
+      "opinity": {
+        "company": "Opinity AP",
+        "role": "Web Planner",
+        "description": "Web service planning."
+      }
+    }
+  },
+  "projects": {
+    "heading": "Projects",
+    "roleLabel": "Role:",
+    "typeBadgeWork": "Work",
+    "typeBadgePersonal": "Personal",
+    "items": {
+      "lobbyV2": {
+        "title": "Gaming Platform Lobby Frontend v2",
+        "description": "Next-gen lobby system for a global online gaming platform. A re-architecture project that resolved v1's technical debt while dramatically improving performance, scalability, and test coverage.",
+        "role": "Frontend Development Lead",
+        "highlights": {
+          "h1": "Designed state management architecture with Jotai + TanStack Query, separating server/client state with cache optimization",
+          "h2": "Built 11-language i18n pipeline with next-intl, including runtime translation-miss detection system",
+          "h3": "Implemented real-time game state sync via WebSocket with automatic reconnection logic",
+          "h4": "Established Playwright E2E + Vitest unit testing framework, integrated automated tests into CI pipeline"
+        }
+      },
+      "lobbyV1": {
+        "title": "Gaming Platform Lobby Frontend v1",
+        "description": "Built the initial frontend for an online gaming platform lobby from scratch. Designed and operated the platform's core infrastructure including i18n, authentication, and real-time communication.",
+        "role": "Frontend Developer",
+        "highlights": {
+          "h1": "Designed global state management and server data fetching architecture using Recoil + SWR",
+          "h2": "Implemented auth/authorization flow with next-auth, including session management and security middleware",
+          "h3": "Built 10-language i18n system with region-specific content branching logic"
+        }
+      },
+      "publishing": {
+        "title": "Large-Scale Web Publishing Projects",
+        "description": "Published websites and service UIs for diverse enterprises and organizations over 6 years. Delivered dozens of projects with responsive design, cross-browser compatibility, and WCAG accessibility as core principles.",
+        "role": "Web Publisher (Lead)",
+        "highlights": {
+          "h1": "Designed semantic markup and SCSS-based component style architecture, built reusable UI pattern library",
+          "h2": "Cross-browser support from IE11 to modern browsers, responsive layouts for mobile, tablet, and desktop",
+          "h3": "WCAG 2.1 AA compliance, keyboard navigation and screen reader compatibility validation"
+        }
+      },
+      "noopdaaBlog": {
+        "title": "Noopdaa Blog",
+        "description": "Full-stack blog platform built on Turborepo monorepo. Separated public blog and admin dashboard as independent apps, ensuring type safety and code reusability through shared packages.",
+        "role": "Full-stack Development (Personal Project)",
+        "highlights": {
+          "h1": "Turborepo monorepo architecture — blog app / admin dashboard / shared packages (DB, UI, Config)",
+          "h2": "Designed security model with Supabase RLS policies, auto view-count aggregation and profile creation via DB triggers",
+          "h3": "Built visitor analytics dashboard — device, browser, referrer tracking with Recharts visualization"
+        }
+      }
+    }
+  },
+  "contact": {
+    "heading": "Contact",
+    "description": "Interested in new opportunities or collaboration? Feel free to reach out.",
+    "copy": "Copy",
+    "copied": "Copied!"
+  },
+  "footer": {
+    "copyright": "© {year} Uihyun Jung. All rights reserved."
+  },
+  "error": {
+    "title": "Something went wrong",
+    "description": "Please try again later.",
+    "retry": "Try again"
+  },
+  "notFound": {
+    "title": "404",
+    "description": "Page not found.",
+    "home": "Back to home"
+  }
+}

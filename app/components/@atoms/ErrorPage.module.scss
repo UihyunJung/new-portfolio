@@ -1,0 +1,32 @@
+@use '../../assets/styles/@tokens/typography' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 16px;
+  text-align: center;
+  padding: 20px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: $font-weight-bold;
+}
+
+.title404 {
+  font-size: 3rem;
+  font-weight: $font-weight-extrabold;
+}
+
+.description {
+  color: var(--color-text-secondary);
+}
+
+.link {
+  color: var(--color-accent);
+  font-weight: $font-weight-medium;
+  margin-top: 8px;
+}

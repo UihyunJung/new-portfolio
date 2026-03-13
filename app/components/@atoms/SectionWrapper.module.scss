@@ -1,0 +1,30 @@
+@use '../../assets/styles/@utilities/mixins' as *;
+
+.section {
+  @include section-padding;
+  position: relative;
+
+  // Subtle top border with gradient
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(100%, 800px);
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-border) 20%,
+      var(--color-accent) 50%,
+      var(--color-border) 80%,
+      transparent
+    );
+    opacity: 0.4;
+  }
+}
+
+.container {
+  @include container;
+}

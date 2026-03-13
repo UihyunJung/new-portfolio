@@ -1,0 +1,86 @@
+@use '../../assets/styles/@utilities/mixins' as *;
+@use '../../assets/styles/@tokens/typography' as *;
+
+.card {
+  display: flex;
+  gap: 24px;
+  position: relative;
+  padding-left: 28px;
+
+  // Timeline line
+  &::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 14px;
+    bottom: -40px;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      var(--color-accent),
+      var(--color-border)
+    );
+    opacity: 0.3;
+  }
+
+  &:last-child::before {
+    display: none;
+  }
+}
+
+.marker {
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gradient-accent);
+  flex-shrink: 0;
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
+
+  [data-theme='dark'] & {
+    box-shadow: 0 0 12px rgba(129, 140, 248, 0.4);
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 40px;
+}
+
+.period {
+  font-size: $font-size-xs;
+  color: var(--color-text-tertiary);
+  font-weight: $font-weight-medium;
+  font-variant-numeric: tabular-nums;
+}
+
+.company {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+
+  @include md {
+    font-size: $font-size-xl;
+  }
+}
+
+.role {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  background: var(--gradient-accent);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  width: fit-content;
+}
+
+.description {
+  font-size: $font-size-sm;
+  color: var(--color-text-secondary);
+  line-height: $line-height-relaxed;
+  margin-top: 8px;
+  max-width: 480px;
+}

@@ -1,0 +1,89 @@
+@use '../@tokens/breakpoints' as *;
+@use '../@tokens/spacing' as *;
+
+// ============================================
+// Responsive Breakpoint Mixins
+// ============================================
+
+@mixin sm {
+  @media (min-width: $breakpoint-sm) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media (min-width: $breakpoint-md) {
+    @content;
+  }
+}
+
+@mixin lg {
+  @media (min-width: $breakpoint-lg) {
+    @content;
+  }
+}
+
+@mixin xl {
+  @media (min-width: $breakpoint-xl) {
+    @content;
+  }
+}
+
+// ============================================
+// Layout Mixins
+// ============================================
+
+@mixin container {
+  width: 100%;
+  max-width: $container-max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $container-padding;
+  padding-right: $container-padding;
+}
+
+@mixin section-padding {
+  padding-top: $section-padding-mobile;
+  padding-bottom: $section-padding-mobile;
+
+  @include md {
+    padding-top: $section-padding-tablet;
+    padding-bottom: $section-padding-tablet;
+  }
+
+  @include lg {
+    padding-top: $section-padding-desktop;
+    padding-bottom: $section-padding-desktop;
+  }
+}
+
+// ============================================
+// Accessibility
+// ============================================
+
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@mixin focus-ring {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+// ============================================
+// Animation
+// ============================================
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
