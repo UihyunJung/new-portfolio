@@ -6,6 +6,7 @@ const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  reactCompiler: true,
   sassOptions: {
     includePaths: [path.join(__dirname, 'app/assets/styles')],
     silenceDeprecations: ['legacy-js-api'],
