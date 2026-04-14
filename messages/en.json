@@ -112,6 +112,28 @@
           "h3": "WCAG 2.1 AA compliance, keyboard navigation and screen reader compatibility validation"
         }
       },
+      "reviewAnalyzer": {
+        "title": "Place Review Analyzer",
+        "description": "A Chrome extension that summarizes and analyzes Google Maps reviews using AI. An AI-assisted solo project built end-to-end — from design to deployment — through pair programming with Claude Code.",
+        "role": "Full-stack Development (AI Pair Programming)",
+        "highlights": {
+          "h1": "Drove requirements and design decisions in collaboration with Claude Code, delegating extension, backend, and billing implementation to the AI assistant",
+          "h2": "Designed a TypeScript-based Google Maps review scraper with Vitest fixture tests to stay resilient against DOM structure changes",
+          "h3": "Built the analysis pipeline on Cloudflare Workers + Supabase + Gemini API, separating rate limiting, usage tracking, and premium entitlement logic",
+          "h4": "Implemented Paddle Billing subscriptions with free-tier daily quotas and 90-day analysis history storage"
+        }
+      },
+      "averageDown": {
+        "title": "Stock Average Down Calculator",
+        "description": "A Chrome extension that calculates dollar-cost-averaging for stock positions. Shipped to the Chrome Web Store as a solo developer, using an AI coding assistant to build the extension, serverless backend, and billing integration.",
+        "role": "Full-stack Development (AI Pair Programming)",
+        "highlights": {
+          "h1": "Iterated requirement → generation → refactor cycles with Claude Code to ship a dependency-free, lightweight Vanilla JS + Vite extension",
+          "h2": "Implemented 8-language i18n (EN/KO/JA/ZH-CN/ZH-TW/DE/ES/PT) with automatic dark mode support",
+          "h3": "Designed a Vercel Serverless + Upstash Redis backend for subscription state verification, integrated with Paddle Billing (Merchant of Record)",
+          "h4": "Built Pro-subscription unlock for additional currencies (KRW/JPY/EUR/GBP/CNY/INR/BRL) and shipped to the Chrome Web Store"
+        }
+      },
       "noopdaaBlog": {
         "title": "Noopdaa Blog",
         "description": "Full-stack blog platform built on Turborepo monorepo. Separated public blog and admin dashboard as independent apps, ensuring type safety and code reusability through shared packages.",

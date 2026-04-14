@@ -112,6 +112,28 @@
           "h3": "WCAG 2.1 AA 기준 웹 접근성 준수, 키보드 네비게이션·스크린 리더 호환성 검증"
         }
       },
+      "reviewAnalyzer": {
+        "title": "Place Review Analyzer",
+        "description": "Google Maps 리뷰를 AI로 요약·분석해 주는 크롬 확장 프로그램. Claude Code와 페어 프로그래밍하며 기획·설계부터 배포까지 단독으로 완성한 AI 어시스턴트 개발 프로젝트.",
+        "role": "풀스택 개발 (AI 페어 프로그래밍)",
+        "highlights": {
+          "h1": "Claude Code에게 요구사항과 제약을 명확히 전달하고 설계 결정을 함께 검토하며, 확장·백엔드·결제 인프라를 AI 주도로 구현",
+          "h2": "TypeScript 기반 Google Maps 리뷰 스크레이퍼 설계 및 Vitest 픽스처 테스트로 DOM 구조 변경에 대응",
+          "h3": "Cloudflare Workers + Supabase + Gemini API로 분석 파이프라인 구축, 레이트 리밋·사용량 추적·프리미엄 권한 검증 로직 분리",
+          "h4": "Paddle Billing 기반 구독 결제 및 무료 티어 일일 한도 시스템, 90일 분석 히스토리 저장 구현"
+        }
+      },
+      "averageDown": {
+        "title": "Stock Average Down Calculator",
+        "description": "주식 물타기 평균단가를 계산해 주는 크롬 확장 프로그램. AI 코딩 어시스턴트를 활용해 바닐라 JS 확장부터 서버리스 백엔드·결제 연동까지 1인 개발로 스토어 출시까지 완료.",
+        "role": "풀스택 개발 (AI 페어 프로그래밍)",
+        "highlights": {
+          "h1": "Claude Code와 함께 요구사항 정리·코드 생성·리팩토링 사이클을 반복하며 의존성 없는 경량 Vanilla JS + Vite 확장 구현",
+          "h2": "8개 언어(EN/KO/JA/ZH-CN/ZH-TW/DE/ES/PT) 다국어 지원 및 다크모드 자동 대응",
+          "h3": "Vercel Serverless + Upstash Redis 기반 구독 상태 검증 백엔드 설계, Paddle Billing(Merchant of Record) 연동",
+          "h4": "Pro 구독으로 추가 통화(KRW/JPY/EUR/GBP/CNY/INR/BRL) 잠금 해제 기능 구현 및 Chrome Web Store 정식 배포"
+        }
+      },
       "noopdaaBlog": {
         "title": "Noopdaa Blog",
         "description": "Turborepo 모노레포 기반의 풀스택 블로그 플랫폼. 공개 블로그와 관리자 대시보드를 독립 앱으로 분리하고, 공유 패키지를 통해 타입 안전성과 코드 재사용성을 확보.",

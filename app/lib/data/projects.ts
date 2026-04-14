@@ -63,6 +63,42 @@ export const projects: Project[] = [
     highlightKeys: ['h1', 'h2', 'h3'],
   },
   {
+    key: 'reviewAnalyzer',
+    type: 'personal',
+    techStack: [
+      'Chrome MV3',
+      'TypeScript',
+      'Vite',
+      'Vitest',
+      'Cloudflare Workers',
+      'Supabase',
+      'Gemini API',
+      'Paddle Billing',
+      'Claude Code',
+    ],
+    highlightKeys: ['h1', 'h2', 'h3', 'h4'],
+    links: {
+      live: 'https://chromewebstore.google.com/detail/place-review-analyzer-for/okcpoanbjoeajobklbobjbhhmlfkljeg',
+    },
+  },
+  {
+    key: 'averageDown',
+    type: 'personal',
+    techStack: [
+      'Chrome MV3',
+      'Vanilla JS',
+      'Vite',
+      'Vercel Serverless',
+      'Upstash Redis',
+      'Paddle Billing',
+      'Claude Code',
+    ],
+    highlightKeys: ['h1', 'h2', 'h3', 'h4'],
+    links: {
+      live: 'https://chromewebstore.google.com/detail/stock-average-down-calcul/dbadoampjeambpjcanmfaadkjibpgefl',
+    },
+  },
+  {
     key: 'noopdaaBlog',
     type: 'personal',
     techStack: [

@@ -6,7 +6,7 @@ export interface Experience {
 export const experiences: Experience[] = [
   {
     key: 'doubledown',
-    period: '2024.10 — Present',
+    period: '2024.10 — 2026.03',
   },
   {
     key: 'darum',
