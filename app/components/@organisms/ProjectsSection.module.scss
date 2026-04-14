@@ -1,21 +1,22 @@
 @use '../../assets/styles/@utilities/mixins' as *;
 @use '../../assets/styles/@tokens/typography' as *;
 
-.heading {
-  font-size: $font-size-3xl;
-  font-weight: $font-weight-bold;
-  letter-spacing: $letter-spacing-tight;
-  margin-bottom: 48px;
+.content {
+  @include section-content;
+}
 
-  @include md {
-    font-size: $font-size-4xl;
-  }
+.heading {
+  @include section-heading;
 }
 
 .grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  text-align: left;
 
   @include md {
     grid-template-columns: repeat(2, 1fr);

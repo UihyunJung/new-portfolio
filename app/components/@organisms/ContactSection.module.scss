@@ -2,22 +2,12 @@
 @use '../../assets/styles/@tokens/typography' as *;
 
 .content {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @include section-content;
   position: relative;
 }
 
 .heading {
-  font-size: $font-size-3xl;
-  font-weight: $font-weight-bold;
-  letter-spacing: $letter-spacing-tight;
-  margin-bottom: 16px;
-
-  @include md {
-    font-size: $font-size-4xl;
-  }
+  @include section-heading;
 }
 
 .description {

@@ -15,6 +15,7 @@ export default function AboutSection() {
   return (
     <SectionWrapper id="about">
       <m.div
+        className={styles.content}
         variants={aboutStagger}
         initial="hidden"
         whileInView="visible"

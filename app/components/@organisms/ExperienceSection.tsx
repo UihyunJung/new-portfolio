@@ -16,6 +16,7 @@ export default function ExperienceSection() {
   return (
     <SectionWrapper id="experience">
       <m.div
+        className={styles.content}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: '-100px' }}

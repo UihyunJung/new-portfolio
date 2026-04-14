@@ -11,9 +11,8 @@ export default function ExperienceCard({ experienceKey, period }: ExperienceCard
 
   return (
     <div className={styles.card}>
-      <div className={styles.marker} />
+      <span className={styles.period}>{period}</span>
       <div className={styles.content}>
-        <span className={styles.period}>{period}</span>
         <h3 className={styles.company}>{t(`items.${experienceKey}.company`)}</h3>
         <span className={styles.role}>{t(`items.${experienceKey}.role`)}</span>
         <p className={styles.description}>{t(`items.${experienceKey}.description`)}</p>
