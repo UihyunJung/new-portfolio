@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#E9EBE8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>LA · 라스베가스 2026.10.03–10.10</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --ink:#1A2029;
+  --ink-2:#454E52;
+  --paper:#E9EBE8;
+  --card:#F5F6F3;
+  --rule:#CFD3CE;
+  --rule-2:#DDE0DB;
+  --muted:#666E70;
+
+  --la:#2C6975;
+  --oc:#54704C;
+  --lv:#9E6E1B;
+  --gc:#8D3D1D;
+
+  --warn-bg:#F7E9BC;
+  --warn-line:#C09B22;
+
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;
+
+  --gut:16px;
+  --nav-h:54px;
+  --safe-l:env(safe-area-inset-left,0px);
+  --safe-r:env(safe-area-inset-right,0px);
+  --safe-b:env(safe-area-inset-bottom,0px);
+}
+@media (min-width:560px){ :root{ --gut:28px } }
+@media (min-width:900px){ :root{ --gut:40px } }
+
+*{box-sizing:border-box}
+html{
+  -webkit-text-size-adjust:100%;
+  scroll-behavior:smooth;
+  overscroll-behavior-y:none;
+}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.6;
+  letter-spacing:-.005em;
+  -webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:rgba(26,32,41,.08);
+  word-break:keep-all;
+  overflow-wrap:anywhere;
+}
+a{color:inherit;-webkit-tap-highlight-color:rgba(26,32,41,.12)}
+h1,h2,h3{margin:0;line-height:1.25;font-weight:700;letter-spacing:-.02em}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:2px}
+
+.wrap{
+  max-width:920px;margin:0 auto;
+  padding-left:calc(var(--gut) + var(--safe-l));
+  padding-right:calc(var(--gut) + var(--safe-r));
+}
+
+/* ============ sticky day nav ============ */
+.daynav{
+  position:sticky;top:0;z-index:60;
+  background:rgba(233,235,232,.94);
+  backdrop-filter:saturate(1.5) blur(14px);
+  -webkit-backdrop-filter:saturate(1.5) blur(14px);
+  border-bottom:1px solid var(--rule);
+}
+.daynav-scroll{
+  max-width:920px;margin:0 auto;
+  display:flex;gap:4px;align-items:stretch;
+  padding:6px calc(var(--gut) + var(--safe-r)) 6px calc(var(--gut) + var(--safe-l));
+  overflow-x:auto;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  scroll-snap-type:x proximity;
+}
+.daynav-scroll::-webkit-scrollbar{display:none}
+.dpill{
+  flex:0 0 auto;
+  min-width:42px;min-height:42px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:1px;
+  text-decoration:none;
+  border:1px solid var(--rule);
+  border-radius:9px;
+  padding:4px 7px;
+  scroll-snap-align:center;
+  transition:background .16s,color .16s,border-color .16s;
+}
+.dpill .n{font-family:var(--mono);font-size:15px;font-weight:600;line-height:1;letter-spacing:-.02em}
+.dpill .w{font-size:9.5px;line-height:1;color:var(--muted);letter-spacing:.02em}
+.dpill[data-leg="la"]{color:var(--la)}
+.dpill[data-leg="oc"]{color:var(--oc)}
+.dpill[data-leg="lv"]{color:var(--lv)}
+.dpill[data-leg="gc"]{color:var(--gc)}
+.dpill.on{background:currentColor;border-color:currentColor}
+.dpill.on .n{color:var(--paper)}
+.dpill.on .w{color:rgba(233,235,232,.78)}
+.dpill.ref{color:var(--muted);min-width:auto;padding:4px 12px}
+.dpill.ref .n{font-family:var(--sans);font-size:12.5px;font-weight:600}
+
+/* ============ hero ============ */
+.hero{padding:34px 0 26px}
+.route{
+  font-family:var(--mono);
+  font-size:clamp(19px,6vw,36px);
+  font-weight:600;letter-spacing:0;
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:.22em;
+  line-height:1.3;
+}
+.route .arw{color:var(--muted);font-weight:400}
+.route .icn{color:var(--gc)} .route .lax{color:var(--la)}
+.route .sna{color:var(--oc)} .route .las{color:var(--lv)}
+.dates{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);margin-top:12px;line-height:1.7;
+}
+.lede{margin:16px 0 0;max-width:56ch;font-size:15px;color:var(--ink-2)}
+
+/* ============ elevation chart ============ */
+.chart{
+  margin:24px 0 0;
+  background:var(--card);
+  border:1px solid var(--rule);
+  border-radius:6px;
+  padding:15px 0 8px;
+  overflow:hidden;
+}
+.chart-hd{padding:0 15px 10px}
+.chart-hd h3{font-size:13.5px}
+.chart-hd span{
+  display:block;font-family:var(--mono);font-size:10.5px;
+  color:var(--muted);letter-spacing:.04em;margin-top:3px;
+}
+.chart svg{display:block;width:100%;height:auto}
+
+/* ============ day block ============ */
+.day{border-top:1px solid var(--rule);scroll-margin-top:calc(var(--nav-h) - 1px)}
+.day[data-leg="la"]{--ac:var(--la)}
+.day[data-leg="oc"]{--ac:var(--oc)}
+.day[data-leg="lv"]{--ac:var(--lv)}
+.day[data-leg="gc"]{--ac:var(--gc)}
+
+.day > summary{
+  list-style:none;cursor:pointer;
+  padding:20px 0;
+  display:grid;grid-template-columns:auto 1fr 22px;
+  gap:0 14px;align-items:center;
+  min-height:44px;
+}
+.day > summary::-webkit-details-marker{display:none}
+.daynum{
+  font-family:var(--mono);font-weight:600;
+  font-size:clamp(26px,8vw,40px);
+  line-height:.9;letter-spacing:-.04em;color:var(--ac);
+}
+.daynum small{
+  display:block;font-size:.36em;letter-spacing:.12em;
+  margin-top:6px;color:var(--muted);
+}
+.daymeta h2{font-size:clamp(16.5px,4.4vw,21px)}
+.daymeta p{margin:4px 0 0;font-size:13px;color:var(--muted);line-height:1.5}
+.chev{
+  justify-self:end;
+  width:10px;height:10px;
+  border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);
+  transform:rotate(45deg) translate(-2px,-2px);transition:transform .2s;
+}
+.day[open] > summary .chev{transform:rotate(-135deg) translate(-2px,-2px)}
+.daybody{padding-bottom:30px}
+.dayband{height:3px}
+
+/* ============ timeline ============ */
+.tl{margin:4px 0 0;padding:0;list-style:none;position:relative}
+.tl::before{
+  content:"";position:absolute;left:53px;top:14px;bottom:14px;
+  width:1px;background:var(--rule);
+}
+.tl li{
+  display:grid;grid-template-columns:46px 1fr;
+  gap:0 22px;padding:8px 0;position:relative;
+}
+.tl .t{
+  font-family:var(--mono);font-size:12.5px;font-weight:500;
+  padding-top:3px;letter-spacing:-.03em;text-align:right;
+}
+.tl .c{position:relative;padding-left:0}
+.tl .c::before{
+  content:"";position:absolute;left:-15.5px;top:8px;
+  width:9px;height:9px;border-radius:50%;
+  background:var(--paper);border:2.5px solid var(--ac);
+}
+.tl li.minor .c::before{
+  border-color:var(--rule);border-width:2px;
+  width:7px;height:7px;left:-14.5px;top:9px;
+}
+.tl .c strong{font-weight:600;font-size:15.5px;display:block;line-height:1.45}
+.tl .c span{display:block;font-size:13.8px;color:var(--ink-2);margin-top:3px;line-height:1.55}
+.tl .c em{
+  display:inline-block;font-style:normal;font-family:var(--mono);
+  font-size:11px;color:var(--muted);letter-spacing:.02em;margin-top:5px;
+  background:var(--card);border:1px solid var(--rule-2);
+  padding:2px 7px;border-radius:4px;
+}
+@media (min-width:560px){
+  .tl::before{left:66px}
+  .tl li{grid-template-columns:56px 1fr;gap:0 25px}
+  .tl .t{font-size:13px}
+}
+
+/* ============ callouts ============ */
+.note,.tip{margin:18px 0;padding:13px 15px;border-radius:0 5px 5px 0;font-size:14.2px;line-height:1.6}
+.note{background:var(--warn-bg);border-left:3px solid var(--warn-line)}
+.tip{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--ac,var(--muted))}
+.note b.h,.tip b.h{display:block;font-size:13.2px;margin-bottom:5px;letter-spacing:-.01em}
+.note p,.tip p{margin:0}
+.note p+p,.tip p+p{margin-top:8px}
+
+/* ============ section headings ============ */
+.subhd{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);
+  margin:26px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--rule);
+}
+
+/* ============ food cards ============ */
+.food{display:grid;gap:9px;grid-template-columns:1fr}
+@media (min-width:620px){.food{grid-template-columns:1fr 1fr}}
+.f{
+  background:var(--card);border:1px solid var(--rule);border-radius:6px;
+  padding:13px 14px 11px;display:flex;flex-direction:column;gap:5px;
+}
+.f.pick{border-color:var(--ac);box-shadow:inset 3px 0 0 var(--ac)}
+.f .tag{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ac);font-weight:600;
+}
+.f .fn{font-weight:600;font-size:15.5px;line-height:1.35}
+.f .fn i{font-style:normal;color:var(--muted);font-weight:400;font-size:13px}
+.f .fd{font-size:13.8px;color:var(--ink-2);line-height:1.55}
+.f .fa{font-family:var(--mono);font-size:10.5px;color:var(--muted);line-height:1.6;letter-spacing:-.01em}
+.f .fl{display:flex;gap:7px;margin-top:4px;flex-wrap:wrap}
+.f .fl a{
+  flex:1 1 auto;min-height:38px;
+  display:inline-flex;align-items:center;justify-content:center;gap:5px;
+  font-size:12.5px;font-weight:600;letter-spacing:-.01em;
+  text-decoration:none;padding:0 12px;
+  border:1px solid var(--rule);border-radius:6px;
+  background:var(--paper);color:var(--ink-2);
+}
+.f .fl a:active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.f .fl svg{width:13px;height:13px;flex:0 0 auto}
+
+/* ============ data rows (mobile-first, no h-scroll) ============ */
+.rows{margin:14px 0 0;border-top:1px solid var(--ink)}
+.row{
+  display:grid;grid-template-columns:1fr auto;
+  gap:2px 14px;align-items:baseline;
+  padding:12px 0;border-bottom:1px solid var(--rule);
+}
+.row .k{font-size:14.5px;font-weight:600;letter-spacing:-.01em}
+.row .k small{display:block;font-family:var(--mono);font-size:10.5px;font-weight:400;color:var(--muted);margin-top:2px;letter-spacing:.02em}
+.row .v{font-family:var(--mono);font-size:13px;text-align:right;white-space:nowrap;line-height:1.5}
+.row .v b{font-weight:500}
+.row .d{grid-column:1/-1;font-size:13.5px;color:var(--ink-2);line-height:1.55;margin-top:3px}
+.row.wide{grid-template-columns:1fr}
+.row.wide .v{text-align:left;margin-top:4px;white-space:normal}
+
+/* ============ checklist ============ */
+.chk{list-style:none;padding:0;margin:14px 0 0}
+.chk li{border-bottom:1px solid var(--rule)}
+.chk label{
+  display:flex;gap:12px;align-items:flex-start;
+  padding:13px 2px;cursor:pointer;min-height:44px;
+}
+.chk input{
+  margin:3px 0 0;width:20px;height:20px;flex:0 0 auto;
+  accent-color:var(--ink);
+}
+.chk .ct{font-size:14.8px;line-height:1.45;font-weight:500}
+.chk .cs{display:block;font-size:12.8px;color:var(--muted);margin-top:3px;font-weight:400;line-height:1.5}
+.chk input:checked ~ .ct{color:var(--muted);text-decoration:line-through;text-decoration-thickness:1px}
+.chk input:checked ~ .ct .cs{text-decoration:none}
+
+.cols{display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:620px){.cols{grid-template-columns:1fr 1fr;gap:26px}}
+
+/* ============ ref sections ============ */
+.sect{padding:34px 0;border-top:1px solid var(--rule)}
+.eyebrow{
+  font-family:var(--mono);font-size:10.5px;font-weight:500;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:9px;
+}
+.sect > h2{font-size:clamp(20px,5vw,26px)}
+.sect > p.sub{color:var(--muted);font-size:14.2px;margin:8px 0 0;max-width:58ch;line-height:1.6}
+
+/* ============ back to top ============ */
+#top{
+  position:fixed;z-index:70;
+  right:calc(14px + var(--safe-r));
+  bottom:calc(14px + var(--safe-b));
+  width:46px;height:46px;border-radius:50%;
+  border:1px solid var(--rule);background:rgba(245,246,243,.94);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  color:var(--ink);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 3px 14px rgba(26,32,41,.16);
+  opacity:0;pointer-events:none;transform:translateY(8px);
+  transition:opacity .2s,transform .2s;
+}
+#top.show{opacity:1;pointer-events:auto;transform:none}
+#top svg{width:17px;height:17px}
+
+footer{
+  border-top:1px solid var(--rule);
+  padding:24px 0 calc(72px + var(--safe-b));
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
+  color:var(--muted);line-height:1.9;
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  html{scroll-behavior:auto}
+}
+@media print{
+  .daynav,#top{display:none}
+  .day{page-break-inside:avoid}
+  .chev{display:none}
+  body{background:#fff;font-size:11pt}
+}
+</style>
+</head>
+<body>
+
+<nav class="daynav" aria-label="날짜 이동">
+  <div class="daynav-scroll" id="nav">
+    <a class="dpill" data-leg="la" href="#d03"><span class="n">03</span><span class="w">토</span></a>
+    <a class="dpill" data-leg="la" href="#d04"><span class="n">04</span><span class="w">일</span></a>
+    <a class="dpill" data-leg="oc" href="#d05"><span class="n">05</span><span class="w">월</span></a>
+    <a class="dpill" data-leg="oc" href="#d06"><span class="n">06</span><span class="w">화</span></a>
+    <a class="dpill" data-leg="lv" href="#d07"><span class="n">07</span><span class="w">수</span></a>
+    <a class="dpill" data-leg="gc" href="#d08"><span class="n">08</span><span class="w">목</span></a>
+    <a class="dpill" data-leg="gc" href="#d09"><span class="n">09</span><span class="w">금</span></a>
+    <a class="dpill" data-leg="lv" href="#d10"><span class="n">10</span><span class="w">토</span></a>
+    <a class="dpill ref" href="#ref"><span class="n">준비</span></a>
+  </div>
+</nav>
+
+<main>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="route">
+      <span class="icn">ICN</span><span class="arw">→</span><span class="lax">LAX</span><span class="arw">→</span><span class="sna">SNA</span><span class="arw">→</span><span class="las">LAS</span><span class="arw">→</span><span class="icn">ICN</span>
+    </div>
+    <div class="dates">2026.10.03 SAT — 10.10 SAT<br>8 days · Uber / Lyft</div>
+    <p class="lede">
+      로스앤젤레스에서 애너하임, 라스베가스를 거쳐 콜로라도 고원까지. 서쪽 바다에서 내륙으로 올라가는 여정이라
+      날마다 고도와 기온이 달라집니다. 아래 그래프가 이 여행에서 옷을 어떻게 챙겨야 하는지를 한 장으로 말해줍니다.
+    </p>
+
+    <div class="chart">
+      <div class="chart-hd">
+        <h3>고도와 새벽 최저기온</h3>
+        <span>SEA LEVEL → 2,100 M</span>
+      </div>
+      <svg viewBox="0 0 800 196" role="img" aria-label="일자별 고도 그래프. 10월 3일 해수면에서 시작해 10월 9일 그랜드캐년 사우스림 2100미터, 새벽 최저 2도까지 올랐다가 10월 10일 라스베가스 610미터로 내려옵니다.">
+        <defs>
+          <linearGradient id="ln" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#2C6975"/>
+            <stop offset="32%" stop-color="#54704C"/>
+            <stop offset="58%" stop-color="#9E6E1B"/>
+            <stop offset="82%" stop-color="#8D3D1D"/>
+            <stop offset="100%" stop-color="#9E6E1B"/>
+          </linearGradient>
+          <linearGradient id="fl" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#8D3D1D" stop-opacity=".17"/>
+            <stop offset="100%" stop-color="#8D3D1D" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+
+        <line x1="34" y1="128" x2="766" y2="128" stroke="#CFD3CE" stroke-width="1"/>
+        <line x1="34" y1="30" x2="766" y2="30" stroke="#CFD3CE" stroke-width="1" stroke-dasharray="2 5"/>
+        <text x="34" y="24" font-family="IBM Plex Mono, monospace" font-size="10" fill="#666E70" letter-spacing=".06em">2,100m</text>
+
+        <path d="M46,128 L149,112 L252,126 L355,126 L458,100 L561,53 L664,30 L767,100 L767,128 L46,128 Z" fill="url(#fl)"/>
+        <path d="M46,128 L149,112 L252,126 L355,126 L458,100 L561,53 L664,30 L767,100"
+              fill="none" stroke="url(#ln)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+
+        <g text-anchor="middle" font-family="IBM Plex Mono, monospace">
+          <circle cx="46"  cy="128" r="4.5" fill="#E9EBE8" stroke="#2C6975" stroke-width="3"/>
+          <circle cx="149" cy="112" r="4.5" fill="#E9EBE8" stroke="#2C6975" stroke-width="3"/>
+          <circle cx="252" cy="126" r="4.5" fill="#E9EBE8" stroke="#54704C" stroke-width="3"/>
+          <circle cx="355" cy="126" r="4.5" fill="#E9EBE8" stroke="#54704C" stroke-width="3"/>
+          <circle cx="458" cy="100" r="4.5" fill="#E9EBE8" stroke="#9E6E1B" stroke-width="3"/>
+          <circle cx="561" cy="53"  r="4.5" fill="#E9EBE8" stroke="#8D3D1D" stroke-width="3"/>
+          <circle cx="664" cy="30"  r="5.5" fill="#8D3D1D" stroke="#E9EBE8" stroke-width="3"/>
+          <circle cx="767" cy="100" r="4.5" fill="#E9EBE8" stroke="#9E6E1B" stroke-width="3"/>
+
+          <g font-size="13" font-weight="500" fill="#1A2029">
+            <text x="46"  y="153">03</text><text x="149" y="153">04</text>
+            <text x="252" y="153">05</text><text x="355" y="153">06</text>
+            <text x="458" y="153">07</text><text x="561" y="153">08</text>
+            <text x="664" y="153">09</text><text x="767" y="153">10</text>
+          </g>
+          <g font-size="12" fill="#666E70">
+            <text x="46"  y="174">16°</text><text x="149" y="174">16°</text>
+            <text x="252" y="174">17°</text><text x="355" y="174">17°</text>
+            <text x="458" y="174">18°</text>
+            <text x="561" y="174" fill="#8D3D1D" font-weight="600">7°</text>
+            <text x="664" y="174" fill="#8D3D1D" font-weight="600">2°</text>
+            <text x="767" y="174">18°</text>
+          </g>
+          <g font-size="10.5" fill="#8D3D1D" letter-spacing=".08em">
+            <text x="561" y="190">MNV</text><text x="664" y="190">GCN</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </header>
+</div>
+
+<div class="dayband" style="background:var(--la)"></div>
+
+<!-- ═══════════ 10/03 ═══════════ -->
+<details class="day" id="d03" data-leg="la" open>
+  <summary class="wrap">
+    <span class="daynum">03<small>SAT</small></span>
+    <span class="daymeta">
+      <h2>도착 · 할리우드</h2>
+      <p>LAX → Kins Hotel → 할리우드 블러바드</p>
+    </span>
+    <i class="chev" aria-hidden="true"></i>
+  </summary>
+  <div class="wrap daybody">
+
+    <ul class="tl">
+      <li><div class="t">14:50</div><div class="c"><strong>LAX 도착</strong><span>입국심사 + 수하물까지 60~90분 예상</span></div></li>
+      <li><div class="t">16:30</div><div class="c"><strong>우버 탑승</strong><span>짐 찾고 차에 타기까지 20~30분 더 잡으세요</span><em>$45–60 · 30~45min</em></div></li>
+      <li><div class="t">17:30</div><div class="c"><strong>Kins Hotel 체크인</strong><span>웨스트레이크 / 히스토릭 필리피노타운 경계. 다운타운과 코리아타운 중간입니다</span></div></li>
+      <li><div class="t">18:30</div><div class="c"><strong>할리우드 블러바드</strong><span>명예의 거리 · TCL 차이니즈 시어터 핸드프린트 · 돌비 극장. 해 지고 조명 켜진 뒤가 더 좋습니다</span><em>$25–35 · 20~30min</em></div></li>
+      <li><div class="t">20:00</div><div class="c"><strong>저녁</strong><span>아래 후보 중 선택</span></div></li>
+      <li class="minor"><div class="t">21:30</div><div class="c"><strong>호텔 복귀</strong><span>한국과 16시간 차이. 첫날은 일찍 자는 게 이득입니다</span></div></li>
+    </ul>
+
+    <div class="note">
+      <b class="h">⚠ 할리우드 블러바드는 큰길만</b>
+      <p>한 블록만 벗어나도 분위기가 크게 달라집니다. 명예의 거리 축을 따라서만 다니시고, 밤에 골목으로 들어가지 마세요.</p>
+    </div>
+
+    <div class="tip">
+      <b class="h">LAX 픽업 방식이 바뀌는 중입니다</b>
+      <p>현재는 <b>LAX-it</b> 전용 주차장(무료 녹색 셔틀, 15~20분)에서 탑니다. 다만 새 피플무버 <b>SkyLink</b>가 2026년 10월 운행 개시를 목표로 하고 있어, 도착 시점엔 Ground Transport Center 픽업으로 바뀌어 있을 수 있습니다. <b>터미널 안내판과 우버 앱 지시를 따르세요.</b></p>
+    </div>
+
+    <div class="subhd">저녁 후보</div>
+    <div class="food">
+      <div class="f pick">
+        <span class="tag">추천</span>
+        <span class="fn">Musso &amp; Frank Grill</span>
+        <span class="fd">1919년 개업, 할리우드에서 가장 오래된 레스토랑. 스테이크와 마티니. 토요일 저녁이라 <b>예약 필수</b>.</span>
+        <span class="fa">6667 Hollywood Blvd<br>토 17:00–23:00 · $$$$</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Musso%20%26%20Frank%20Grill%206667%20Hollywood%20Blvd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+13234677788"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+      <div class="f">
+        <span class="fn">Mel's Drive-In</span>
+        <span class="fd">클래식 다이너. 버거와 밀크셰이크. 부담 없고 늦게까지 합니다.</span>
+        <span class="fa">1660 Highland Ave<br>07:00–23:00 · $$</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Mel%27s%20Drive-In%201660%20Highland%20Ave%20Los%20Angeles"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+13234652111"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+      <div class="f">
+        <span class="fn">Te'Kila</span>
+        <span class="fd">멕시칸. 타코와 마르가리타. 앞쪽 자리에서 거리 구경이 됩니다.</span>
+        <span class="fa">6541 Hollywood Blvd<br>12:00–01:00 · $$</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Te%27Kila%206541%20Hollywood%20Blvd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+13239602404"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+      <div class="f">
+        <span class="fn">Hae Jang Chon <i>· 코리아타운</i></span>
+        <span class="fd">호텔에서 우버 10분. 도착 첫날 한식이 아깝긴 하지만 가장 편한 선택지이긴 합니다.</span>
+        <span class="fa">3821 W 6th St<br>~24:00 (화 휴무) · $$</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Hae%20Jang%20Chon%203821%20W%206th%20St%20Los%20Angeles"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+12133898777"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+    </div>
+
+  </div>
+</details>
+
+<!-- ═══════════ 10/04 ═══════════ -->
+<details class="day" id="d04" data-leg="la" open>
+  <summary class="wrap">
+    <span class="daynum">04<small>SUN</small></span>
+    <span class="daymeta">
+      <h2>산타모니카 · 게티 · 그리피스</h2>
+      <p>서쪽 해안에서 동쪽 언덕까지 가로지르는 날</p>
+    </span>
+    <i class="chev" aria-hidden="true"></i>
+  </summary>
+  <div class="wrap daybody">
+
+    <div class="note">
+      <b class="h">⚠ 이 여행에서 유일하게 무리한 날입니다</b>
+      <p>4곳을 도는데 우버 이동만 4번, 합계 2시간 가까이 깔립니다. 게티센터에서 시간이 늘어질 가능성이 높으니 <b>더 그로브는 언제든 버릴 수 있는 카드</b>로 두세요.</p>
+    </div>
+
+    <ul class="tl">
+      <li><div class="t">08:30</div><div class="c"><strong>호텔 출발</strong><em>$45–60 · 30~40min</em></div></li>
+      <li><div class="t">09:15</div><div class="c"><strong>산타모니카</strong><span>피어 · 팔리세이즈 파크(절벽 위 산책로, 사진 포인트) · 3rd Street Promenade</span></div></li>
+      <li class="minor"><div class="t">12:00</div><div class="c"><strong>점심</strong><span>프로머나드에서 해결</span></div></li>
+      <li><div class="t">12:30</div><div class="c"><strong>게티센터</strong><span>입장 무료. 트램 타고 언덕 위로. 소장품만큼 건축·정원·전망이 좋습니다</span><em>일 10:00–17:30 · $20–28</em></div></li>
+      <li><div class="t">16:00</div><div class="c"><strong>더 그로브 / 파머스 마켓</strong><span>1934년부터 이어진 재래시장과 옆에 붙은 쇼핑몰 <b>(선택)</b></span><em>일 10:00–19:00 · $28–38</em></div></li>
+      <li><div class="t">18:00</div><div class="c"><strong>그리피스 전망대</strong><span>10월 초 일몰 18:35경. 30분 전 도착이 최적입니다</span><em>일 10:00–22:00 · $25–35</em></div></li>
+      <li><div class="t">20:00</div><div class="c"><strong>로스펠리즈에서 저녁</strong><span>전망대에서 우버 10분</span></div></li>
+    </ul>
+
+    <div class="note">
+      <b class="h">⚠ 그리피스에서 내려올 때 우버가 안 잡힙니다</b>
+      <p>진입로가 외길이고 통신이 약해서 기사들이 배차를 취소합니다. 주말 저녁이면 20~40분 대기를 각오하세요.</p>
+      <p><b>대안:</b> <b>DASH Observatory 셔틀</b>($0.50, 주말 운행)로 버몬트/선셋 메트로역까지 내려온 뒤 거기서 우버를 부르면 훨씬 빠릅니다.</p>
+    </div>
+
+    <div class="tip">
+      <b class="h">월요일 휴관을 피하셨습니다</b>
+      <p>그리피스 전망대와 게티센터 모두 월요일 휴관입니다. 일요일 배치가 정확합니다. 다만 게티센터는 <b>날짜 지정 예약이 필요할 수 있으니</b> 출발 전 확인하세요.</p>
+    </div>
+
+    <div class="subhd">점심 · 산타모니카</div>
+    <div class="food">
+      <div class="f">
+        <span class="fn">1212 Santa Monica</span>
+        <span class="fd">프로머나드 한복판. 굴과 브런치 메뉴가 좋습니다.</span>
+        <span class="fa">1212 3rd Street Promenade<br>일 11:00–22:00</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=1212%20Santa%20Monica%201212%203rd%20Street%20Promenade"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+13105769996"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+      <div class="f">
+        <span class="fn">Barney's Beanery</span>
+        <span class="fd">캐주얼한 아메리칸. 맥주 종류가 많고 자리가 넉넉합니다.</span>
+        <span class="fa">1351 3rd Street Promenade<br>09:00–02:00</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Barney%27s%20Beanery%201351%203rd%20Street%20Promenade%20Santa%20Monica"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+13106565777"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+    </div>
+
+    <div class="subhd">게티센터 안</div>
+    <div class="food">
+      <div class="f">
+        <span class="fn">Restaurant at The Getty Center</span>
+        <span class="fd">창밖으로 산과 스카이라인이 보입니다. 일요일은 15:00까지라 놓치기 쉬우니 예약 권장. 가볍게는 옆 카페테리아.</span>
+        <span class="fa">1200 Getty Center Dr<br>일 11:00–15:00</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Restaurant%20at%20The%20Getty%20Center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+13104406810"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+    </div>
+
+    <div class="subhd">저녁 · 로스펠리즈</div>
+    <div class="food">
+      <div class="f pick">
+        <span class="tag">추천</span>
+        <span class="fn">Home Restaurant</span>
+        <span class="fd">분수가 있는 파티오가 좋습니다. 그리피스에서 내려와 저녁 먹기 딱 좋은 위치.</span>
+        <span class="fa">1760 Hillhurst Ave<br>일 09:00–21:30</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Home%20Restaurant%201760%20Hillhurst%20Ave%20Los%20Angeles"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+13239908016"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+      <div class="f">
+        <span class="fn">Alcove</span>
+        <span class="fd">카페 겸 레스토랑. 베이커리 케이스가 따로 있어 디저트 포장이 됩니다.</span>
+        <span class="fa">1929 Hillhurst Ave<br>일 08:00–22:00</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Alcove%201929%20Hillhurst%20Ave%20Los%20Angeles"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+13236440100"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+      <div class="f">
+        <span class="fn">Messhall Kitchen</span>
+        <span class="fd">아메리칸 개스트로펍. 굴과 립이 평이 좋습니다.</span>
+        <span class="fa">4500 Los Feliz Blvd<br>일 12:00–21:00</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Messhall%20Kitchen%204500%20Los%20Feliz%20Blvd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+13236606377"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+    </div>
+
+  </div>
+</details>
+
+<!-- ═══════════ 10/05 ═══════════ -->
+<details class="day" id="d05" data-leg="oc" open>
+  <summary class="wrap">
+    <span class="daynum">05<small>MON</small></span>
+    <span class="daymeta">
+      <h2>애너하임 이동 · 캘리포니아 어드벤처</h2>
+      <p>DCA 정상 운영일 — 밤까지 씁니다</p>
+    </span>
+    <i class="chev" aria-hidden="true"></i>
+  </summary>
+  <div class="wrap daybody">
+
+    <div class="tip">
+      <b class="h">이 배치가 정답입니다</b>
+      <p>올해 DCA 우기 부기 배쉬(할로윈 유료 야간행사)는 10월 <b>1·4·6·8·11·13·15·18·20·22·25·27·29·31일</b>입니다. 10/5는 없어서 DCA가 밤까지 정상 운영됩니다. 반대로 10/6은 DCA가 18시에 닫습니다. <b>두 파크 순서를 절대 바꾸지 마세요.</b></p>
+    </div>
+
+    <ul class="tl">
+      <li><div class="t">08:00</div><div class="c"><strong>체크아웃 후 애너하임으로</strong><span>LA→애너하임은 아침 러시아워의 역방향이라 그나마 낫습니다</span><em>$70–100 · 45~70min</em></div></li>
+      <li><div class="t">09:15</div><div class="c"><strong>Best Western Plus Park Place Inn</strong><span>디즈니랜드 정문에서 <b>도보 5분</b>. 체크인은 15시지만 프런트에 짐 맡기고 바로 출발하세요</span></div></li>
+      <li><div class="t">10:00</div><div class="c"><strong>DCA 입장</strong><span>개장 08:00, 마감 21~22시 예상. 출발 2주 전 공식 캘린더로 확정하세요</span></div></li>
+      <li class="minor"><div class="t">①</div><div class="c"><strong>Radiator Springs Racers</strong><span>가장 인기. 라이트닝 레인 없으면 대기 90분 이상</span></div></li>
+      <li class="minor"><div class="t">②</div><div class="c"><strong>Guardians of the Galaxy</strong><span>15시 이후엔 Monsters After Dark 버전으로 바뀝니다</span></div></li>
+      <li class="minor"><div class="t">③</div><div class="c"><strong>Incredicoaster → Toy Story Midway Mania</strong><span>픽사 피어</span></div></li>
+      <li class="minor"><div class="t">④</div><div class="c"><strong>Soarin' Around the World</strong></div></li>
+      <li class="minor"><div class="t">⑤</div><div class="c"><strong>Web Slingers</strong><span>어벤저스 캠퍼스</span></div></li>
+      <li><div class="t">21:00</div><div class="c"><strong>World of Color</strong><span>상영 여부 확인 — Coco 신규 구역 공사로 올해 일부 공연이 조정됐습니다</span></div></li>
+    </ul>
+
+    <div class="note">
+      <b class="h">⚠ 라이트닝 레인 멀티패스는 입장일 아침에 앱에서</b>
+      <p>없으면 하루에 5~6개밖에 못 탑니다. 있으면 10개 이상 가능합니다. 아침에 앱 켜고 바로 구매하세요.</p>
+    </div>
+
+    <div class="subhd">식사</div>
+    <div class="food">
+      <div class="f pick">
+        <span class="tag">파크 밖 · 추천</span>
+        <span class="fn">Din Tai Fung</span>
+        <span class="fd">다운타운 디즈니. 최근 오픈했고 만족도가 높습니다. 파크 음식에 지쳤을 때 좋은 선택.</span>
+        <span class="fa">1547 Disneyland Dr<br>10:30–23:00</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Din%20Tai%20Fung%201547%20Disneyland%20Dr%20Anaheim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+17142027598"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+      <div class="f">
+        <span class="fn">Lamplight Lounge <i>· 파크 안</i></span>
+        <span class="fd">픽사 피어. 파크 안에서 제대로 앉아 먹는 자리. 예약 권장.</span>
+        <span class="fa">Pixar Pier, DCA</span>
+        <span class="fl"><a href="https://www.google.com/maps/search/?api=1&amp;query=Lamplight%20Lounge%20Disney%20California%20Adventure"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a></span>
+      </div>
+      <div class="f">
+        <span class="fn">Black Tap Craft Burgers</span>
+        <span class="fd">버거와 크레이지 쉐이크. 셀프 착석이라 팁 부담이 없습니다.</span>
+        <span class="fa">1540 Disneyland Dr<br>11:00–24:00</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Black%20Tap%20Craft%20Burgers%201540%20Disneyland%20Dr%20Anaheim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+16572762498"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+      <div class="f">
+        <span class="fn">Jazz Kitchen</span>
+        <span class="fd">케이준. 크랩 베녜 평이 특히 좋습니다. 라이브 연주가 있습니다.</span>
+        <span class="fa">1590 Disneyland Dr<br>11:00–22:00</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Jazz%20Kitchen%201590%20Disneyland%20Dr%20Anaheim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+17147765200"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+      <div class="f">
+        <span class="fn">Calaca Mamas Cantina</span>
+        <span class="fd">하버 블러바드. 새벽 1시까지 해서 파크에서 늦게 나와도 됩니다.</span>
+        <span class="fa">1550 S Harbor Blvd<br>11:00–01:00</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Calaca%20Mamas%20Cantina%201550%20S%20Harbor%20Blvd%20Anaheim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+17142154226"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+      <div class="f">
+        <span class="fn">Denny's</span>
+        <span class="fd">호텔 바로 옆, 24시간. 아침이나 심야용 안전판.</span>
+        <span class="fa">1610 S Harbor Blvd<br>24h</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Denny%27s%201610%20S%20Harbor%20Blvd%20Anaheim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+17147763745"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+    </div>
+
+    <div class="tip">
+      <b class="h">루프탑 바 The FIFTH는 월요일 휴무입니다</b>
+      <p>디즈니 불꽃놀이를 내려다볼 수 있는 곳이라 후보에 올릴 만하지만, 오늘은 문을 닫습니다. 내일(10/6) 저녁에 고려해보세요.</p>
+    </div>
+
+  </div>
+</details>
+
+<!-- ═══════════ 10/06 ═══════════ -->
+<details class="day" id="d06" data-leg="oc" open>
+  <summary class="wrap">
+    <span class="daynum">06<small>TUE</small></span>
+    <span class="daymeta">
+      <h2>디즈니랜드</h2>
+      <p>할로윈 시즌 한정 어트랙션이 있는 날</p>
+    </span>
+    <i class="chev" aria-hidden="true"></i>
+  </summary>
+  <div class="wrap daybody">
+
+    <ul class="tl">
+      <li><div class="t">07:15</div><div class="c"><strong>게이트 앞 도착</strong><span>개장 30~45분 전. <b>첫 한 시간이 하루 전체를 좌우합니다</b></span></div></li>
+      <li><div class="t">08:00</div><div class="c"><strong>Rise of the Resistance</strong><span>스타워즈: 갤럭시 엣지. 무조건 첫 번째로</span></div></li>
+      <li class="minor"><div class="t">②</div><div class="c"><strong>Haunted Mansion Holiday</strong><span>나이트메어 비포 크리스마스 버전. 8/21–10/31 시즌 한정 — <b>이번 여행의 하이라이트가 될 수 있습니다</b></span></div></li>
+      <li class="minor"><div class="t">③</div><div class="c"><strong>Space Mountain</strong><span>할로윈 시즌엔 Ghost Galaxy 버전</span></div></li>
+      <li class="minor"><div class="t">④</div><div class="c"><strong>Indiana Jones → Pirates of the Caribbean</strong></div></li>
+      <li class="minor"><div class="t">⑤</div><div class="c"><strong>Matterhorn → Big Thunder Mountain</strong></div></li>
+      <li class="minor"><div class="t">⑥</div><div class="c"><strong>Millennium Falcon: Smugglers Run</strong></div></li>
+      <li><div class="t">18:00</div><div class="c"><strong>저녁부터는 쇼와 쇼핑 위주로</strong><span>아래 주의사항 참고</span></div></li>
+      <li><div class="t">21:00</div><div class="c"><strong>퍼레이드 · 불꽃놀이</strong><span>당일 스케줄은 앱에서 확인</span></div></li>
+    </ul>
+
+    <div class="note">
+      <b class="h">⚠ 오늘 저녁에 디즈니랜드가 붐빕니다</b>
+      <p>DCA가 우기 부기 배쉬 때문에 18시에 문을 닫으면서, 낮에 DCA에 있던 손님들이 디즈니랜드로 넘어옵니다. <b>인기 어트랙션은 오전~오후에 끝내두고</b> 저녁은 퍼레이드·불꽃놀이·쇼핑에 쓰세요.</p>
+    </div>
+
+    <div class="subhd">식사</div>
+    <div class="food">
+      <div class="f pick">
+        <span class="tag">예약 필요</span>
+        <span class="fn">Blue Bayou</span>
+        <span class="fd">파이러츠 어트랙션 내부, 배가 지나가는 물가 자리. 60일 전 예약이 열려 이미 늦었을 수 있지만 <b>워크인 대기도 됩니다</b>. 체크인할 때 물가 자리를 요청해보세요.</span>
+        <span class="fa">1313 S Harbor Blvd<br>11:00–22:00</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Blue%20Bayou%20Restaurant%20Disneyland%20Anaheim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+17147814636"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+      <div class="f">
+        <span class="fn">The FIFTH Rooftop</span>
+        <span class="fd">디즈니 불꽃놀이를 내려다보는 루프탑. 화요일은 영업합니다. 불꽃 시간대 자리는 예약 필수.</span>
+        <span class="fa">1650 S Harbor Blvd<br>화 17:00–22:00</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=The%20FIFTH%20Rooftop%201650%20S%20Harbor%20Blvd%20Anaheim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+17147720899"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+      <div class="f">
+        <span class="fn">Cafe Orleans <i>· 파크 안</i></span>
+        <span class="fd">뉴올리언스 스퀘어. 몬테크리스토 샌드위치가 시그니처.</span>
+        <span class="fa">New Orleans Square, Disneyland</span>
+        <span class="fl"><a href="https://www.google.com/maps/search/?api=1&amp;query=Cafe%20Orleans%20Disneyland"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a></span>
+      </div>
+      <div class="f">
+        <span class="fn">Centrico</span>
+        <span class="fd">다운타운 디즈니 멕시칸. 개방형 구조라 분위기가 좋습니다.</span>
+        <span class="fa">1580 Disneyland Dr<br>10:30–23:00</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Centrico%201580%20Disneyland%20Dr%20Anaheim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+17142043930"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+    </div>
+
+  </div>
+</details>
+
+<!-- ═══════════ 10/07 ═══════════ -->
+<details class="day" id="d07" data-leg="lv" open>
+  <summary class="wrap">
+    <span class="daynum">07<small>WED</small></span>
+    <span class="daymeta">
+      <h2>라스베가스 이동 · 스트립</h2>
+      <p>SNA 13:55 → LAS 15:10 · 실질 관광 4시간</p>
+    </span>
+    <i class="chev" aria-hidden="true"></i>
+  </summary>
+  <div class="wrap daybody">
+
+    <div class="note">
+      <b class="h">⚠ 오늘 저녁에 욕심 내지 마세요</b>
+      <p>내일 새벽 5시 출발이면 <b>21:30에는 자야 합니다.</b> 실질 관광 시간은 4시간뿐이에요. 쇼(O, 미스테어 등)는 21:30 회차는 물론 19:00 회차도 위험합니다. <b>라스베가스는 10/10에 한 번 더 있습니다.</b></p>
+    </div>
+
+    <ul class="tl">
+      <li><div class="t">11:30</div><div class="c"><strong>애너하임 호텔 출발</strong><span>국내선이라 90분 전 도착이면 충분합니다</span><em>$30–40 · 20~25min</em></div></li>
+      <li class="minor"><div class="t">13:55</div><div class="c"><strong>SNA 출발</strong></div></li>
+      <li><div class="t">15:10</div><div class="c"><strong>LAS 도착</strong></div></li>
+      <li><div class="t">16:00</div><div class="c"><strong>플래닛 할리우드 체크인</strong><span>스트립 정중앙, 미라클 마일 숍스 안. 파리스·벨라지오·코스모폴리탄·아리아 모두 도보권</span><em>$18–25 · 10~15min</em></div></li>
+      <li><div class="t">17:00</div><div class="c"><strong>벨라지오 분수쇼</strong><span>도보 5분. 저녁엔 15분 간격. 옆 <b>컨서버토리</b>(실내 정원, 가을 테마)도 무료입니다</span></div></li>
+      <li><div class="t">18:00</div><div class="c"><strong>저녁</strong><span>분수 보이는 자리면 이 둘을 한 번에 해결할 수 있습니다</span></div></li>
+      <li><div class="t">19:30</div><div class="c"><strong>파리스 에펠탑 전망대</strong><span>야경 타이밍이 딱 좋습니다. 온라인 예매가 저렴하고 대기도 짧습니다. 대안은 하이롤러(더 링크 대관람차, 30분)</span></div></li>
+      <li><div class="t">20:30</div><div class="c"><strong>스트립 야경 산책</strong><span>벨라지오 → 코스모폴리탄 → 아리아</span></div></li>
+      <li><div class="t">21:30</div><div class="c"><strong>호텔 복귀 · 취침</strong><span><b>투어 가방 미리 싸두고 알람 두 개 맞추세요</b></span></div></li>
+    </ul>
+
+    <div class="tip">
+      <b class="h">10/7–10/10 연박이면 방을 유지하세요</b>
+      <p>투어 기간에 체크아웃했다가 다시 들어오는 것보다, 방을 그대로 두고 큰 짐은 놓고 가는 편이 훨씬 편합니다. 투어에는 1박 2일치 작은 가방만 챙기세요.</p>
+    </div>
+
+    <div class="subhd">저녁 후보</div>
+    <div class="food">
+      <div class="f pick">
+        <span class="tag">추천 · 예약</span>
+        <span class="fn">Mon Ami Gabi</span>
+        <span class="fd">파리스 호텔 1층. <b>벨라지오 분수 정면 파티오</b>라 분수쇼를 보면서 저녁을 먹을 수 있습니다. 파티오 자리는 경쟁이 심하니 미리 예약하세요.</span>
+        <span class="fa">3655 S Las Vegas Blvd<br>07:00–22:00</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Mon%20Ami%20Gabi%20Paris%20Las%20Vegas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+17029444224"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+      <div class="f">
+        <span class="fn">Café Hollywood <i>· 호텔 내부</i></span>
+        <span class="fd">플래닛 할리우드 안. 새벽 2시까지, 메뉴 폭이 넓습니다. <b>시간을 아껴야 할 때 정답.</b></span>
+        <span class="fa">3667 S Las Vegas Blvd<br>06:00–02:00</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Cafe%20Hollywood%20Planet%20Hollywood%20Las%20Vegas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+17027321222"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+      <div class="f">
+        <span class="fn">Alexxa's</span>
+        <span class="fd">같은 파리스 호텔. 스테이크와 파스타. 분수 뷰는 아니지만 자리 잡기가 수월합니다.</span>
+        <span class="fa">3655 S Las Vegas Blvd<br>07:00–22:00</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Alexxa%27s%20Paris%20Las%20Vegas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+17023315100"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+    </div>
+
+  </div>
+</details>
+
+<!-- ═══════════ 10/08 ═══════════ -->
+<details class="day" id="d08" data-leg="gc" open>
+  <summary class="wrap">
+    <span class="daynum">08<small>THU</small></span>
+    <span class="daymeta">
+      <h2>모뉴먼트밸리 · 그랜드캐년</h2>
+      <p>1박 2일 투어 · 05:00 출발</p>
+    </span>
+    <i class="chev" aria-hidden="true"></i>
+  </summary>
+  <div class="wrap daybody">
+
+    <ul class="tl">
+      <li><div class="t">04:15</div><div class="c"><strong>기상</strong><span>전날 밤에 가방을 다 싸두면 여기서 15분을 법니다</span></div></li>
+      <li><div class="t">05:00</div><div class="c"><strong>투어 출발</strong><span>이 시각 라스베가스 기온 약 17~19°C</span></div></li>
+      <li><div class="t">낮</div><div class="c"><strong>모뉴먼트밸리</strong><span>해발 1,600m · 낮 21~24°C / 새벽 6~9°C</span></div></li>
+    </ul>
+
+    <div class="note">
+      <b class="h">⚠ 고산 증상에 대비하세요</b>
+      <p>사우스림은 해발 2,100m입니다. 두통이나 숨이 차는 증상이 올 수 있어요. <b>물을 평소보다 많이 마시고, 첫날 술은 피하세요.</b> 습도가 20~30%라 탈수가 빨리 옵니다.</p>
+    </div>
+
+    <div class="cols">
+      <div>
+        <div class="subhd">복장</div>
+        <ul class="chk">
+          <li><label><input type="checkbox"><span class="ct">반팔 + 긴팔 + 플리스/경량패딩 + 바람막이<span class="cs">겹쳐 입고 낮에 하나씩 벗는 방식</span></span></label></li>
+          <li><label><input type="checkbox"><span class="ct">비니, 얇은 장갑<span class="cs">새벽 그랜드캐년은 영하 근처까지 갑니다</span></span></label></li>
+          <li><label><input type="checkbox"><span class="ct">편한 운동화<span class="cs">샌들 · 슬리퍼 절대 금지</span></span></label></li>
+          <li><label><input type="checkbox"><span class="ct">챙모자 · 선글라스 · 선크림<span class="cs">고도가 높아 자외선이 LA보다 훨씬 강합니다</span></span></label></li>
+        </ul>
+      </div>
+      <div>
+        <div class="subhd">챙길 것</div>
+        <ul class="chk">
+          <li><label><input type="checkbox"><span class="ct">물 2L 이상<span class="cs">차에서 보충이 어려울 수 있습니다</span></span></label></li>
+          <li><label><input type="checkbox"><span class="ct">견과류 · 에너지바</span></label></li>
+          <li><label><input type="checkbox"><span class="ct">보조배터리<span class="cs">차량 충전이 보장되지 않습니다</span></span></label></li>
+          <li><label><input type="checkbox"><span class="ct">멀미약<span class="cs">비포장 구간이 있습니다</span></span></label></li>
+          <li><label><input type="checkbox"><span class="ct">립밤 · 핸드크림<span class="cs">건조함이 생각보다 심합니다</span></span></label></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</details>
+
+<!-- ═══════════ 10/09 ═══════════ -->
+<details class="day" id="d09" data-leg="gc" open>
+  <summary class="wrap">
+    <span class="daynum">09<small>FRI</small></span>
+    <span class="daymeta">
+      <h2>그랜드캐년 사우스림</h2>
+      <p>해발 2,100m · 이번 여행에서 가장 추운 아침</p>
+    </span>
+    <i class="chev" aria-hidden="true"></i>
+  </summary>
+  <div class="wrap daybody">
+
+    <ul class="tl">
+      <li><div class="t">새벽</div><div class="c"><strong>그랜드캐년 사우스림</strong><span>낮 17~19°C / <b>새벽 1~4°C</b>. 전날 밤에 아침 입을 옷을 머리맡에 꺼내두세요</span></div></li>
+      <li><div class="t">저녁</div><div class="c"><strong>라스베가스 복귀</strong><span>늦게 도착하니 10/10 오전은 여유 있게 잡으세요</span></div></li>
+    </ul>
+
+    <div class="tip">
+      <b class="h">일몰과 일출이 하이라이트입니다</b>
+      <p>협곡은 정오에 가장 밋밋하게 보입니다. 빛이 낮게 깔리는 아침·저녁에 색과 깊이가 살아나요. 투어에 일출 일정이 있다면 추위를 감수할 값어치가 있습니다.</p>
+    </div>
+
+  </div>
+</details>
+
+<!-- ═══════════ 10/10 ═══════════ -->
+<details class="day" id="d10" data-leg="lv" open>
+  <summary class="wrap">
+    <span class="daynum">10<small>SAT</small></span>
+    <span class="daymeta">
+      <h2>라스베가스 · 귀국</h2>
+      <p>LAS 23:50 → ICN · 짐 보관이 관건</p>
+    </span>
+    <i class="chev" aria-hidden="true"></i>
+  </summary>
+  <div class="wrap daybody">
+
+    <ul class="tl">
+      <li><div class="t">10:00</div><div class="c"><strong>브런치</strong><span>전날 늦게 복귀했을 테니 오전은 느긋하게</span></div></li>
+      <li><div class="t">11:00</div><div class="c"><strong>체크아웃 · 벨 데스크에 짐 보관</strong><span>개당 팁 $2–5</span></div></li>
+      <li><div class="t">12:00</div><div class="c"><strong>오후 일정</strong><span>아래 옵션 중 1~2개</span></div></li>
+      <li><div class="t">18:00</div><div class="c"><strong>마지막 저녁</strong></div></li>
+      <li><div class="t">20:00</div><div class="c"><strong>호텔에서 짐 회수</strong></div></li>
+      <li><div class="t">20:45</div><div class="c"><strong>공항 도착</strong><span>국제선이므로 3시간 전 권장. 터미널 3, 우버 픽업은 <b>Level 0 발렛 구역</b>입니다</span><em>$18–25 · 10~15min</em></div></li>
+      <li><div class="t">23:50</div><div class="c"><strong>LAS 출발 → 인천</strong></div></li>
+    </ul>
+
+    <div class="tip">
+      <b class="h">가장 무난한 조합</b>
+      <p>낮에는 실내(호텔 순회 + 미라클 마일 쇼핑) → 17시 프리몬트 스트리트 → 18:30 저녁 → 20시 복귀. 10월 낮 기온이 30°C 가까워서 야외를 오래 걷는 건 힘듭니다.</p>
+    </div>
+
+    <div class="subhd">오후 옵션</div>
+    <div class="rows">
+      <div class="row">
+        <div class="k">프리몬트 스트리트</div>
+        <div class="v">우버 15–20min<br><b>$20–25</b></div>
+        <div class="d">비바 비전 캐노피 조명쇼(해질녘부터), 올드 베가스 분위기. 스트립과 완전히 다릅니다</div>
+      </div>
+      <div class="row">
+        <div class="k">호텔 순회</div>
+        <div class="v">도보</div>
+        <div class="d">베네시안 곤돌라 · 시저스 팰리스 · 윈 · 코스모폴리탄. 더운 낮에는 이게 현명합니다</div>
+      </div>
+      <div class="row">
+        <div class="k">Sphere</div>
+        <div class="v">우버 10min</div>
+        <div class="d">외관(엑소스피어)은 무료. 내부 쇼는 별도 티켓</div>
+      </div>
+      <div class="row">
+        <div class="k">South Premium Outlets</div>
+        <div class="v">우버 10min</div>
+        <div class="d">공항에서 차로 5분. <b>마지막 날에 최적인 위치</b>입니다</div>
+      </div>
+      <div class="row">
+        <div class="k">쇼</div>
+        <div class="v">도보</div>
+        <div class="d">“O”(벨라지오), “Mystère”(트레저 아일랜드). <b>19:00 회차만 가능</b>, 21:00 종료 후 바로 공항 — 타이트합니다</div>
+      </div>
+    </div>
+
+    <div class="subhd">브런치</div>
+    <div class="food">
+      <div class="f pick">
+        <span class="tag">추천</span>
+        <span class="fn">Mon Ami Gabi</span>
+        <span class="fd">아침 7시부터 엽니다. 파티오에서 커피 마시며 스트립 보는 게 마지막 날에 어울려요.</span>
+        <span class="fa">3655 S Las Vegas Blvd<br>07:00–22:00</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Mon%20Ami%20Gabi%20Paris%20Las%20Vegas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+17029444224"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+      <div class="f">
+        <span class="fn">The Henry</span>
+        <span class="fd">코스모폴리탄. 다이너 스타일이고 거의 24시간 돌아갑니다. 립아이 스테이크 앤 에그가 유명.</span>
+        <span class="fa">3708 Las Vegas Blvd S<br>심야 운영</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=The%20Henry%20Cosmopolitan%20Las%20Vegas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+17026987980"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+      <div class="f">
+        <span class="fn">Alexxa's</span>
+        <span class="fd">파리스 호텔. 에그 베네딕트와 프렌치 토스트 평이 좋습니다.</span>
+        <span class="fa">3655 S Las Vegas Blvd<br>07:00–22:00</span>
+        <span class="fl">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Alexxa%27s%20Paris%20Las%20Vegas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>지도</a>
+          <a href="tel:+17023315100"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>전화</a>
+        </span>
+      </div>
+    </div>
+
+  </div>
+</details>
+
+<div class="dayband" style="background:var(--lv)"></div>
+
+<!-- ═══════════ 참고 ═══════════ -->
+<div class="wrap" id="ref">
+
+  <section class="sect" style="border-top:none">
+    <div class="eyebrow">Weather</div>
+    <h2>날씨와 옷차림</h2>
+    <p class="sub">핵심은 하루 안의 일교차 10~13°C입니다. 두꺼운 옷 한 벌보다 얇은 옷 세 벌이 낫습니다.</p>
+
+    <div class="rows">
+      <div class="row">
+        <div class="k">로스앤젤레스</div>
+        <div class="v">낮 <b>26–28°</b><br>새벽 <b>15–17°</b></div>
+        <div class="d">비 거의 없음, 매우 맑음</div>
+      </div>
+      <div class="row">
+        <div class="k">애너하임</div>
+        <div class="v">낮 <b>27–29°</b><br>새벽 <b>16–18°</b></div>
+        <div class="d">내륙이라 LA보다 조금 덥습니다</div>
+      </div>
+      <div class="row">
+        <div class="k">라스베가스</div>
+        <div class="v">낮 <b>29–32°</b><br>새벽 <b>17–19°</b></div>
+        <div class="d">습도 20~30%, 극도로 건조</div>
+      </div>
+      <div class="row">
+        <div class="k">모뉴먼트밸리<small>1,600 M</small></div>
+        <div class="v">낮 <b>21–24°</b><br>새벽 <b>6–9°</b></div>
+        <div class="d">일교차가 15°C 이상</div>
+      </div>
+      <div class="row">
+        <div class="k">그랜드캐년<small>2,100 M</small></div>
+        <div class="v">낮 <b>17–19°</b><br>새벽 <b>1–4°</b></div>
+        <div class="d"><b>겨울 아침 수준입니다</b></div>
+      </div>
+    </div>
+
+    <div class="subhd">상황별 복장</div>
+    <div class="rows">
+      <div class="row wide"><div class="k">LA · 베가스 낮</div><div class="d">반팔 + 선글라스 + 선크림</div></div>
+      <div class="row wide"><div class="k">LA · 베가스 밤</div><div class="d">얇은 가디건 또는 데님자켓</div></div>
+      <div class="row wide"><div class="k">산타모니카 · 그리피스 저녁</div><div class="d"><b>바람막이 필수.</b> 해변 바람과 해발 340m 전망대</div></div>
+      <div class="row wide"><div class="k">디즈니 이틀</div><div class="d">편한 운동화 + 백팩에 후드 한 장. 하루 2만보 이상 걷습니다</div></div>
+      <div class="row wide"><div class="k">그랜드캐년 투어</div><div class="d">반팔 + 긴팔 + 플리스/경량패딩 + 바람막이 + 비니 + 장갑</div></div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="eyebrow">Ground</div>
+    <h2>Uber / Lyft</h2>
+    <p class="sub">6일간 총 교통비는 대략 $450–600을 예상하세요. 요금은 수요에 따라 ±40% 움직입니다.</p>
+    <div class="rows">
+      <div class="row"><div class="k">LAX → Kins Hotel</div><div class="v">30–45min<br><b>$45–60</b></div></div>
+      <div class="row"><div class="k">호텔 → 할리우드</div><div class="v">20–30min<br><b>$25–35</b></div></div>
+      <div class="row"><div class="k">호텔 → 산타모니카</div><div class="v">30–40min<br><b>$45–60</b></div></div>
+      <div class="row"><div class="k">산타모니카 → 게티센터</div><div class="v">15min<br><b>$20–28</b></div></div>
+      <div class="row"><div class="k">게티 → 더 그로브</div><div class="v">25min<br><b>$28–38</b></div></div>
+      <div class="row"><div class="k">더 그로브 → 그리피스</div><div class="v">25–35min<br><b>$25–35</b></div></div>
+      <div class="row"><div class="k">LA → 애너하임</div><div class="v">45–70min<br><b>$70–100</b></div></div>
+      <div class="row"><div class="k">애너하임 → SNA</div><div class="v">20–25min<br><b>$30–40</b></div></div>
+      <div class="row"><div class="k">LAS → 플래닛 할리우드</div><div class="v">10–15min<br><b>$18–25</b></div></div>
+    </div>
+    <div class="tip" style="--ac:var(--la)">
+      <b class="h">실무 요령</b>
+      <p>· <b>Uber와 Lyft 둘 다 깔고 매번 비교하세요.</b> LA에서는 차이가 클 때가 많습니다.<br>
+      · 러시아워(07–10시, 15–19시)는 요금 1.5~2배에 소요시간도 2배입니다.<br>
+      · 팁은 15~20%.<br>
+      · <b>라스베가스 스트립 안은 걸어다니세요.</b> 최소요금이 $12–20이라 짧은 거리는 손해입니다.</p>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="eyebrow">Before you go</div>
+    <h2>지금 예약할 것</h2>
+    <ul class="chk">
+      <li><label><input type="checkbox"><span class="ct">디즈니 파크 예약 + 티켓<span class="cs">라이트닝 레인 멀티패스는 입장일 아침에 앱에서 구매</span></span></label></li>
+      <li><label><input type="checkbox"><span class="ct">Blue Bayou (10/6)<span class="cs">60일 전 오픈 — 지금 남은 자리가 있는지 확인</span></span></label></li>
+      <li><label><input type="checkbox"><span class="ct">Mon Ami Gabi 파티오 (10/7)<span class="cs">분수 뷰 자리는 경쟁이 심합니다</span></span></label></li>
+      <li><label><input type="checkbox"><span class="ct">Musso &amp; Frank (10/3)<span class="cs">토요일 저녁</span></span></label></li>
+      <li><label><input type="checkbox"><span class="ct">게티센터<span class="cs">입장은 무료지만 시간 지정 예약이 필요한지 확인</span></span></label></li>
+      <li><label><input type="checkbox"><span class="ct">파리스 에펠탑 전망대<span class="cs">온라인이 저렴하고 대기도 짧습니다</span></span></label></li>
+      <li><label><input type="checkbox"><span class="ct">디즈니 파크 운영시간 재확인<span class="cs">출발 2주 전에 공식 캘린더로</span></span></label></li>
+      <li><label><input type="checkbox"><span class="ct">LAX 픽업 방식 재확인<span class="cs">SkyLink 개통 여부 — 출발 직전에</span></span></label></li>
+    </ul>
+  </section>
+
+  <footer>
+    LA · ANAHEIM · LAS VEGAS · GRAND CANYON<br>2026.10.03 — 10.10
+  </footer>
+
+</div>
+</main>
+
+<button id="top" aria-label="맨 위로">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+(function(){
+  var days = Array.prototype.slice.call(document.querySelectorAll('.day'));
+  var pills = Array.prototype.slice.call(document.querySelectorAll('.dpill[href^="#d"]'));
+  var nav = document.getElementById('nav');
+  var byId = {};
+  pills.forEach(function(p){ byId[p.getAttribute('href').slice(1)] = p; });
+
+  /* --- 탭한 날짜가 접혀 있으면 펼치고 이동 --- */
+  pills.forEach(function(p){
+    p.addEventListener('click', function(){
+      var t = document.getElementById(p.getAttribute('href').slice(1));
+      if(t && !t.open) t.open = true;
+    });
+  });
+
+  /* --- 현재 보고 있는 날짜를 상단 네비에 표시 --- */
+  var current = null;
+  function mark(id){
+    if(id === current) return;
+    current = id;
+    pills.forEach(function(p){ p.classList.remove('on'); });
+    var p = byId[id];
+    if(!p) return;
+    p.classList.add('on');
+    var pl = p.offsetLeft, pw = p.offsetWidth, nw = nav.clientWidth;
+    nav.scrollTo({ left: Math.max(0, pl - nw/2 + pw/2), behavior:'smooth' });
+  }
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      var vis = entries.filter(function(e){ return e.isIntersecting; });
+      if(!vis.length) return;
+      vis.sort(function(a,b){ return a.boundingClientRect.top - b.boundingClientRect.top; });
+      mark(vis[0].target.id);
+    }, { rootMargin: '-56px 0px -72% 0px', threshold: 0 });
+    days.forEach(function(d){ io.observe(d); });
+  }
+
+  /* --- 여행 기간이면 오늘 날짜로 열고 이동 --- */
+  var now = new Date();
+  if(now.getFullYear() === 2026 && now.getMonth() === 9){
+    var d = now.getDate();
+    if(d >= 3 && d <= 10){
+      var id = 'd' + (d < 10 ? '0' + d : d);
+      var el = document.getElementById(id);
+      if(el){
+        days.forEach(function(x){ x.open = (x.id === id); });
+        requestAnimationFrame(function(){
+          el.scrollIntoView();
+          mark(id);
+        });
+      }
+    }
+  }
+
+  /* --- 맨 위로 --- */
+  var top = document.getElementById('top');
+  var ticking = false;
+  function onScroll(){
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      top.classList.toggle('show', window.scrollY > 700);
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  top.addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  });
+})();
+</script>
+
+</body>
+</html>
