@@ -1,6 +1,7 @@
 'use client';
 
 import { useLocale } from 'next-intl';
+import { Languages } from 'lucide-react';
 import { useRouter, usePathname } from '@i18n/navigation';
 import styles from './LocaleSwitcher.module.scss';
 
@@ -23,6 +24,10 @@ export default function LocaleSwitcher() {
       }
       type="button"
     >
+      {/* The icon supplies the "this is a language control" context that a
+          bare two-letter code can't. The code itself stays action-labelled:
+          it names the language you get, not the one you're in. */}
+      <Languages size={14} aria-hidden="true" />
       {locale === 'ko' ? 'EN' : 'KO'}
     </button>
   );
