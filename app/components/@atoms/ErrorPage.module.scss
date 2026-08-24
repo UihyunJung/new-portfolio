@@ -1,32 +1,51 @@
-@use '../../assets/styles/@tokens/typography' as *;
+@use '../../assets/styles/@utilities/mixins' as *;
 
 .container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  min-height: 60vh;
-  gap: 16px;
-  text-align: center;
-  padding: 20px;
+  min-height: 60dvh;
+  gap: var(--space-sm);
+  padding: var(--space-xl) var(--shell-pad);
+  max-width: var(--shell-max);
+  margin-inline: auto;
+  width: 100%;
 }
 
 .title {
-  font-size: 2rem;
-  font-weight: $font-weight-bold;
+  @include display(var(--text-2xl));
 }
 
 .title404 {
-  font-size: 3rem;
-  font-weight: $font-weight-extrabold;
+  @include display(var(--text-display-s));
+  @include tnum;
 }
 
 .description {
-  color: var(--color-text-secondary);
+  color: var(--color-ink-2);
 }
 
 .link {
-  color: var(--color-accent);
-  font-weight: $font-weight-medium;
-  margin-top: 8px;
+  margin-block-start: var(--space-2xs);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-accent-text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--color-rule-2);
+  text-underline-offset: 4px;
+  transition: text-decoration-color var(--dur-micro) var(--ease-out);
+  @include affordance;
+
+  @include hover-fine {
+    &:hover {
+      text-decoration-color: currentColor;
+    }
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+    border-radius: 2px;
+  }
 }

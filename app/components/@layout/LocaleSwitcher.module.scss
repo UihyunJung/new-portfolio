@@ -1,34 +1,41 @@
+@use '../../assets/styles/@utilities/mixins' as *;
+
 .switcher {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: var(--space-3xs);
   height: 32px;
-  padding: 0 8px;
-  border-radius: 8px;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  white-space: nowrap;
-  color: var(--color-text-secondary);
-  transition: color 0.2s ease, background-color 0.2s ease;
+  padding-inline: var(--space-2xs);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-label);
+  color: var(--color-ink-2);
+  transition:
+    color var(--dur-micro) var(--ease-out),
+    background-color var(--dur-micro) var(--ease-out);
+  @include affordance;
 
   svg {
     flex-shrink: 0;
-    color: var(--color-text-tertiary);
-    transition: color 0.2s ease;
+    color: var(--color-muted);
+    transition: color var(--dur-micro) var(--ease-out);
   }
 
-  &:hover {
-    color: var(--color-text-primary);
-    background-color: var(--color-surface-hover);
+  @include hover-fine {
+    &:hover {
+      color: var(--color-ink);
+      background-color: var(--color-paper-2);
 
-    svg {
-      color: var(--color-accent);
+      svg {
+        color: var(--color-accent);
+      }
     }
   }
 
   &:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
+    @include focus-ring;
   }
 }

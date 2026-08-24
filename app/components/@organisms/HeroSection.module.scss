@@ -1,158 +1,189 @@
 @use '../../assets/styles/@utilities/mixins' as *;
-@use '../../assets/styles/@tokens/typography' as *;
 
+// H2 · Split diptych — lede left (7), artifact right (5). Never centred,
+// never full-viewport: the hero is the height of what it holds.
 .hero {
-  display: flex;
-  align-items: center;
-  min-height: 100dvh;
-  padding-top: 64px;
-  position: relative;
-  overflow: hidden;
-}
+  @include band(var(--space-2xl), var(--space-3xl));
 
-// Video background
-.videoBg {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: blur(2px);
-
-  @include reduced-motion {
-    // Show first frame only
-    animation: none;
+  @include wide {
+    @include band(var(--space-3xl), var(--space-4xl));
   }
 }
 
-.videoOverlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.82);
+.shell {
+  @include shell;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-xl);
+  align-items: start;
 
-  :global([data-theme='light']) & {
-    background: rgba(255, 255, 255, 0.85);
+  @include lg {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-2xl);
   }
 }
 
-.container {
-  @include container;
-  position: relative;
-  z-index: 1;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
+.lede {
+  min-width: 0;
 }
 
 .greeting {
-  font-size: $font-size-lg;
-  color: var(--color-accent);
-  font-weight: $font-weight-semibold;
-  margin-bottom: 16px;
-  letter-spacing: $letter-spacing-wide;
-
-  @include md {
-    font-size: $font-size-xl;
-  }
+  font-size: var(--text-md);
+  color: var(--color-muted);
+  margin-block-end: var(--space-2xs);
 }
 
 .name {
-  font-size: $font-size-5xl;
-  font-weight: $font-weight-extrabold;
-  letter-spacing: $letter-spacing-tight;
-  margin-bottom: 8px;
-  background: var(--gradient-accent-text);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  width: fit-content;
-
-  @include md {
-    font-size: $font-size-6xl;
-  }
-
-  @include lg {
-    font-size: 4.5rem;
-  }
+  @include display(var(--text-display));
+  margin-block-end: var(--space-2xs);
 }
 
-.title {
-  font-size: $font-size-xl;
-  color: var(--color-text-secondary);
-  font-weight: $font-weight-medium;
-  margin-bottom: 20px;
-
-  @include md {
-    font-size: $font-size-2xl;
-  }
+.role {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-ink-2);
+  margin-block-end: var(--space-md);
 }
 
 .description {
-  font-size: $font-size-base;
-  color: #5c5c5c;
-  max-width: 520px;
-  line-height: $line-height-relaxed;
+  font-size: var(--text-md);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink-2);
+  text-wrap: pretty;
 
   @include md {
     white-space: pre-line;
   }
-
-  :global([data-theme='dark']) & {
-    color: #808099;
-  }
-
-  @include md {
-    font-size: $font-size-lg;
-  }
 }
 
-.cta {
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-md);
+  margin-block-start: var(--space-lg);
+}
+
+// Cobalt's one solid signal button. 6px radius — ruler-drawn, not a pill.
+.primary {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  margin-top: 56px;
-  border-radius: 50%;
-  border: 1.5px solid var(--color-border);
-  color: var(--color-text-tertiary);
-  transition: all 0.3s ease;
-  animation: float 3s ease-in-out infinite;
+  gap: var(--space-2xs);
+  padding: var(--space-2xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  transition:
+    background-color var(--dur-micro) var(--ease-out),
+    transform var(--dur-micro) var(--ease-out);
+  @include affordance;
+  @include tap-target;
+  @include control-states;
 
-  &:hover {
-    color: var(--color-accent);
-    border-color: var(--color-accent);
-    box-shadow: var(--shadow-glow);
-    transform: translateY(4px);
+  svg {
+    transition: transform var(--dur-micro) var(--ease-out);
+  }
+
+  @include hover-fine {
+    &:hover svg {
+      transform: translateX(2px);
+    }
+  }
+
+  &:active {
+    transform: translateY(1px);
   }
 
   &:focus-visible {
     @include focus-ring;
   }
+}
 
-  @include reduced-motion {
-    animation: none;
+// C3 · Typographic link — a word and a 1px underline. No box, no fill.
+.secondary {
+  padding-block: var(--space-3xs);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-ink-2);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--color-rule-2);
+  text-underline-offset: 5px;
+  transition:
+    color var(--dur-micro) var(--ease-out),
+    text-decoration-color var(--dur-micro) var(--ease-out);
+  @include affordance;
+  @include tap-target;
+  @include control-states;
 
+  @include hover-fine {
     &:hover {
-      transform: none;
+      color: var(--color-accent-text);
+      text-decoration-color: var(--color-accent);
     }
   }
-}
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(8px);
+  &:focus-visible {
+    @include focus-ring;
+    border-radius: 2px;
   }
 }
 
+// ============================================
+// The artifact slot
+// ============================================
+
+.spec {
+  min-width: 0;
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-paper-2);
+  overflow: clip;
+}
+
+.specHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2xs) var(--space-sm);
+  background: var(--color-paper-3);
+  border-block-end: var(--rule-hair) solid var(--color-rule);
+}
+
+.specTitle {
+  @include label;
+}
+
+.specRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3xs);
+  padding: var(--space-xs) var(--space-sm);
+
+  & + & {
+    border-block-start: var(--rule-hair) solid var(--color-rule);
+  }
+
+  @include sm {
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+    gap: var(--space-sm);
+    align-items: baseline;
+  }
+}
+
+.specKey {
+  @include label;
+}
+
+.specValue {
+  @include tnum;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  color: var(--color-ink);
+  overflow-wrap: anywhere;
+}

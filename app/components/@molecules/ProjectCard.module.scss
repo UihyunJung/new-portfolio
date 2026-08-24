@@ -1,170 +1,141 @@
 @use '../../assets/styles/@utilities/mixins' as *;
-@use '../../assets/styles/@tokens/typography' as *;
 
-.card {
-  position: relative;
+// A Workbench artifact block. No card, no border-gradient, no lift.
+// Hairlines and vertical rhythm do the containment.
+.block {
+  scroll-margin-block-start: var(--scroll-offset);
   display: flex;
   flex-direction: column;
-  padding: 28px;
-  border-radius: 20px;
-  background: var(--gradient-surface);
-  box-shadow: var(--shadow-card);
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-  height: 100%;
+  gap: var(--space-sm);
+  padding-block: var(--space-xl);
+  border-block-end: var(--rule-hair) solid var(--color-rule);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2xs) var(--space-md);
+}
+
+.title {
+  @include display(var(--text-xl));
+  min-width: 0;
 
   @include md {
-    padding: 32px;
+    font-size: var(--text-2xl);
+  }
+}
+
+.type {
+  @include label;
+  @include affordance;
+}
+
+.description {
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink-2);
+  text-wrap: pretty;
+
+  @include md {
+    font-size: var(--text-base);
+  }
+}
+
+.manifest {
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-paper-2);
+  overflow: clip;
+}
+
+.manifestRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3xs);
+  padding: var(--space-xs) var(--space-sm);
+
+  & + & {
+    border-block-start: var(--rule-hair) solid var(--color-rule);
   }
 
-  // Gradient border
+  @include sm {
+    grid-template-columns: 5rem minmax(0, 1fr);
+    gap: var(--space-sm);
+    align-items: baseline;
+  }
+}
+
+.manifestKey {
+  @include label;
+}
+
+.manifestValue {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink);
+  overflow-wrap: anywhere;
+}
+
+.highlights {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.highlight {
+  position: relative;
+  padding-inline-start: var(--space-md);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink-2);
+  text-wrap: pretty;
+
+  // A drawn tick, not a coloured dot.
   &::before {
     content: '';
     position: absolute;
-    inset: 0;
-    border-radius: 20px;
-    padding: 1px;
-    background: var(--gradient-card-border);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-    -webkit-mask-composite: xor;
-    pointer-events: none;
-  }
-
-  &:hover {
-    box-shadow: var(--shadow-card-hover);
-    transform: translateY(-4px);
-  }
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-
-.typeBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: $font-size-xs;
-  font-weight: $font-weight-semibold;
-  padding: 4px 10px;
-  border-radius: 100px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-
-  &[data-type='work'] {
-    background: var(--color-accent-light);
-    color: var(--color-accent);
-  }
-
-  &[data-type='personal'] {
-    background: color-mix(in srgb, var(--color-accent-secondary) 12%, transparent);
-    color: var(--color-accent-secondary);
+    inset-inline-start: 0;
+    inset-block-start: 0.7em;
+    width: var(--space-2xs);
+    height: var(--rule-hair);
+    background: var(--color-accent);
   }
 }
 
 .links {
   display: flex;
-  gap: 6px;
+  flex-wrap: wrap;
+  gap: var(--space-md);
 }
 
-.linkBtn {
-  display: flex;
+// C3 · Typographic link — no boxed icon buttons.
+.link {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  color: var(--color-text-tertiary);
-  border: 1px solid var(--color-border);
-  transition: all 0.2s ease;
+  gap: var(--space-3xs);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-accent-text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--color-rule-2);
+  text-underline-offset: 4px;
+  transition: text-decoration-color var(--dur-micro) var(--ease-out);
+  @include affordance;
+  @include tap-target;
 
-  &:hover {
-    color: var(--color-accent);
-    border-color: var(--color-accent);
+  @include hover-fine {
+    &:hover {
+      text-decoration-color: currentColor;
+    }
   }
 
   &:focus-visible {
     @include focus-ring;
+    border-radius: 2px;
   }
-}
-
-.title {
-  font-size: $font-size-xl;
-  font-weight: $font-weight-bold;
-  margin-bottom: 10px;
-
-  @include md {
-    font-size: $font-size-2xl;
-  }
-}
-
-.description {
-  font-size: $font-size-sm;
-  color: var(--color-text-secondary);
-  line-height: $line-height-relaxed;
-  margin-bottom: 14px;
-
-  @include md {
-    font-size: $font-size-base;
-  }
-}
-
-.role {
-  font-size: $font-size-sm;
-  color: var(--color-text-secondary);
-  margin-bottom: 14px;
-}
-
-.roleLabel {
-  font-weight: $font-weight-semibold;
-  color: var(--color-text-primary);
-  margin-right: 8px;
-}
-
-.highlights {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.highlight {
-  font-size: $font-size-sm;
-  color: var(--color-text-secondary);
-  line-height: $line-height-normal;
-  padding-left: 16px;
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 8px;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--gradient-accent);
-  }
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: auto;
-}
-
-.tag {
-  font-size: $font-size-xs;
-  font-weight: $font-weight-medium;
-  padding: 4px 12px;
-  border-radius: 100px;
-  background: var(--color-accent-light);
-  color: var(--color-accent);
-  transition: background-color 0.2s ease;
 }

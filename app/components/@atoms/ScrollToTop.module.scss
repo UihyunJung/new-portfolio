@@ -2,40 +2,50 @@
 
 .container {
   position: sticky;
-  bottom: 0;
-  z-index: 90;
+  inset-block-end: 0;
+  z-index: 40;
   height: 0;
   pointer-events: none;
 }
 
+// A bordered square, not a filled gradient disc with a coloured glow.
 .btn {
   position: absolute;
-  bottom: 32px;
-  right: 32px;
+  inset-block-end: var(--space-lg);
+  inset-inline-end: var(--space-lg);
   pointer-events: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--gradient-accent);
-  color: #fff;
-  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
-  transition: box-shadow 0.2s ease;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  // Icon-only control: the border is its only boundary, so it must
+  // carry 3:1 against paper (WCAG 1.4.11).
+  border: var(--rule-hair) solid var(--color-rule-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-paper);
+  color: var(--color-ink-2);
+  transition:
+    color var(--dur-micro) var(--ease-out),
+    border-color var(--dur-micro) var(--ease-out);
+  @include control-states;
 
-  &:hover {
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
+  @include hover-fine {
+    &:hover {
+      color: var(--color-accent-text);
+      border-color: var(--color-accent);
+    }
+  }
+
+  &:active {
+    transform: translateY(1px);
   }
 
   &:focus-visible {
     @include focus-ring;
   }
 
-  @media (max-width: 767px) {
-    width: 40px;
-    height: 40px;
-    bottom: 20px;
-    right: 20px;
+  @media (max-width: 47.9375rem) {
+    inset-block-end: var(--space-sm);
+    inset-inline-end: var(--space-sm);
   }
 }

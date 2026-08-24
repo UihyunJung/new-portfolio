@@ -1,8 +1,10 @@
 import { useTranslations } from 'next-intl';
-import { Github, ExternalLink, Briefcase, User } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import styles from './ProjectCard.module.scss';
 
 interface ProjectCardProps {
+  /** Anchor target for the section's overview index. */
+  id: string;
   projectKey: string;
   type: 'work' | 'personal';
   techStack: string[];
@@ -14,6 +16,7 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({
+  id,
   projectKey,
   type,
   techStack,
@@ -23,47 +26,31 @@ export default function ProjectCard({
   const t = useTranslations('projects');
 
   return (
-    <article className={styles.card}>
-      <div className={styles.header}>
-        <span className={styles.typeBadge} data-type={type}>
-          {type === 'work' ? <Briefcase size={12} aria-hidden="true" /> : <User size={12} aria-hidden="true" />}
+    <article id={id} className={styles.block}>
+      <header className={styles.head}>
+        <h3 className={styles.title}>{t(`items.${projectKey}.title`)}</h3>
+        <span className={styles.type}>
           {t(type === 'work' ? 'typeBadgeWork' : 'typeBadgePersonal')}
         </span>
-        {links && (
-          <div className={styles.links}>
-            {links.github && (
-              <a
-                href={links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.linkBtn}
-                aria-label="GitHub"
-              >
-                <Github size={16} />
-              </a>
-            )}
-            {links.live && (
-              <a
-                href={links.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.linkBtn}
-                aria-label="Live Demo"
-              >
-                <ExternalLink size={16} />
-              </a>
-            )}
-          </div>
-        )}
-      </div>
+      </header>
 
-      <h3 className={styles.title}>{t(`items.${projectKey}.title`)}</h3>
-      <p className={styles.description}>{t(`items.${projectKey}.description`)}</p>
-
-      <p className={styles.role}>
-        <span className={styles.roleLabel}>{t('roleLabel')}</span>
-        {t(`items.${projectKey}.role`)}
+      <p className={styles.description}>
+        {t(`items.${projectKey}.description`)}
       </p>
+
+      {/* The artifact: a typographic frame carrying the real manifest. */}
+      <dl className={styles.manifest}>
+        <div className={styles.manifestRow}>
+          <dt className={styles.manifestKey}>{t('roleLabel')}</dt>
+          <dd className={styles.manifestValue}>
+            {t(`items.${projectKey}.role`)}
+          </dd>
+        </div>
+        <div className={styles.manifestRow}>
+          <dt className={styles.manifestKey}>{t('stackLabel')}</dt>
+          <dd className={styles.manifestValue}>{techStack.join('  ·  ')}</dd>
+        </div>
+      </dl>
 
       <ul className={styles.highlights}>
         {highlightKeys.map((hKey) => (
@@ -73,13 +60,32 @@ export default function ProjectCard({
         ))}
       </ul>
 
-      <div className={styles.tags}>
-        {techStack.map((tech) => (
-          <span key={tech} className={styles.tag}>
-            {tech}
-          </span>
-        ))}
-      </div>
+      {links && (links.github || links.live) && (
+        <p className={styles.links}>
+          {links.github && (
+            <a
+              href={links.github}
+              className={styles.link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {t('linkGithub')}
+              <ArrowUpRight size={14} aria-hidden="true" />
+            </a>
+          )}
+          {links.live && (
+            <a
+              href={links.live}
+              className={styles.link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {t('linkLive')}
+              <ArrowUpRight size={14} aria-hidden="true" />
+            </a>
+          )}
+        </p>
+      )}
     </article>
   );
 }

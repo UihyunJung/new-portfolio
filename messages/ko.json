@@ -4,14 +4,24 @@
     "skills": "기술",
     "experience": "경력",
     "projects": "프로젝트",
-    "contact": "연락처"
+    "contact": "연락처",
+    "landmark": "섹션 바로가기",
+    "openMenu": "메뉴 열기",
+    "closeMenu": "메뉴 닫기",
+    "backToTop": "맨 위로"
   },
   "hero": {
     "greeting": "안녕하세요",
     "name": "정의현",
     "title": "Frontend Developer",
     "description": "사용자 경험을 최우선으로 생각하는 프론트엔드 개발자입니다.\n10년 이상의 웹 개발 경험을 바탕으로, 성능과 접근성을 고려한\n모던 웹 애플리케이션을 만듭니다.",
-    "ctaAriaLabel": "소개 섹션으로 스크롤"
+    "ctaAriaLabel": "소개 섹션으로 스크롤",
+    "ctaProjects": "프로젝트",
+    "ctaContact": "연락하기",
+    "specTitle": "PROFILE",
+    "spec": {
+      "years": "10년+"
+    }
   },
   "about": {
     "heading": "About Me",
@@ -77,7 +87,7 @@
   },
   "projects": {
     "heading": "Projects",
-    "roleLabel": "역할:",
+    "roleLabel": "ROLE",
     "typeBadgeWork": "업무",
     "typeBadgePersonal": "개인",
     "items": {
@@ -144,16 +154,28 @@
           "h3": "방문자 분석 대시보드 구축 — 디바이스, 브라우저, 리퍼러 추적 및 Recharts 기반 시각화"
         }
       }
-    }
+    },
+    "stackLabel": "STACK",
+    "linkGithub": "GitHub",
+    "linkLive": "바로가기"
   },
   "contact": {
     "heading": "Contact",
     "description": "새로운 기회나 협업에 관심이 있으시다면 편하게 연락 주세요.",
     "copy": "복사",
-    "copied": "복사됨!"
+    "copied": "복사됨",
+    "links": {
+      "github": "GitHub",
+      "linkedin": "LinkedIn"
+    }
   },
   "footer": {
-    "copyright": "© {year} 정의현. All rights reserved."
+    "copyright": "© {year} 정의현. All rights reserved.",
+    "builtLabel": "BUILT",
+    "builtWith": "Next.js 16 · React 19 · TypeScript · SCSS Modules",
+    "typeLabel": "TYPE",
+    "typeset": "Space Grotesk · Wanted Sans · JetBrains Mono",
+    "sourceLabel": "SOURCE"
   },
   "error": {
     "title": "문제가 발생했습니다",

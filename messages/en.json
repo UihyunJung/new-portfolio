@@ -4,14 +4,24 @@
     "skills": "Skills",
     "experience": "Experience",
     "projects": "Projects",
-    "contact": "Contact"
+    "contact": "Contact",
+    "landmark": "Jump to section",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "backToTop": "Back to top"
   },
   "hero": {
     "greeting": "Hello",
     "name": "Uihyun Jung",
     "title": "Frontend Developer",
     "description": "A frontend developer who prioritizes user experience above all.\nWith over 10 years of web development experience,\nI build modern web apps focused on performance and accessibility.",
-    "ctaAriaLabel": "Scroll to About section"
+    "ctaAriaLabel": "Scroll to About section",
+    "ctaProjects": "Projects",
+    "ctaContact": "Get in touch",
+    "specTitle": "PROFILE",
+    "spec": {
+      "years": "10+ years"
+    }
   },
   "about": {
     "heading": "About Me",
@@ -77,7 +87,7 @@
   },
   "projects": {
     "heading": "Projects",
-    "roleLabel": "Role:",
+    "roleLabel": "ROLE",
     "typeBadgeWork": "Work",
     "typeBadgePersonal": "Personal",
     "items": {
@@ -144,16 +154,28 @@
           "h3": "Built visitor analytics dashboard — device, browser, referrer tracking with Recharts visualization"
         }
       }
-    }
+    },
+    "stackLabel": "STACK",
+    "linkGithub": "GitHub",
+    "linkLive": "Visit"
   },
   "contact": {
     "heading": "Contact",
     "description": "Interested in new opportunities or collaboration? Feel free to reach out.",
     "copy": "Copy",
-    "copied": "Copied!"
+    "copied": "Copied",
+    "links": {
+      "github": "GitHub",
+      "linkedin": "LinkedIn"
+    }
   },
   "footer": {
-    "copyright": "© {year} Uihyun Jung. All rights reserved."
+    "copyright": "© {year} Uihyun Jung. All rights reserved.",
+    "builtLabel": "BUILT",
+    "builtWith": "Next.js 16 · React 19 · TypeScript · SCSS Modules",
+    "typeLabel": "TYPE",
+    "typeset": "Space Grotesk · Wanted Sans · JetBrains Mono",
+    "sourceLabel": "SOURCE"
   },
   "error": {
     "title": "Something went wrong",

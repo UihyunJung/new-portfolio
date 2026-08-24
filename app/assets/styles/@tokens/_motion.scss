@@ -1,0 +1,15 @@
+// ============================================
+// Motion tokens
+// Three named easings. The browser default `ease` is banned —
+// it is what uncrafted motion looks like.
+// ============================================
+
+:root {
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); // entering
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0); // leaving
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); // state toggles
+
+  --dur-micro: 120ms;
+  --dur-short: 220ms;
+  --dur-long: 420ms;
+}

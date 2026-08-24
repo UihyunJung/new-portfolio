@@ -1,7 +1,5 @@
-@use '../@tokens/typography' as *;
-
 // ============================================
-// CSS Reset
+// Reset
 // ============================================
 
 *,
@@ -10,6 +8,12 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+// gate 34 — clip, never hidden, on BOTH html and body
+html,
+body {
+  overflow-x: clip;
 }
 
 html {
@@ -21,13 +25,18 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
-  background-color: var(--color-bg-primary);
-  color: var(--color-text-primary);
-  line-height: $line-height-normal;
+  background-color: var(--color-paper);
+  color: var(--color-ink-2);
+  font-family: var(--font-body);
+  font-weight: var(--weight-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
   word-break: keep-all;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color var(--dur-short) var(--ease-in-out),
+    color var(--dur-short) var(--ease-in-out);
 }
 
 img,
@@ -57,15 +66,19 @@ ol {
   list-style: none;
 }
 
+// gate 51 — display headers wrap inside long words
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  overflow-wrap: break-word;
-  font-weight: $font-weight-bold;
-  line-height: $line-height-tight;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--color-ink);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  text-wrap: balance;
 }
 
 p {
@@ -78,39 +91,53 @@ button {
   border: none;
 }
 
+// Anchored sections clear the mobile top bar
+:target,
+section[id] {
+  scroll-margin-block-start: var(--scroll-offset);
+}
+
 #main-content {
   display: flex;
   flex: 1;
   flex-direction: column;
 }
 
-// Skip to content (accessibility)
+::selection {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+// Skip to content
 .skip-to-content {
   position: absolute;
   top: -100%;
-  left: 16px;
-  z-index: 999;
-  padding: 8px 16px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--color-text-primary);
-  background-color: var(--color-surface);
-  border: 2px solid var(--color-accent);
-  border-radius: 6px;
+  left: var(--space-sm);
+  z-index: 60;
+  padding: var(--space-2xs) var(--space-sm);
+  color: var(--color-ink);
+  background-color: var(--color-paper);
+  border: var(--rule-solid) solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
 
   &:focus {
-    top: 16px;
+    top: var(--space-sm);
   }
 }
 
-// Reduced motion
+// Reduced motion — spatial motion collapses, scroll snaps to instant
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
+    animation-duration: 150ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+    transition-duration: 150ms !important;
   }
 }

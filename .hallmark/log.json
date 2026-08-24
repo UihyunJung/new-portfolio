@@ -1,0 +1,15 @@
+[
+  {
+    "date": "2026-08-25",
+    "scope": "page",
+    "genre": "modern-minimal",
+    "macrostructure": "Workbench",
+    "theme": "Cobalt",
+    "theme_axes": "light / grotesk-sans / cool",
+    "nav": "top bar (numbered index + active tick, no CTA)",
+    "footer": "Ft4 Dense colophon",
+    "enrichment": "none",
+    "brief": "nooroong.com — Uihyun Jung frontend portfolio, technical/workbench tone",
+    "notes": "Rail retired to a top bar at user request; graphite band removed; hero greeting restored; projects gained an overview index."
+  }
+]

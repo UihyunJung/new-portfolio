@@ -3,6 +3,7 @@ import Script from 'next/script';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import localFont from 'next/font/local';
+import { Space_Grotesk, JetBrains_Mono } from 'next/font/google';
 import ThemeProvider from '@/components/@layout/ThemeProvider';
 import MotionProvider from '@/components/@layout/MotionProvider';
 import Header from '@/components/@layout/Header';
@@ -16,6 +17,22 @@ const wantedSans = localFont({
   variable: '--font-wanted-sans',
   display: 'swap',
   weight: '100 900',
+});
+
+// 2+1 pairing. Space Grotesk carries Latin display; Wanted Sans carries
+// Hangul in the same stack so mixed KO/EN headlines stay in one voice.
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-space-grotesk',
+  display: 'swap',
+  weight: ['500', '600', '700'],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains-mono',
+  display: 'swap',
+  weight: ['400', '500'],
 });
 
 // Analytics belongs to the production deployment only. Vercel sets VERCEL_ENV
@@ -93,7 +110,7 @@ export default async function LocaleLayout({
       // `scroll-behavior: smooth` in _reset.scss: anchor jumps stay smooth,
       // route changes (including locale switches) snap.
       data-scroll-behavior="smooth"
-      className={wantedSans.variable}
+      className={`${wantedSans.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
       <head>
