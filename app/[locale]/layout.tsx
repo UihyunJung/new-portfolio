@@ -18,6 +18,13 @@ const wantedSans = localFont({
   weight: '100 900',
 });
 
+// Analytics belongs to the production deployment only. Vercel sets VERCEL_ENV
+// to 'production' | 'preview' | 'development'; it is absent locally, so
+// `npm run dev`, `npm run start` and every preview deployment stay out of the
+// GA property. Read server-side — the layout is a Server Component, so this
+// never needs the NEXT_PUBLIC_ prefix.
+const analyticsEnabled = process.env.VERCEL_ENV === 'production';
+
 const META = {
   ko: {
     title: '정의현 | Frontend Developer',
@@ -90,23 +97,27 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <head>
-        <Script id="gtm" strategy="afterInteractive">
-          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        {analyticsEnabled && (
+          <Script id="gtm" strategy="afterInteractive">
+            {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','${GTM_ID}');`}
-        </Script>
+          </Script>
+        )}
       </head>
       <body>
-        <noscript>
-          <iframe
-            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-            height="0"
-            width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
-          />
-        </noscript>
+        {analyticsEnabled && (
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+              height="0"
+              width="0"
+              style={{ display: 'none', visibility: 'hidden' }}
+            />
+          </noscript>
+        )}
         <a href="#main-content" className="skip-to-content">
           Skip to content
         </a>
