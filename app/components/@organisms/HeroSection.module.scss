@@ -48,10 +48,10 @@
 }
 
 .description {
-  max-width: 46ch;
   font-size: var(--text-md);
   line-height: var(--leading-relaxed);
   color: var(--color-ink-2);
+  text-wrap: pretty;
 
   @include md {
     white-space: pre-line;
@@ -150,6 +150,7 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--space-2xs) var(--space-sm);
+  background: var(--color-paper-3);
   border-block-end: var(--rule-hair) solid var(--color-rule);
 }
 

@@ -8,7 +8,7 @@ export default function AboutSection() {
   const t = useTranslations('about');
 
   return (
-    <SectionWrapper id="about" rhythm="normal">
+    <SectionWrapper id="about">
       {/* S2 · Hanging — the heading floats in negative space. No eyebrow. */}
       <h2 className={styles.heading}>{t('heading')}</h2>
 

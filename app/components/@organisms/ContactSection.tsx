@@ -26,7 +26,7 @@ export default function ContactSection() {
   };
 
   return (
-    <SectionWrapper id="contact" rhythm="tight">
+    <SectionWrapper id="contact">
       <h2 className={styles.heading}>{t('heading')}</h2>
       <p className={styles.description}>{t('description')}</p>
 

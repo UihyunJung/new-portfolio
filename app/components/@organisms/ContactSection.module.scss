@@ -5,10 +5,10 @@
 }
 
 .description {
-  max-width: 52ch;
   font-size: var(--text-md);
   line-height: var(--leading-relaxed);
   color: var(--color-ink-2);
+  text-wrap: pretty;
 }
 
 .emailRow {

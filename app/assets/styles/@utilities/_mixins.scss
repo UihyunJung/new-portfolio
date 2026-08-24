@@ -52,9 +52,9 @@
   padding-inline: var(--shell-pad);
 }
 
-// Sections vary their vertical rhythm deliberately — a page where every
-// band carries identical padding reads as a template.
-@mixin band($top: var(--space-2xl), $bottom: var(--space-2xl)) {
+// Bottom-heavy by default: a band should settle into the next one rather
+// than float between two equal gaps.
+@mixin band($top: var(--space-2xl), $bottom: var(--space-3xl)) {
   padding-block: $top $bottom;
 }
 

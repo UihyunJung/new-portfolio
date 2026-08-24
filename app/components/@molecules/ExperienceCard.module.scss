@@ -41,9 +41,11 @@
 }
 
 .description {
-  max-width: 68ch;
   margin-block-start: var(--space-3xs);
   font-size: var(--text-sm);
   line-height: var(--leading-relaxed);
   color: var(--color-ink-2);
+  // Korean wraps at 어절 boundaries (word-break: keep-all), which strands a
+  // single unit on the last line more often than Latin does.
+  text-wrap: pretty;
 }

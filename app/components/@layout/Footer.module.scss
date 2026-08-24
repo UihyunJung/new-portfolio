@@ -1,6 +1,7 @@
 @use '../../assets/styles/@utilities/mixins' as *;
 
 .foot {
+  background: var(--color-paper-2);
   border-block-start: var(--rule-hair) solid var(--color-rule);
 }
 

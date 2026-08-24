@@ -8,7 +8,7 @@ export default function ExperienceSection() {
   const t = useTranslations('experience');
 
   return (
-    <SectionWrapper id="experience" rhythm="tight">
+    <SectionWrapper id="experience">
       <h2 className={styles.heading}>{t('heading')}</h2>
 
       {/* An index of ruled rows — period in the margin, the record beside it. */}

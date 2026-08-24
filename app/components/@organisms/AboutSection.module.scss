@@ -5,10 +5,10 @@
 }
 
 .bio {
-  max-width: 62ch;
   font-size: var(--text-md);
   line-height: var(--leading-relaxed);
   color: var(--color-ink-2);
+  text-wrap: pretty;
 
   @include md {
     white-space: pre-line;

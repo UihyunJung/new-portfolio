@@ -7,7 +7,7 @@ export default function SkillsSection() {
   const t = useTranslations('skills');
 
   return (
-    <SectionWrapper id="skills" rhythm="wide">
+    <SectionWrapper id="skills" surface>
       <h2 className={styles.heading}>{t('heading')}</h2>
 
       {/* F3 · Tabular spec sheet — name, value, footnote. Hairline rows,

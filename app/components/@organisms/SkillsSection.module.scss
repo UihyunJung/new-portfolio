@@ -14,8 +14,8 @@
   grid-template-areas:
     'key   count'
     'value value';
-  gap: var(--space-2xs) var(--space-sm);
-  padding-block: var(--space-md);
+  gap: var(--space-3xs) var(--space-sm);
+  padding-block: var(--space-sm);
   border-block-end: var(--rule-hair) solid var(--color-rule);
 
   @include md {
@@ -37,7 +37,7 @@
   min-width: 0;
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  line-height: var(--leading-relaxed);
+  line-height: var(--leading-normal);
   color: var(--color-ink);
   overflow-wrap: anywhere;
 }

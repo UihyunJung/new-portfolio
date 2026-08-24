@@ -10,7 +10,7 @@ export default function ProjectsSection() {
   const t = useTranslations('projects');
 
   return (
-    <SectionWrapper id="projects" rhythm="wide">
+    <SectionWrapper id="projects">
       <h2 className={styles.heading}>{t('heading')}</h2>
 
       {/* An overview layer. The blocks below give depth; this gives the
