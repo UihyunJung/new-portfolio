@@ -2,20 +2,12 @@
 
 import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { m } from 'motion/react';
-import { Github, Linkedin, Mail, Copy, Check } from 'lucide-react';
+import { Copy, Check } from 'lucide-react';
 import SectionWrapper from '@components/@atoms/SectionWrapper';
 import { socialLinks } from '@lib/data/socialLinks';
-import { fadeUp, stagger } from '@lib/animations';
 import styles from './ContactSection.module.scss';
 
-const ICON_MAP = {
-  github: Github,
-  linkedin: Linkedin,
-  email: Mail,
-} as const;
-
-const contactStagger = stagger(0.1);
+const EMAIL = 'uihyun.jung@gmail.com';
 
 export default function ContactSection() {
   const t = useTranslations('contact');
@@ -24,7 +16,7 @@ export default function ContactSection() {
 
   const copyEmail = async () => {
     try {
-      await navigator.clipboard.writeText('uihyun.jung@gmail.com');
+      await navigator.clipboard.writeText(EMAIL);
       setCopied(true);
       clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => setCopied(false), 2000);
@@ -34,47 +26,46 @@ export default function ContactSection() {
   };
 
   return (
-    <SectionWrapper id="contact">
-      <m.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '-100px' }}
-        variants={contactStagger}
-        className={styles.content}
-      >
-        <m.h2 variants={fadeUp} className={styles.heading}>
-          {t('heading')}
-        </m.h2>
-        <m.p variants={fadeUp} className={styles.description}>
-          {t('description')}
-        </m.p>
-        <m.div variants={fadeUp} className={styles.emailRow}>
-          <a href="mailto:uihyun.jung@gmail.com" className={styles.email}>
-            uihyun.jung@gmail.com
-          </a>
-          <button type="button" className={styles.copyBtn} onClick={copyEmail}>
-            {copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
-            {copied ? t('copied') : t('copy')}
-          </button>
-        </m.div>
-        <m.div variants={fadeUp} className={styles.links}>
-          {socialLinks.map((link) => {
-            const Icon = ICON_MAP[link.icon];
-            return (
+    <SectionWrapper id="contact" rhythm="tight">
+      <h2 className={styles.heading}>{t('heading')}</h2>
+      <p className={styles.description}>{t('description')}</p>
+
+      <div className={styles.emailRow}>
+        {/* C3 · Typographic link — solid ink, not a gradient text fill. */}
+        <a href={`mailto:${EMAIL}`} className={styles.email}>
+          {EMAIL}
+        </a>
+        <button
+          type="button"
+          className={styles.copyBtn}
+          onClick={copyEmail}
+          data-state={copied ? 'success' : 'idle'}
+        >
+          {copied ? (
+            <Check size={13} aria-hidden="true" />
+          ) : (
+            <Copy size={13} aria-hidden="true" />
+          )}
+          {copied ? t('copied') : t('copy')}
+        </button>
+      </div>
+
+      <ul className={styles.links}>
+        {socialLinks
+          .filter((link) => link.icon !== 'email')
+          .map((link) => (
+            <li key={link.key}>
               <a
-                key={link.key}
                 href={link.href}
-                target={link.icon !== 'email' ? '_blank' : undefined}
-                rel={link.icon !== 'email' ? 'noopener noreferrer' : undefined}
-                className={styles.iconLink}
-                aria-label={link.key}
+                className={styles.link}
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <Icon size={22} />
+                {t(`links.${link.key}`)}
               </a>
-            );
-          })}
-        </m.div>
-      </m.div>
+            </li>
+          ))}
+      </ul>
     </SectionWrapper>
   );
 }

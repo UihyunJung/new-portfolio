@@ -1,20 +1,9 @@
 @use '../../assets/styles/@utilities/mixins' as *;
-@use '../../assets/styles/@tokens/typography' as *;
-
-.content {
-  @include section-content;
-}
 
 .heading {
   @include section-heading;
 }
 
-.timeline {
-  width: 100%;
-  max-width: 860px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  text-align: left;
+.index {
+  border-block-start: var(--rule-solid) solid var(--color-ink);
 }

@@ -1,103 +1,127 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import clsx from 'clsx';
 import { Menu, X } from 'lucide-react';
 import useActiveSection from '@hooks/useActiveSection';
+import { scrollToSection, scrollToTop } from '@lib/scrollTo';
 import ThemeToggle from './ThemeToggle';
 import LocaleSwitcher from './LocaleSwitcher';
 import styles from './Header.module.scss';
 
-const NAV_ITEMS = ['about', 'skills', 'experience', 'projects', 'contact'] as const;
+const NAV_ITEMS = [
+  'about',
+  'skills',
+  'experience',
+  'projects',
+  'contact',
+] as const;
 
 export default function Header() {
   const t = useTranslations('nav');
   const activeSection = useActiveSection();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  // No body scroll lock here. `overflow: hidden` on <body> makes it a scroll
+  // container, which re-parents the sticky bar from the viewport to the body
+  // box — it jumps to the top of the document and vanishes.
 
-  // 메뉴 열린 상태에서 스크롤 방지
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : '';
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [menuOpen]);
-
-  const scrollToSection = (id: string) => {
+  const go = (id: string) => {
     setMenuOpen(false);
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
+    scrollToSection(id);
+  };
+
+  const home = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setMenuOpen(false);
+    scrollToTop();
   };
 
   return (
-    <header className={clsx(styles.header, (scrolled || menuOpen) && styles.headerScrolled)}>
-      <div className={styles.container}>
-        <a
-          href="#hero"
-          className={styles.logo}
-          onClick={(e) => {
-            e.preventDefault();
-            setMenuOpen(false);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-        >
-          UJ
-        </a>
+    <>
+      <header className={styles.bar}>
+        <div className={styles.inner}>
+          <a href="#hero" className={styles.mark} onClick={home}>
+            UJ
+          </a>
 
-        <nav className={styles.nav}>
-          {NAV_ITEMS.map((item) => (
+          {/* A numbered section index, not a link row — it carries the
+              reading position the way the side-rail did. No CTA button. */}
+          <nav className={styles.index} aria-label={t('landmark')}>
+            <ul className={styles.indexList}>
+              {NAV_ITEMS.map((item, i) => {
+                const isActive = activeSection === item;
+                return (
+                  <li key={item}>
+                    <button
+                      type="button"
+                      className={clsx(
+                        styles.indexLink,
+                        isActive && styles.isActive,
+                      )}
+                      aria-current={isActive ? 'true' : undefined}
+                      onClick={() => go(item)}
+                    >
+                      <span className={styles.indexNum} aria-hidden="true">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      {t(item)}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+
+          <div className={styles.actions}>
+            <ThemeToggle />
+            <LocaleSwitcher />
             <button
-              key={item}
-              className={clsx(styles.navLink, activeSection === item && styles.active)}
-              onClick={() => scrollToSection(item)}
               type="button"
+              className={styles.menuBtn}
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label={menuOpen ? t('closeMenu') : t('openMenu')}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-nav"
             >
-              {t(item)}
+              {menuOpen ? (
+                <X size={20} aria-hidden="true" />
+              ) : (
+                <Menu size={20} aria-hidden="true" />
+              )}
             </button>
-          ))}
-        </nav>
-
-        <div className={styles.actions}>
-          <ThemeToggle />
-          <LocaleSwitcher />
-          <button
-            className={styles.menuBtn}
-            onClick={() => setMenuOpen(!menuOpen)}
-            type="button"
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={menuOpen}
-          >
-            {menuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
+          </div>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile menu */}
-      <nav className={clsx(styles.mobileNav, menuOpen && styles.mobileNavOpen)} inert={!menuOpen ? true : undefined}>
-        <div className={styles.mobileNavInner}>
-          {NAV_ITEMS.map((item) => (
-            <button
-              key={item}
-              className={clsx(styles.mobileNavLink, activeSection === item && styles.active)}
-              onClick={() => scrollToSection(item)}
-              type="button"
-            >
-              {t(item)}
-            </button>
-          ))}
-        </div>
+      <nav
+        id="mobile-nav"
+        className={clsx(styles.sheet, menuOpen && styles.sheetOpen)}
+        aria-label={t('landmark')}
+        inert={!menuOpen ? true : undefined}
+      >
+        <ul className={styles.sheetInner}>
+          {NAV_ITEMS.map((item, i) => {
+            const isActive = activeSection === item;
+            return (
+              <li key={item}>
+                <button
+                  type="button"
+                  className={clsx(styles.sheetLink, isActive && styles.isActive)}
+                  aria-current={isActive ? 'true' : undefined}
+                  onClick={() => go(item)}
+                >
+                  <span className={styles.sheetIndex} aria-hidden="true">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  {t(item)}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
       </nav>
-    </header>
+    </>
   );
 }

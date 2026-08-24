@@ -1,160 +1,222 @@
 @use '../../assets/styles/@utilities/mixins' as *;
 
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  background-color: color-mix(in srgb, var(--color-bg-primary) 70%, transparent);
-  backdrop-filter: blur(16px) saturate(180%);
-  border-bottom: 1px solid transparent;
-  box-shadow: none;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+// ============================================
+// Top bar — one bar at every width.
+// Deliberately conventional in placement, but not the AI-nav fingerprint:
+// the links are a numbered index with an active tick (the side-rail's job,
+// laid out horizontally) and there is no CTA button on the right. The page's
+// call to action lives in the hero, where the reader is.
+// ============================================
+
+.bar {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 50;
+  background: color-mix(in oklab, var(--color-paper) 86%, transparent);
+  backdrop-filter: blur(10px);
+  border-block-end: var(--rule-hair) solid var(--color-rule);
 }
 
-.headerScrolled {
-  border-bottom-color: color-mix(in srgb, var(--color-border) 50%, transparent);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-}
-
-.container {
-  @include container;
+.inner {
+  @include shell;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 64px;
+  gap: var(--space-md);
+  height: var(--bar-h);
 }
 
-.logo {
-  font-size: 1.25rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  background: var(--gradient-accent-text);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: opacity 0.2s ease;
+.mark {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-ink);
+  transition: color var(--dur-micro) var(--ease-out);
+  @include affordance;
 
-  &:hover {
-    opacity: 0.8;
+  @include hover-fine {
+    &:hover {
+      color: var(--color-accent-text);
+    }
   }
 
   &:focus-visible {
     @include focus-ring;
-    border-radius: 4px;
-    -webkit-text-fill-color: var(--color-accent);
+    border-radius: var(--radius-sm);
   }
 }
 
-.nav {
+// ---- Desktop index -------------------------------------------------------
+
+.index {
   display: none;
-  gap: 4px;
 
-  @include lg {
-    display: flex;
+  @include wide {
+    display: block;
   }
 }
 
-.navLink {
-  padding: 8px 12px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--color-text-tertiary);
-  border-radius: 8px;
-  transition: color 0.2s ease, background-color 0.2s ease;
+.indexList {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
 
-  &:hover {
-    color: var(--color-text-primary);
-    background-color: var(--color-surface-hover);
+.indexLink {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-3xs);
+  padding-block: var(--space-2xs);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-ink-2);
+  transition: color var(--dur-micro) var(--ease-out);
+  @include affordance;
+  @include control-states;
+
+  // The active tick — the rail's indicator, rotated into the bar.
+  &::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    block-size: var(--rule-solid);
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: inline-start;
+    transition: transform var(--dur-micro) var(--ease-out);
+  }
+
+  @include hover-fine {
+    &:hover {
+      color: var(--color-ink);
+    }
   }
 
   &:focus-visible {
     @include focus-ring;
+    border-radius: 2px;
+  }
+
+  @include reduced-motion {
+    &::after {
+      transition: none;
+    }
   }
 }
 
-.active {
-  color: var(--color-accent);
+.indexNum {
+  @include label;
+  @include tnum;
+  font-size: 0.625rem;
 }
+
+.isActive {
+  color: var(--color-accent-text);
+
+  .indexNum {
+    color: var(--color-accent);
+  }
+
+  &::after {
+    transform: scaleX(1);
+  }
+}
+
+// ---- Utilities -----------------------------------------------------------
 
 .actions {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--space-3xs);
 }
 
-// Hamburger button - mobile/tablet only
 .menuBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   width: 40px;
   height: 40px;
-  border-radius: 8px;
-  color: var(--color-text-secondary);
-  transition: color 0.2s ease, background-color 0.2s ease;
+  border-radius: var(--radius-sm);
+  color: var(--color-ink-2);
+  transition:
+    color var(--dur-micro) var(--ease-out),
+    background-color var(--dur-micro) var(--ease-out);
 
-  &:hover {
-    color: var(--color-text-primary);
-    background-color: var(--color-surface-hover);
+  @include hover-fine {
+    &:hover {
+      color: var(--color-ink);
+      background-color: var(--color-paper-2);
+    }
   }
 
   &:focus-visible {
     @include focus-ring;
   }
 
-  @include lg {
+  @include wide {
     display: none;
   }
 }
 
-// Mobile nav overlay
-.mobileNav {
+// ---- Mobile sheet --------------------------------------------------------
+// Fixed, not sticky. A sticky sheet occupies flow height, so collapsing it on
+// menu-click shortened the document mid-scroll and the anchor overshot.
+
+.sheet {
+  position: fixed;
+  inset-block-start: var(--bar-h);
+  inset-inline: 0;
+  z-index: 49;
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.3s ease;
+  background: var(--color-paper-2);
+  transition: grid-template-rows var(--dur-short) var(--ease-in-out);
 
-  @include lg {
+  @include wide {
     display: none;
   }
 }
 
-.mobileNavOpen {
+.sheetOpen {
   grid-template-rows: 1fr;
+  border-block-end: var(--rule-hair) solid var(--color-rule-strong);
+  box-shadow: var(--shadow-sheet);
 }
 
-.mobileNavInner {
+.sheetInner {
   overflow: hidden;
+  min-height: 0;
+}
+
+.sheetLink {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.mobileNavOpen .mobileNavInner {
-  padding: 8px 20px 20px;
-}
-
-.mobileNavLink {
-  padding: 12px 16px;
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  border-radius: 10px;
-  text-align: left;
-  transition: color 0.2s ease, background-color 0.2s ease;
-
-  &:hover {
-    color: var(--color-text-primary);
-    background-color: var(--color-surface-hover);
-  }
+  align-items: baseline;
+  gap: var(--space-sm);
+  width: 100%;
+  padding: var(--space-xs) var(--shell-pad);
+  font-size: var(--text-md);
+  font-weight: var(--weight-medium);
+  text-align: start;
+  color: var(--color-ink-2);
+  border-block-start: var(--rule-hair) solid var(--color-rule);
+  transition: color var(--dur-micro) var(--ease-out);
+  @include affordance;
+  @include tap-target;
+  @include control-states;
 
   &:focus-visible {
     @include focus-ring;
+    outline-offset: -2px;
   }
 
-  &.active {
-    color: var(--color-accent);
-    background-color: var(--color-accent-light);
+  &.isActive {
+    color: var(--color-accent-text);
   }
+}
+
+.sheetIndex {
+  @include label;
+  @include tnum;
 }

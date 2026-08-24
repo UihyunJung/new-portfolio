@@ -1,60 +1,49 @@
 @use '../../assets/styles/@utilities/mixins' as *;
-@use '../../assets/styles/@tokens/typography' as *;
 
-.card {
+.row {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 8px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2xs);
+  padding-block: var(--space-md);
+  border-block-end: var(--rule-hair) solid var(--color-rule);
 
   @include md {
-    grid-template-columns: 180px 1fr;
-    gap: 48px;
-    align-items: start;
+    grid-template-columns: 11rem minmax(0, 1fr);
+    gap: var(--space-lg);
+    align-items: baseline;
   }
 }
 
 .period {
-  font-size: $font-size-sm;
-  color: var(--color-text-tertiary);
-  font-weight: $font-weight-medium;
-  font-variant-numeric: tabular-nums;
-  padding-top: 2px;
-
-  @include md {
-    text-align: right;
-    border-right: 1px solid var(--color-border);
-    padding-right: 24px;
-  }
+  @include label;
+  @include tnum;
 }
 
-.content {
+.record {
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--space-3xs);
 }
 
 .company {
-  font-size: $font-size-lg;
-  font-weight: $font-weight-semibold;
-
-  @include md {
-    font-size: $font-size-xl;
-  }
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-ink);
 }
 
 .role {
-  font-size: $font-size-sm;
-  font-weight: $font-weight-medium;
-  background: var(--gradient-accent);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  width: fit-content;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-accent-text);
 }
 
 .description {
-  font-size: $font-size-sm;
-  color: var(--color-text-secondary);
-  line-height: $line-height-relaxed;
-  margin-top: 8px;
+  max-width: 68ch;
+  margin-block-start: var(--space-3xs);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink-2);
 }

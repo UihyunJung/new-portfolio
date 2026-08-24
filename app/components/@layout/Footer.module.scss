@@ -1,52 +1,70 @@
 @use '../../assets/styles/@utilities/mixins' as *;
 
-.footer {
-  border-top: 1px solid var(--color-border);
-  padding: 32px 0;
+.foot {
+  border-block-start: var(--rule-hair) solid var(--color-rule);
 }
 
-.container {
-  @include container;
+.shell {
+  @include shell;
+  @include band(var(--space-lg), var(--space-lg));
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 16px;
+  gap: var(--space-md);
+}
 
-  @include md {
-    flex-direction: row;
-    justify-content: space-between;
+.colophon {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3xs);
+
+  @include sm {
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    gap: var(--space-sm);
+    align-items: baseline;
   }
 }
 
-.links {
-  display: flex;
-  gap: 12px;
+.key {
+  @include label;
 }
 
-.iconLink {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  color: var(--color-text-tertiary);
-  border: 1px solid var(--color-border);
-  transition: all 0.2s ease;
+.value {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  color: var(--color-ink-2);
+  overflow-wrap: anywhere;
+}
 
-  &:hover {
-    color: var(--color-accent);
-    border-color: var(--color-accent);
-    box-shadow: var(--shadow-glow);
-    transform: translateY(-2px);
+.link {
+  color: var(--color-accent-text);
+  text-decoration: underline;
+  text-decoration-color: var(--color-rule-2);
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--dur-micro) var(--ease-out);
+  @include affordance;
+
+  @include hover-fine {
+    &:hover {
+      text-decoration-color: currentColor;
+    }
   }
 
   &:focus-visible {
     @include focus-ring;
+    border-radius: 2px;
   }
 }
 
 .copyright {
-  font-size: 0.8125rem;
-  color: var(--color-text-tertiary);
+  @include label;
+  @include tnum;
+  padding-block-start: var(--space-md);
+  border-block-start: var(--rule-hair) solid var(--color-rule);
 }

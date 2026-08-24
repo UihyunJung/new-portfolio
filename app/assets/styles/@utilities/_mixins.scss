@@ -1,9 +1,7 @@
 @use '../@tokens/breakpoints' as *;
-@use '../@tokens/spacing' as *;
-@use '../@tokens/typography' as *;
 
 // ============================================
-// Responsive Breakpoint Mixins
+// Responsive — mobile-first, min-width only
 // ============================================
 
 @mixin sm {
@@ -30,50 +28,69 @@
   }
 }
 
+// Desktop threshold: the inline section index appears, the sheet retires.
+@mixin wide {
+  @media (min-width: 60rem) {
+    @content;
+  }
+}
+
+@mixin hover-fine {
+  @media (hover: hover) and (pointer: fine) {
+    @content;
+  }
+}
+
 // ============================================
-// Layout Mixins
+// Layout
 // ============================================
 
-@mixin container {
+@mixin shell {
   width: 100%;
-  max-width: $container-max-width;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: $container-padding;
-  padding-right: $container-padding;
+  max-width: var(--shell-max);
+  margin-inline: auto;
+  padding-inline: var(--shell-pad);
 }
 
-@mixin section-padding {
-  padding-top: $section-padding-mobile;
-  padding-bottom: $section-padding-mobile;
-
-  @include md {
-    padding-top: $section-padding-tablet;
-    padding-bottom: $section-padding-tablet;
-  }
-
-  @include lg {
-    padding-top: $section-padding-desktop;
-    padding-bottom: $section-padding-desktop;
-  }
+// Sections vary their vertical rhythm deliberately — a page where every
+// band carries identical padding reads as a template.
+@mixin band($top: var(--space-2xl), $bottom: var(--space-2xl)) {
+  padding-block: $top $bottom;
 }
 
-@mixin section-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+// ============================================
+// Voice
+// ============================================
+
+// The machine-readout voice. Used for spec-table keys, meta rows and
+// status chips — never as a kicker above a section heading.
+@mixin label {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-muted);
 }
 
+@mixin display($size: var(--text-3xl)) {
+  font-family: var(--font-display);
+  font-size: $size;
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-display);
+  font-style: normal;
+  color: var(--color-ink);
+}
+
+// S2 Hanging — the heading floats in negative space. No rule, no eyebrow.
 @mixin section-heading {
-  font-size: $font-size-3xl;
-  font-weight: $font-weight-bold;
-  letter-spacing: $letter-spacing-tight;
-  margin-bottom: 48px;
+  @include display(var(--text-3xl));
+  margin-block-end: var(--space-xl);
+}
 
-  @include md {
-    font-size: $font-size-4xl;
-  }
+@mixin tnum {
+  font-variant-numeric: tabular-nums;
 }
 
 // ============================================
@@ -87,14 +104,45 @@
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
   white-space: nowrap;
   border-width: 0;
 }
 
+// Never transitioned — the ring must be there the instant focus lands.
 @mixin focus-ring {
-  outline: 2px solid var(--color-accent);
+  outline: var(--rule-solid) solid var(--color-focus);
   outline-offset: 2px;
+}
+
+// Clickable affordances are single-line objects (gate 49).
+@mixin affordance {
+  white-space: nowrap;
+}
+
+@mixin tap-target {
+  @media (pointer: coarse) {
+    min-height: 44px;
+  }
+}
+
+// Completes the eight-state contract for a control: the disabled channel
+// (opacity + cursor + the native attribute) and the reduced-motion escape
+// for any spatial hover/press feedback.
+@mixin control-states {
+  &:disabled,
+  &[aria-disabled='true'] {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  @include reduced-motion {
+    &:hover,
+    &:active,
+    &:hover svg {
+      transform: none;
+    }
+  }
 }
 
 // ============================================

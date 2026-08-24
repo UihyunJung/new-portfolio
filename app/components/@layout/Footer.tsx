@@ -1,42 +1,40 @@
 import { useTranslations } from 'next-intl';
-import { Github, Linkedin, Mail } from 'lucide-react';
-import { socialLinks } from '@lib/data/socialLinks';
 import styles from './Footer.module.scss';
 
-const ICON_MAP = {
-  github: Github,
-  linkedin: Linkedin,
-  email: Mail,
-} as const;
+const SOURCE_URL = 'https://github.com/UihyunJung';
 
 export default function Footer() {
   const t = useTranslations('footer');
   const year = new Date().getFullYear();
 
   return (
-    <footer className={styles.footer}>
-      <div className={styles.container}>
-        <div className={styles.links}>
-          {socialLinks.map((link) => {
-            const Icon = ICON_MAP[link.icon];
-            return (
+    <footer className={styles.foot}>
+      <div className={styles.shell}>
+        {/* Ft4 · Dense typographic colophon — credits, not a sitemap. */}
+        <dl className={styles.colophon}>
+          <div className={styles.row}>
+            <dt className={styles.key}>{t('builtLabel')}</dt>
+            <dd className={styles.value}>{t('builtWith')}</dd>
+          </div>
+          <div className={styles.row}>
+            <dt className={styles.key}>{t('typeLabel')}</dt>
+            <dd className={styles.value}>{t('typeset')}</dd>
+          </div>
+          <div className={styles.row}>
+            <dt className={styles.key}>{t('sourceLabel')}</dt>
+            <dd className={styles.value}>
               <a
-                key={link.key}
-                href={link.href}
-                className={styles.iconLink}
-                target={link.href.startsWith('mailto') ? undefined : '_blank'}
-                rel={
-                  link.href.startsWith('mailto')
-                    ? undefined
-                    : 'noopener noreferrer'
-                }
-                aria-label={link.key}
+                href={SOURCE_URL}
+                className={styles.link}
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <Icon size={20} />
+                github.com/UihyunJung
               </a>
-            );
-          })}
-        </div>
+            </dd>
+          </div>
+        </dl>
+
         <p className={styles.copyright}>{t('copyright', { year })}</p>
       </div>
     </footer>
