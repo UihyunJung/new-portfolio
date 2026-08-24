@@ -186,5 +186,11 @@
     "title": "404",
     "description": "Page not found.",
     "home": "Back to home"
+  },
+  "theme": {
+    "label": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
   }
 }

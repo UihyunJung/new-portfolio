@@ -1,26 +1,37 @@
 @use '../../assets/styles/@utilities/mixins' as *;
 
 .switcher {
-  display: grid;
-  place-items: center;
-  min-width: 36px;
-  height: 36px;
-  padding-inline: var(--space-3xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3xs);
+  height: 32px;
+  padding-inline: var(--space-2xs);
   border-radius: var(--radius-sm);
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
   font-weight: 500;
   letter-spacing: var(--tracking-label);
-  color: var(--color-muted);
+  color: var(--color-ink-2);
   transition:
     color var(--dur-micro) var(--ease-out),
     background-color var(--dur-micro) var(--ease-out);
   @include affordance;
 
+  svg {
+    flex-shrink: 0;
+    color: var(--color-muted);
+    transition: color var(--dur-micro) var(--ease-out);
+  }
+
   @include hover-fine {
     &:hover {
       color: var(--color-ink);
       background-color: var(--color-paper-2);
+
+      svg {
+        color: var(--color-accent);
+      }
     }
   }
 
