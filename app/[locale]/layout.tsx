@@ -80,7 +80,15 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={wantedSans.variable} suppressHydrationWarning>
+    <html
+      lang={locale}
+      // Opts into Next's route-transition handling for the global
+      // `scroll-behavior: smooth` in _reset.scss: anchor jumps stay smooth,
+      // route changes (including locale switches) snap.
+      data-scroll-behavior="smooth"
+      className={wantedSans.variable}
+      suppressHydrationWarning
+    >
       <head>
         <Script id="gtm" strategy="afterInteractive">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
