@@ -54,6 +54,7 @@ export default function ThemeToggle() {
           <button
             key={value}
             type="button"
+            data-option={value}
             className={clsx(styles.option, selected && styles.isSelected)}
             aria-pressed={selected}
             aria-label={t(value)}

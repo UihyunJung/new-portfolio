@@ -29,7 +29,12 @@
   border-radius: 4px;
   background: var(--color-paper);
   transform: translateX(calc(var(--thumb-index, 0) * 28px));
-  transition: transform var(--dur-long) var(--ease-spring);
+  // --dur-short, not --dur-long. The spring's overshoot is a fixed 16% of
+  // the travel, and one lane here is only 28px — about 4.5px. Spread over
+  // 420ms that reads as settling rather than as a bounce; at 220ms the
+  // same 4.5px lands as a distinct pop. The header's index tick keeps the
+  // longer duration because it crosses far more ground.
+  transition: transform var(--dur-short) var(--ease-spring);
   pointer-events: none;
 
   @include reduced-motion {
@@ -50,6 +55,11 @@
     background-color var(--dur-micro) var(--ease-out);
 
   svg {
+    // An explicit function list on BOTH ends of the transition. With
+    // `none` on one side a browser may fall back to interpolating
+    // matrices, and rotate(360deg) is the same matrix as rotate(0deg) —
+    // the moon's full turn would silently collapse into no turn at all.
+    transform: rotate(0deg) scale(1);
     transition: transform var(--dur-long) var(--ease-spring);
   }
 
@@ -66,24 +76,46 @@
 }
 
 // The thumb carries the selection; the option carries its colour and a
-// small spring on the mark itself, so the icon *arrives* rather than
-// switching on under a box that slid into place without it.
+// spring on the mark itself, so the icon *arrives* rather than switching
+// on under a box that slid into place without it.
 //
-// Not the 180° rotation the canvas sketch used: that sketch had two
-// options. Here there are three, and a half-turn is invisible on an
-// eight-ray sun and upside-down on the monitor. Scale reads on all three.
+// The scale is the baseline, shared by all three. The spin is not: each
+// glyph only survives the rotation that lands it back on itself.
 .isSelected {
   color: var(--color-accent-text);
 
   svg {
-    transform: scale(1.08);
+    transform: rotate(0deg) scale(1.08);
   }
+
+  // Eight rays at 45° — a half turn maps the sun onto itself, so it spins
+  // and lands identical.
+  &[data-option='light'] svg {
+    transform: rotate(180deg) scale(1.08);
+  }
+
+  // The crescent has no rotational symmetry; only a full turn brings it
+  // back upright.
+  &[data-option='dark'] svg {
+    transform: rotate(360deg) scale(1.08);
+  }
+
+  // The monitor is deliberately left out. There is no angle that both
+  // spins and lands upright, and a screen resting upside down is a bug,
+  // not a flourish.
 }
 
-// The spring overshoots; compressed into the reset's 150ms clamp that
-// reads as a twitch rather than as physics.
 @include reduced-motion {
+  // The spring overshoots; compressed into the reset's 150ms clamp that
+  // reads as a twitch rather than as physics.
   .option svg {
     transition-timing-function: var(--ease-out);
+  }
+
+  // Keep the state change, drop the spin — a whirling icon is exactly the
+  // unrequested movement this query exists to suppress.
+  .isSelected[data-option='light'] svg,
+  .isSelected[data-option='dark'] svg {
+    transform: rotate(0deg) scale(1.08);
   }
 }
