@@ -1,0 +1,538 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Sans+KR:wght@300;400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; }
+  html:has(.root.light) body { background: oklch(98.5% 0.004 250); }
+  html:has(.root.dark) body { background: oklch(15% 0.014 258); }
+
+  .root {
+    --paper: oklch(15% 0.014 258);
+    --paper-2: oklch(18.5% 0.015 258);
+    --paper-3: oklch(22% 0.016 259);
+    --rule: oklch(28% 0.014 258);
+    --rule-2: oklch(36% 0.016 258);
+    --rule-strong: oklch(56% 0.016 258);
+    --ink: oklch(95% 0.006 250);
+    --ink-2: oklch(86% 0.01 252);
+    --muted: oklch(70% 0.014 254);
+    --accent: oklch(72% 0.16 256);
+    --accent-text: oklch(78% 0.14 256);
+    --accent-soft: oklch(26% 0.05 257);
+    --accent-ink: oklch(16% 0.02 258);
+    --weight-body: 350;
+
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --dur-micro: 120ms;
+    --dur-short: 220ms;
+    --dur-long: 420ms;
+
+    --font-display: 'Space Grotesk', 'Noto Sans KR', sans-serif;
+    --font-body: 'Noto Sans KR', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+    position: relative;
+    width: 100%;
+    min-height: 900px;
+    overflow: clip;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-weight: var(--weight-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .root.light {
+    --paper: oklch(98.5% 0.004 250);
+    --paper-2: oklch(96.8% 0.005 252);
+    --paper-3: oklch(94.2% 0.006 253);
+    --rule: oklch(90% 0.007 253);
+    --rule-2: oklch(83% 0.009 254);
+    --rule-strong: oklch(62% 0.012 255);
+    --ink: oklch(24% 0.02 258);
+    --ink-2: oklch(34% 0.018 257);
+    --muted: oklch(52% 0.017 256);
+    --accent: oklch(54% 0.21 256);
+    --accent-text: oklch(50% 0.19 256);
+    --accent-soft: oklch(95.5% 0.028 256);
+    --accent-ink: oklch(99% 0.003 250);
+    --weight-body: 400;
+  }
+
+  a { color: var(--accent-text); text-decoration: none; }
+  a:hover { color: var(--accent); }
+
+  /* ---- atmosphere ------------------------------------------------ */
+  .field { position: absolute; inset: 0; pointer-events: none; }
+
+  .grid {
+    position: absolute; inset: -1px;
+    background-image:
+      linear-gradient(to right, var(--rule) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
+    background-size: 72px 72px;
+    -webkit-mask-image: radial-gradient(130% 95% at 72% -10%, #000 0%, transparent 74%);
+    mask-image: radial-gradient(130% 95% at 72% -10%, #000 0%, transparent 74%);
+    animation: gridIn 1400ms var(--ease-out) both;
+  }
+  @keyframes gridIn { from { opacity: 0; transform: scale(1.04); } }
+
+  .spot {
+    position: absolute; inset: 0;
+    background: radial-gradient(420px circle at var(--mx, 72%) var(--my, 26%),
+      color-mix(in oklab, var(--accent) 15%, transparent), transparent 68%);
+  }
+
+  .sweep {
+    position: absolute; left: 0; right: 0; top: 56px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    animation: sweep 9s var(--ease-in-out) 1.6s infinite;
+  }
+  @keyframes sweep {
+    0% { transform: translateY(0); opacity: 0; }
+    6% { opacity: 0.7; }
+    88% { opacity: 0.7; }
+    100% { transform: translateY(760px); opacity: 0; }
+  }
+
+  /* ---- top bar --------------------------------------------------- */
+  .bar {
+    position: relative; z-index: 3;
+    border-bottom: 1px solid var(--rule);
+    background: color-mix(in oklab, var(--paper) 86%, transparent);
+    backdrop-filter: blur(10px);
+    animation: barIn 620ms var(--ease-out) both;
+  }
+  @keyframes barIn { from { opacity: 0; transform: translateY(-100%); } }
+
+  .barInner {
+    width: 100%; max-width: 1180px; margin-inline: auto;
+    padding-inline: 48px;
+    height: 56px;
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  }
+
+  .mark {
+    font-family: var(--font-display);
+    font-size: 1.1875rem; font-weight: 700; letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+
+  .navList { display: flex; align-items: center; gap: 24px; list-style: none; margin: 0; padding: 0; }
+  .navLink {
+    display: inline-flex; align-items: baseline; gap: 4px;
+    font-size: 0.875rem; font-weight: 500; color: var(--ink-2);
+    padding-block: 8px; position: relative; cursor: pointer;
+    transition: color var(--dur-micro) var(--ease-out);
+  }
+  .navNum {
+    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.08em; color: var(--muted);
+    transition: color var(--dur-micro) var(--ease-out);
+  }
+  .navLink::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+    background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform var(--dur-short) var(--ease-out);
+  }
+  .navLink:hover { color: var(--ink); }
+  .navLink:hover .navNum { color: var(--accent-text); }
+  .navLink:hover::after { transform: scaleX(1); }
+  .navLink.on { color: var(--ink); }
+  .navLink.on::after { transform: scaleX(1); }
+  .navLink.on .navNum { color: var(--accent-text); }
+
+  .barRight { display: flex; align-items: center; gap: 12px; }
+  .seg {
+    display: flex; align-items: center; position: relative;
+    border: 1px solid var(--rule-2); border-radius: 6px; padding: 2px;
+    background: var(--paper-2);
+  }
+  .segThumb {
+    position: absolute; top: 2px; bottom: 2px; left: 2px; width: 30px;
+    border-radius: 4px; background: var(--accent);
+    transition: transform 280ms var(--ease-in-out);
+  }
+  .segBtn {
+    position: relative; z-index: 1;
+    width: 30px; height: 24px; display: grid; place-items: center;
+    border: 0; background: none; color: var(--muted); cursor: pointer;
+    transition: color var(--dur-short) var(--ease-out);
+  }
+  .segBtn.on { color: var(--accent-ink); }
+  .segBtn svg { display: block; }
+
+  .locale {
+    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.08em; color: var(--muted);
+    border: 1px solid var(--rule-2); border-radius: 6px;
+    padding: 5px 9px; background: none; cursor: pointer;
+    transition: color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+  }
+  .locale:hover { color: var(--ink); border-color: var(--rule-strong); }
+
+  /* ---- hero ------------------------------------------------------ */
+  .shell {
+    position: relative; z-index: 2;
+    width: 100%; max-width: 1180px; margin-inline: auto;
+    padding: 88px 48px 0;
+    display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 72px; align-items: start;
+  }
+
+  .greeting {
+    margin: 0 0 10px;
+    font-size: 1.0625rem; color: var(--muted);
+    animation: riseIn 620ms var(--ease-out) 120ms both;
+  }
+  @keyframes riseIn { from { opacity: 0; transform: translateY(10px); } }
+
+  .name {
+    margin: 0 0 6px;
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 2rem + 6vw, 8rem);
+    font-weight: 600; letter-spacing: -0.03em; line-height: 1.02;
+    color: var(--ink);
+  }
+  .cm { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: 0.06em; }
+  .ch { display: inline-block; animation: charIn 820ms var(--ease-out) both; }
+  @keyframes charIn { from { transform: translateY(112%) rotate(5deg); opacity: 0; } }
+
+  .role {
+    margin: 0; position: relative; display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 1.75rem; font-weight: 500; letter-spacing: 0.08em;
+    line-height: 1.2; color: var(--ink-2);
+  }
+  .rw { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: 0.12em; }
+  .rc { display: inline-block; animation: charIn 700ms var(--ease-out) both; }
+  .roleRule {
+    display: block; height: 2px; background: var(--accent); margin-top: 12px;
+    transform-origin: left; animation: drawRule 900ms var(--ease-out) 900ms both;
+  }
+  @keyframes drawRule { from { transform: scaleX(0); } }
+
+  .desc {
+    margin: 26px 0 0; max-width: 44ch;
+    font-size: 1.0625rem; line-height: 1.75; color: var(--ink-2);
+    white-space: pre-line; text-wrap: pretty;
+    animation: riseIn 620ms var(--ease-out) 980ms both;
+  }
+
+  .actions {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 24px;
+    margin-top: 32px;
+    animation: riseIn 620ms var(--ease-out) 1120ms both;
+  }
+
+  .primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 20px; border: 0; border-radius: 6px;
+    background: var(--accent); color: var(--accent-ink);
+    font-family: var(--font-body); font-size: 0.875rem; font-weight: 600;
+    white-space: nowrap; cursor: pointer; position: relative; overflow: hidden;
+    transition: transform 260ms var(--ease-out), box-shadow 260ms var(--ease-out);
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 40%, transparent);
+  }
+  .primary::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(105deg, transparent 30%, color-mix(in oklab, var(--accent-ink) 26%, transparent) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 620ms var(--ease-out);
+  }
+  .primary:hover::before { transform: translateX(120%); }
+  .primary:hover { box-shadow: 0 0 0 8px color-mix(in oklab, var(--accent) 16%, transparent); }
+  .primary svg { transition: transform var(--dur-short) var(--ease-out); }
+  .primary:hover svg { transform: translateX(3px); }
+  .primary:active { transform: translateY(1px) scale(0.985); }
+
+  .secondary {
+    padding-block: 4px; border: 0; background: none; cursor: pointer;
+    font-family: var(--font-body); font-size: 0.875rem; font-weight: 500;
+    color: var(--ink-2); white-space: nowrap; position: relative;
+  }
+  .secondary::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+    background: var(--rule-2);
+  }
+  .secondary::before {
+    content: ''; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%;
+    background: var(--accent); transform: scaleX(0); transform-origin: right;
+    transition: transform 320ms var(--ease-out);
+  }
+  .secondary:hover { color: var(--accent-text); }
+  .secondary:hover::before { transform: scaleX(1); transform-origin: left; }
+
+  /* ---- spec panel ------------------------------------------------ */
+  .spec {
+    margin: 0; min-width: 0;
+    border: 1px solid var(--rule); border-radius: 10px;
+    background: color-mix(in oklab, var(--paper-2) 88%, transparent);
+    backdrop-filter: blur(6px);
+    overflow: clip;
+    animation: panelIn 760ms var(--ease-out) 420ms both;
+  }
+  @keyframes panelIn { from { opacity: 0; transform: translateY(22px) scale(0.985); } }
+
+  .specHead {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 16px; background: var(--paper-3);
+    border-bottom: 1px solid var(--rule);
+  }
+  .lbl {
+    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+    margin: 0;
+  }
+  .live { display: inline-flex; align-items: center; gap: 6px; }
+  .dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+    animation: pulse 1800ms var(--ease-in-out) infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.35; transform: scale(0.7); } }
+
+  .signalWrap { padding: 14px 16px 4px; border-bottom: 1px solid var(--rule); }
+  .signal { display: block; width: 100%; height: 84px; }
+  .sigLine {
+    stroke-dasharray: 980; stroke-dashoffset: 0;
+    animation: draw 2200ms var(--ease-out) 700ms both;
+  }
+  @keyframes draw { from { stroke-dashoffset: 980; } }
+  .sigBase { stroke-dasharray: 3 5; opacity: 0.45; }
+  .blip {
+    offset-path: path("M0 62 L36 62 L48 26 L60 80 L74 44 L100 44 L112 18 L128 72 L144 50 L182 50 L194 30 L210 68 L226 46 L276 46 L290 22 L304 76 L318 42 L370 42 L384 60 L420 60");
+    offset-rotate: 0deg;
+    animation: blip 7s linear 2200ms infinite;
+  }
+  @keyframes blip { from { offset-distance: 0%; } to { offset-distance: 100%; } }
+
+  .specRow {
+    display: grid; grid-template-columns: 6.5rem minmax(0, 1fr);
+    gap: 16px; align-items: baseline; padding: 12px 16px;
+    animation: rowIn 520ms var(--ease-out) both;
+  }
+  @keyframes rowIn { from { opacity: 0; transform: translateX(14px); } }
+  .specRow + .specRow { border-top: 1px solid var(--rule); }
+  .specKey {
+    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0;
+  }
+  .specVal {
+    margin: 0; font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.5;
+    color: var(--ink); font-variant-numeric: tabular-nums; overflow-wrap: anywhere;
+  }
+
+  /* a real counter, animated by CSS alone via a registered custom property */
+  @property --yrs { syntax: '<integer>'; initial-value: 0; inherits: false; }
+  .count { --yrs: 10; counter-reset: yrs var(--yrs); animation: countYrs 1600ms var(--ease-out) 1400ms both; }
+  .count::before { content: counter(yrs); }
+  @keyframes countYrs { from { --yrs: 0; } to { --yrs: 10; } }
+
+  /* ---- marquee + cue --------------------------------------------- */
+  .foot {
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+    border-top: 1px solid var(--rule);
+    background: color-mix(in oklab, var(--paper) 82%, transparent);
+    backdrop-filter: blur(8px);
+    animation: riseIn 700ms var(--ease-out) 1400ms both;
+  }
+  .marquee {
+    overflow: hidden; padding-block: 16px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  }
+  .track {
+    display: flex; width: max-content;
+    animation: marquee 46s linear infinite;
+  }
+  .marquee:hover .track { animation-play-state: paused; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+  .run {
+    display: flex; align-items: center; gap: 28px; padding-right: 28px;
+    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em;
+    color: var(--muted); white-space: nowrap;
+  }
+  .run b { font-weight: 500; color: var(--ink-2); }
+  .run i { font-style: normal; color: var(--accent); }
+
+  .cue {
+    position: absolute; left: 48px; bottom: 82px; z-index: 2;
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--muted);
+    animation: riseIn 700ms var(--ease-out) 1600ms both;
+  }
+  .cueRail { position: relative; width: 1px; height: 34px; background: var(--rule-2); overflow: hidden; }
+  .cueRail::after {
+    content: ''; position: absolute; inset-inline: 0; height: 14px;
+    background: var(--accent); animation: cueRun 2200ms var(--ease-in-out) infinite;
+  }
+  @keyframes cueRun { from { transform: translateY(-100%); } to { transform: translateY(240%); } }
+
+  /* ---- reduced motion -------------------------------------------- */
+  .root.rm *, .root.rm *::before, .root.rm *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .root *, .root *::before, .root *::after {
+      animation: none !important;
+      transition-duration: 1ms !important;
+    }
+  }
+</style>
+</helmet>
+<div class="{{rootClass}}">
+  <div class="field" aria-hidden="true">
+    <div class="grid"></div>
+    <div class="spot"></div>
+    <div class="sweep"></div>
+  </div>
+
+  <header class="bar">
+    <div class="barInner">
+      <span class="mark">정의현</span>
+      <nav class="nav">
+        <ul class="navList">
+          <li><span class="navLink on"><span class="navNum">01</span>소개</span></li>
+          <li><span class="navLink"><span class="navNum">02</span>기술</span></li>
+          <li><span class="navLink"><span class="navNum">03</span>경력</span></li>
+          <li><span class="navLink"><span class="navNum">04</span>프로젝트</span></li>
+          <li><span class="navLink"><span class="navNum">05</span>연락처</span></li>
+        </ul>
+      </nav>
+      <div class="barRight">
+        <div class="seg">
+          <span class="segThumb" style="transform: translateX({{thumbX}})"></span>
+          <button type="button" class="{{sunClass}}" aria-label="라이트">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+          </button>
+          <button type="button" class="{{moonClass}}" aria-label="다크">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+          </button>
+        </div>
+        <button type="button" class="locale">KO / EN</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="shell">
+    <div>
+      <p class="greeting">안녕하세요</p>
+      <h1 class="name"><span class="cm"><span class="ch" style="animation-delay: 200ms">정</span></span><span class="cm"><span class="ch" style="animation-delay: 265ms">의</span></span><span class="cm"><span class="ch" style="animation-delay: 330ms">현</span></span></h1>
+      <p class="role"><span class="rw"><span class="rc" style="animation-delay: 520ms">F</span></span><span class="rw"><span class="rc" style="animation-delay: 545ms">R</span></span><span class="rw"><span class="rc" style="animation-delay: 570ms">O</span></span><span class="rw"><span class="rc" style="animation-delay: 595ms">N</span></span><span class="rw"><span class="rc" style="animation-delay: 620ms">T</span></span><span class="rw"><span class="rc" style="animation-delay: 645ms">E</span></span><span class="rw"><span class="rc" style="animation-delay: 670ms">N</span></span><span class="rw"><span class="rc" style="animation-delay: 695ms">D</span></span><span class="rw"><span class="rc" style="animation-delay: 720ms">&nbsp;</span></span><span class="rw"><span class="rc" style="animation-delay: 745ms">D</span></span><span class="rw"><span class="rc" style="animation-delay: 770ms">E</span></span><span class="rw"><span class="rc" style="animation-delay: 795ms">V</span></span><span class="rw"><span class="rc" style="animation-delay: 820ms">E</span></span><span class="rw"><span class="rc" style="animation-delay: 845ms">L</span></span><span class="rw"><span class="rc" style="animation-delay: 870ms">O</span></span><span class="rw"><span class="rc" style="animation-delay: 895ms">P</span></span><span class="rw"><span class="rc" style="animation-delay: 920ms">E</span></span><span class="rw"><span class="rc" style="animation-delay: 945ms">R</span></span><span class="roleRule"></span></p>
+      <p class="desc">사용자 경험을 최우선으로 생각하는 프론트엔드 개발자입니다.
+10년 이상의 웹 개발 경험을 바탕으로, 성능과 접근성을 고려한
+모던 웹 애플리케이션을 만듭니다.</p>
+      <div class="actions">
+        <button type="button" class="primary" data-magnetic="">프로젝트<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+        <button type="button" class="secondary">연락하기</button>
+      </div>
+    </div>
+
+    <dl class="spec">
+      <div class="specHead">
+        <p class="lbl">PROFILE</p>
+        <span class="live"><span class="dot"></span><span class="lbl">LIVE</span></span>
+      </div>
+      <div class="signalWrap">
+        <svg class="signal" viewBox="0 0 420 96" fill="none" preserveAspectRatio="none" aria-hidden="true">
+          <path class="sigBase" d="M0 88 L420 88" stroke="var(--rule-2)" stroke-width="1"></path>
+          <path class="sigLine" d="M0 62 L36 62 L48 26 L60 80 L74 44 L100 44 L112 18 L128 72 L144 50 L182 50 L194 30 L210 68 L226 46 L276 46 L290 22 L304 76 L318 42 L370 42 L384 60 L420 60" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+          <circle class="blip" cx="0" cy="0" r="4.5" fill="var(--accent)"></circle>
+        </svg>
+      </div>
+      <div class="specRow" style="animation-delay: 900ms">
+        <dt class="specKey">EXPERIENCE</dt>
+        <dd class="specVal"><span class="count"></span>년+</dd>
+      </div>
+      <div class="specRow" style="animation-delay: 990ms">
+        <dt class="specKey">CORE</dt>
+        <dd class="specVal">React · Next.js · TypeScript</dd>
+      </div>
+      <div class="specRow" style="animation-delay: 1080ms">
+        <dt class="specKey">STATE</dt>
+        <dd class="specVal">Jotai · TanStack Query</dd>
+      </div>
+      <div class="specRow" style="animation-delay: 1170ms">
+        <dt class="specKey">TESTING</dt>
+        <dd class="specVal">Playwright · Vitest</dd>
+      </div>
+      <div class="specRow" style="animation-delay: 1260ms">
+        <dt class="specKey">I18N</dt>
+        <dd class="specVal">next-intl · 11 locales</dd>
+      </div>
+    </dl>
+  </div>
+
+  <div class="cue" aria-hidden="true">
+    <span class="cueRail"></span>
+    <span>SCROLL</span>
+  </div>
+
+  <div class="foot">
+    <div class="marquee">
+      <div class="track">
+        <div class="run"><b>React</b><i>·</i><b>Next.js</b><i>·</i><b>TypeScript</b><i>·</i><b>Jotai</b><i>·</i><b>TanStack Query</b><i>·</i><b>Playwright</b><i>·</i><b>Vitest</b><i>·</i><b>next-intl</b><i>·</i><b>Motion / React</b><i>·</i><b>SCSS / Sass</b><i>·</i><b>Zod</b><i>·</i><b>WebSocket</b><i>·</i><b>GitHub Actions</b><i>·</i><b>Docker</b><i>·</i></div>
+        <div class="run"><b>React</b><i>·</i><b>Next.js</b><i>·</i><b>TypeScript</b><i>·</i><b>Jotai</b><i>·</i><b>TanStack Query</b><i>·</i><b>Playwright</b><i>·</i><b>Vitest</b><i>·</i><b>next-intl</b><i>·</i><b>Motion / React</b><i>·</i><b>SCSS / Sass</b><i>·</i><b>Zod</b><i>·</i><b>WebSocket</b><i>·</i><b>GitHub Actions</b><i>·</i><b>Docker</b><i>·</i></div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Look"},"reduceMotion":{"editor":"boolean","default":false,"section":"Look"},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    const root = document.documentElement;
+    this._move = (e) => {
+      root.style.setProperty('--mx', e.clientX + 'px');
+      root.style.setProperty('--my', e.clientY + 'px');
+      const nodes = document.querySelectorAll('[data-magnetic]');
+      for (const el of nodes) {
+        const r = el.getBoundingClientRect();
+        const dx = e.clientX - (r.left + r.width / 2);
+        const dy = e.clientY - (r.top + r.height / 2);
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const reach = 140;
+        if (dist < reach) {
+          const f = (1 - dist / reach) * 0.32;
+          el.style.transform = 'translate(' + (dx * f).toFixed(2) + 'px,' + (dy * f).toFixed(2) + 'px)';
+        } else if (el.style.transform) {
+          el.style.transform = '';
+        }
+      }
+    };
+    window.addEventListener('pointermove', this._move);
+  }
+
+  componentWillUnmount() {
+    if (this._move) window.removeEventListener('pointermove', this._move);
+  }
+
+  renderVals() {
+    const theme = this.props.theme === 'light' ? 'light' : 'dark';
+    const rm = this.props.reduceMotion === true;
+    return {
+      rootClass: 'root ' + theme + (rm ? ' rm' : ''),
+      thumbX: theme === 'light' ? '0px' : '30px',
+      sunClass: 'segBtn' + (theme === 'light' ? ' on' : ''),
+      moonClass: 'segBtn' + (theme === 'dark' ? ' on' : ''),
+    };
+  }
+}
+</script>
+</body>
+</html>

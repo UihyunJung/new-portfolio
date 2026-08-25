@@ -1,0 +1,34 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 1440, "h": 900, "title": "01 · Kinetic hero", "is_interactive": true },
+    { "file": "ScrollStage.dc.html", "x": 1560, "y": 0, "w": 1440, "h": 900, "title": "02 · Scroll stage", "is_interactive": true },
+    { "file": "MicroInteractions.dc.html", "x": 0, "y": 1080, "w": 1440, "h": 1100, "title": "03 · Micro-interaction sheet", "is_interactive": true },
+    { "file": "ProjectReveal.dc.html", "x": 1560, "y": 1080, "w": 1440, "h": 900, "title": "04 · Project index → viewer", "is_interactive": true },
+    { "file": "MotionSpec.dc.html", "x": 0, "y": 2360, "w": 1080, "h": 880, "title": "05 · Motion tokens", "is_interactive": true },
+    { "file": "Mobile.dc.html", "x": 1240, "y": 2360, "w": 390, "h": 844, "title": "06 · Mobile 390", "is_interactive": true }
+  ],
+  "annotations": [
+    {
+      "id": "note-1",
+      "x": -460,
+      "y": 0,
+      "w": 380,
+      "text": "01 Kinetic hero\n문자 단위 마스크 리빌 · 자석 CTA · 커서 스포트라이트 · SVG stroke 드로잉 + offset-path 블립 · @property 카운터. 트윅으로 라이트/다크와 reduced-motion 폴백을 그 자리에서 확인.\n\n02 Scroll stage\n이 프레임 안에서 스크롤하세요. 전부 CSS scroll-driven animation — scroll(), view(), view-timeline-name 만 씁니다. 스크롤 리스너 JS 없음."
+    },
+    {
+      "id": "note-2",
+      "x": -460,
+      "y": 1080,
+      "w": 380,
+      "text": "03 Micro-interaction sheet\n실제 사이트 컴포넌트 9종이 전부 동작합니다. 호버·클릭해 보세요. 각 타일 아래 모노 라인이 그대로 구현 스펙(duration·easing·delay)입니다.\n\n04 Project index → viewer\n인덱스 행에 호버하면 뷰어가 교체되고, 상세 보기를 누르면 하이라이트가 70ms 간격으로 열립니다."
+    },
+    {
+      "id": "note-3",
+      "x": -460,
+      "y": 2360,
+      "w": 380,
+      "text": "05 Motion tokens\n_motion.scss의 이징 3종에 스프링 하나를 더했습니다. 곡선·러너·지속시간 사다리·스태거가 실제 값으로 재생됩니다.\n\n06 Mobile 390×844\n같은 모션을 모바일 폭에 맞춘 것. reduceMotion 트윅을 켜면 정적 폴백이 됩니다 — 애니메이션을 전부 꺼도 레이아웃이 무너지지 않는 게 설계 조건."
+    }
+  ],
+  "launch": { "view": "canvas" }
+}
