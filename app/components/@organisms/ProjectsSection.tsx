@@ -1,5 +1,6 @@
 import { useTranslations } from 'next-intl';
 import SectionWrapper from '@components/@atoms/SectionWrapper';
+import SectionHeading from '@components/@atoms/SectionHeading';
 import ProjectCard from '@components/@molecules/ProjectCard';
 import { projects } from '@lib/data/projects';
 import styles from './ProjectsSection.module.scss';
@@ -11,7 +12,7 @@ export default function ProjectsSection() {
 
   return (
     <SectionWrapper id="projects">
-      <h2 className={styles.heading}>{t('heading')}</h2>
+      <SectionHeading>{t('heading')}</SectionHeading>
 
       {/* An overview layer. The blocks below give depth; this gives the
           reader the shape of the whole set in one glance. Plain anchors —

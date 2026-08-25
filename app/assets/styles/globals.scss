@@ -16,6 +16,20 @@
  *
  * deviation: Cobalt's window-bar code card dropped -- global discipline 4 /
  *   gate 47 forbid re-drawn chrome. Typographic frame used instead.
+ *
+ * motion (Kinetic Cobalt): the page carries a deliberate motion layer now.
+ *   load    -- hero only: character-level rise (SplitText) + block cues,
+ *              all CSS keyframes, base rule = resting state.
+ *   scroll  -- animation-timeline: view() / scroll(root), via the
+ *              scroll-driven mixins in @utilities/_mixins.scss. No scroll
+ *              listener, no observer, nothing to hydrate.
+ *   pointer -- magnetic CTA + cursor spotlight in the hero (fine pointers
+ *              only), sliding index tick, spring on arriving objects.
+ *   contract: nothing is hidden by JavaScript. Motion is subtracted, not
+ *              added, under prefers-reduced-motion and wherever scroll
+ *              timelines are unsupported -- the layout is already correct.
+ *   cut: an infinite scan hairline across the hero (read as an artefact),
+ *        and the count roll on skill rows (a value that never changes).
  * Hallmark · pre-emit critique: P5 H4 E5 S5 R5 V4
  */
 

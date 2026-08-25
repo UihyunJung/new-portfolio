@@ -34,8 +34,20 @@ export default function ThemeToggle() {
     return <div className={styles.group} aria-hidden="true" />;
   }
 
+  // One thumb that slides between the three, rather than three backgrounds
+  // that cross-fade. The options are equal-width, so its position is pure
+  // arithmetic — no measurement, no ref.
+  const activeIndex = OPTIONS.findIndex((option) => option.value === theme);
+
   return (
     <div className={styles.group} role="group" aria-label={t('label')}>
+      {activeIndex >= 0 && (
+        <span
+          className={styles.thumb}
+          style={{ '--thumb-index': activeIndex } as React.CSSProperties}
+          aria-hidden="true"
+        />
+      )}
       {OPTIONS.map(({ value, Icon }) => {
         const selected = theme === value;
         return (

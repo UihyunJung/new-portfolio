@@ -154,3 +154,140 @@
     @content;
   }
 }
+
+// ============================================
+// Scroll-driven motion
+// ============================================
+//
+// One contract governs everything below: the element's ORDINARY rules are
+// already its resting state, and the keyframes animate *from* the hidden
+// one. So a browser without scroll timelines, and every reduced-motion
+// reader, gets the finished layout — never a blank page waiting on an
+// animation that will not run. Never write the hidden state into a base
+// rule; that is how scroll reveals become a blank-page bug.
+//
+// The reset's reduced-motion block clamps `animation-duration`, which does
+// nothing to a timeline-driven animation — its progress comes from scroll
+// position, not from time. That is why the guard here is explicit.
+
+@mixin supports-scroll-timeline {
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      @content;
+    }
+  }
+}
+
+// --- rise into view -------------------------------------------------------
+// Emit the keyframes ONCE per module, at top level.
+
+@mixin reveal-keyframes {
+  @keyframes reveal-up {
+    from {
+      opacity: 0;
+      transform: translateY(var(--reveal-shift, 1.5rem));
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@mixin reveal-on-scroll($range: entry 8% entry 76%) {
+  @include supports-scroll-timeline {
+    animation: reveal-up linear both;
+    animation-timeline: view();
+    animation-range: $range;
+  }
+}
+
+// --- a heading line that rises out of its own clip box --------------------
+// Needs two elements: the outer clips, the inner moves.
+
+@mixin line-keyframes {
+  @keyframes line-up {
+    from {
+      transform: translateY(105%);
+    }
+
+    to {
+      transform: none;
+    }
+  }
+}
+
+@mixin line-mask {
+  display: block;
+  overflow: hidden;
+  // Hangul and Latin descenders both sit below the baseline; without this
+  // the clip box shaves them.
+  padding-block-end: 0.08em;
+}
+
+@mixin line-rise($range: entry 12% entry 80%) {
+  display: block;
+
+  @include supports-scroll-timeline {
+    animation: line-up linear both;
+    animation-timeline: view();
+    animation-range: $range;
+  }
+}
+
+// --- rules that draw themselves ------------------------------------------
+
+@mixin rule-keyframes {
+  @keyframes rule-draw {
+    from {
+      transform: scaleX(0);
+    }
+
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes rail-draw {
+    from {
+      transform: scaleY(0);
+    }
+
+    to {
+      transform: scaleY(1);
+    }
+  }
+}
+
+@mixin rule-draw-on-scroll($range: entry 14% entry 82%) {
+  transform-origin: left;
+
+  @include supports-scroll-timeline {
+    animation: rule-draw linear both;
+    animation-timeline: view();
+    animation-range: $range;
+  }
+}
+
+// A vertical rail that fills as its own section passes the viewport —
+// the timeline made visible.
+@mixin rail-draw-on-scroll($range: cover 10% cover 82%) {
+  transform-origin: top;
+
+  @include supports-scroll-timeline {
+    animation: rail-draw linear both;
+    animation-timeline: view();
+    animation-range: $range;
+  }
+}
+
+// Reading progress for the whole document, tied to the root scroller.
+@mixin document-progress {
+  transform-origin: left;
+
+  @include supports-scroll-timeline {
+    animation: rule-draw linear both;
+    animation-timeline: scroll(root block);
+  }
+}

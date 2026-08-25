@@ -1,5 +1,22 @@
 @use '../../assets/styles/@utilities/mixins' as *;
 
+@include rule-keyframes;
+
+// Six long blocks in a row: fading each one in as it arrives is exactly the
+// templated effect this page avoids, and it hides text the reader is
+// already trying to read. So nothing here animates opacity. The highlights
+// step in from the margin and their ticks draw — motion you notice only if
+// you are watching for it.
+@keyframes highlight-in {
+  from {
+    transform: translateX(1.25rem);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
 // A Workbench artifact block. No card, no border-gradient, no lift.
 // Hairlines and vertical rhythm do the containment.
 .block {
@@ -94,7 +111,13 @@
   color: var(--color-ink-2);
   text-wrap: pretty;
 
-  // A drawn tick, not a coloured dot.
+  @include supports-scroll-timeline {
+    animation: highlight-in linear both;
+    animation-timeline: view();
+    animation-range: entry 12% entry 66%;
+  }
+
+  // A drawn tick, not a coloured dot — and it really is drawn.
   &::before {
     content: '';
     position: absolute;
@@ -103,6 +126,7 @@
     width: var(--space-2xs);
     height: var(--rule-hair);
     background: var(--color-accent);
+    @include rule-draw-on-scroll(entry 16% entry 70%);
   }
 }
 

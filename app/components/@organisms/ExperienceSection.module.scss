@@ -1,9 +1,41 @@
 @use '../../assets/styles/@utilities/mixins' as *;
 
-.heading {
-  @include section-heading;
-}
+@include rule-keyframes;
 
+// The rail sits in the gutter between the period column (11rem) and the
+// record — see ExperienceCard.module.scss for the grid it belongs to. The
+// track is painted as a background so both pseudo-elements stay free: one
+// for the section rule, one for the accent that fills it.
 .index {
-  border-block-start: var(--rule-solid) solid var(--color-ink);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 0;
+    block-size: var(--rule-solid);
+    background: var(--color-ink);
+    @include rule-draw-on-scroll(entry 4% entry 58%);
+  }
+
+  @include md {
+    background-image: linear-gradient(
+      var(--color-rule-2),
+      var(--color-rule-2)
+    );
+    background-size: var(--rule-hair) 100%;
+    background-position: calc(11rem + var(--space-lg) / 2) 0;
+    background-repeat: no-repeat;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset-block: 0;
+      inset-inline-start: calc(11rem + var(--space-lg) / 2);
+      inline-size: var(--rule-hair);
+      background: var(--color-accent);
+      @include rail-draw-on-scroll;
+    }
+  }
 }

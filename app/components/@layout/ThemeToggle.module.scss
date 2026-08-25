@@ -3,6 +3,7 @@
 // Segmented control: shows the selected setting *and* both alternatives.
 // Hairlines and a raised surface carry the selection — no coloured glow.
 .group {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 2px;
@@ -13,7 +14,27 @@
   background: var(--color-paper-2);
 }
 
+// 26px option + 2px gap = a 28px step. The spring is what makes it read as
+// one object changing lanes instead of a rectangle being redrawn.
+.thumb {
+  position: absolute;
+  inset-block: 3px;
+  inset-inline-start: 3px;
+  inline-size: 26px;
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: 4px;
+  background: var(--color-paper);
+  transform: translateX(calc(var(--thumb-index, 0) * 28px));
+  transition: transform var(--dur-long) var(--ease-spring);
+  pointer-events: none;
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
 .option {
+  position: relative;
   display: grid;
   place-items: center;
   width: 26px;
@@ -36,8 +57,7 @@
   }
 }
 
+// The thumb carries the selection now; the option only carries its colour.
 .isSelected {
   color: var(--color-accent-text);
-  background: var(--color-paper);
-  border: var(--rule-hair) solid var(--color-rule);
 }

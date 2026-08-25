@@ -1,14 +1,32 @@
 @use '../../assets/styles/@utilities/mixins' as *;
 
-.heading {
-  @include section-heading;
-}
+@include reveal-keyframes;
+@include rule-keyframes;
 
 .sheet {
-  border-block-start: var(--rule-solid) solid var(--color-ink);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 0;
+    block-size: var(--rule-solid);
+    background: var(--color-ink);
+    @include rule-draw-on-scroll(entry 4% entry 58%);
+  }
 }
 
+// The rows are stacked, so scroll position staggers them on its own — no
+// per-row delay is needed or wanted.
+//
+// Hover sweeps a band of accent light across the row. It is contained by
+// the row's own stacking context so it can sit under the type without
+// escaping into the band behind it.
 .row {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas:
@@ -17,6 +35,40 @@
   gap: var(--space-3xs) var(--space-sm);
   padding-block: var(--space-sm);
   border-block-end: var(--rule-hair) solid var(--color-rule);
+  @include reveal-on-scroll(entry 6% entry 62%);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklab, var(--color-accent) 12%, transparent),
+      transparent
+    );
+    transform: translateX(-100%);
+    transition: transform var(--dur-long) var(--ease-out);
+    pointer-events: none;
+  }
+
+  @include hover-fine {
+    &:hover::before {
+      transform: translateX(100%);
+    }
+
+    &:hover .count {
+      color: var(--color-accent-text);
+      transform: translateY(-2px);
+    }
+  }
+
+  @include reduced-motion {
+    &::before {
+      display: none;
+    }
+  }
 
   @include md {
     grid-template-columns: 10rem minmax(0, 1fr) 2.5rem;
@@ -46,6 +98,9 @@
   @include label;
   @include tnum;
   grid-area: count;
+  transition:
+    color var(--dur-micro) var(--ease-out),
+    transform var(--dur-short) var(--ease-out);
 
   @include md {
     text-align: end;

@@ -1,8 +1,6 @@
 @use '../../assets/styles/@utilities/mixins' as *;
 
-.heading {
-  @include section-heading;
-}
+@include rule-keyframes;
 
 // Overview index — a table of contents, not a repeat of the blocks.
 .index {
@@ -17,23 +15,49 @@
   }
 }
 
+// Hovering a row draws a rule down its leading edge and steps the row in
+// behind it — the entry acknowledges the cursor without moving anything
+// else on the page.
 .indexLink {
+  position: relative;
   display: grid;
   grid-template-columns: 2rem minmax(0, 1fr) auto;
   gap: var(--space-2xs);
   align-items: baseline;
   padding-block: var(--space-2xs);
+  padding-inline-start: 0;
   border-block-end: var(--rule-hair) solid var(--color-rule);
-  transition: color var(--dur-micro) var(--ease-out);
+  transition:
+    color var(--dur-micro) var(--ease-out),
+    padding-inline-start var(--dur-short) var(--ease-out),
+    background-color var(--dur-short) var(--ease-out);
   @include tap-target;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    inline-size: var(--rule-solid);
+    background: var(--color-accent);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform var(--dur-short) var(--ease-out);
+  }
 
   @include hover-fine {
     &:hover {
       color: var(--color-accent-text);
+      padding-inline-start: var(--space-sm);
+      background-color: var(--color-accent-soft);
 
       .indexTitle {
         text-decoration-color: currentColor;
       }
+    }
+
+    &:hover::before {
+      transform: scaleY(1);
     }
   }
 
@@ -68,5 +92,15 @@
 }
 
 .sequence {
-  border-block-start: var(--rule-solid) solid var(--color-ink);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 0;
+    block-size: var(--rule-solid);
+    background: var(--color-ink);
+    @include rule-draw-on-scroll(entry 4% entry 58%);
+  }
 }

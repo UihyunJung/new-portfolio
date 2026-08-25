@@ -1,0 +1,46 @@
+@use '../../assets/styles/@utilities/mixins' as *;
+
+@keyframes split-rise {
+  from {
+    opacity: 0;
+    // A touch of rotation so the unit arrives rather than slides — the
+    // clip box hides the pivot, only the settle is visible.
+    transform: translateY(112%) rotate(5deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.split {
+  display: inline;
+}
+
+.reader {
+  @include visually-hidden;
+}
+
+// The clip box. Descenders sit below the baseline, so the box is grown
+// rather than the glyph shaved.
+.mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-block-end: 0.06em;
+}
+
+// The resting state IS the base rule. The keyframes move *from* hidden,
+// with `both` holding the start through the delay — so switching the
+// animation off leaves the line correctly typeset.
+.unit {
+  display: inline-block;
+  animation: split-rise var(--dur-long) var(--ease-out) both;
+  // A transform-only animation the compositor can own.
+  will-change: transform;
+
+  @include reduced-motion {
+    animation: none;
+  }
+}

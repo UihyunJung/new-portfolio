@@ -1,11 +1,16 @@
 @use '../../assets/styles/@utilities/mixins' as *;
 
+@include reveal-keyframes;
+
 .row {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--space-2xs);
   padding-block: var(--space-md);
   border-block-end: var(--rule-hair) solid var(--color-rule);
+  --reveal-shift: 1rem;
+  @include reveal-on-scroll(entry 6% entry 62%);
 
   @include md {
     grid-template-columns: 11rem minmax(0, 1fr);
@@ -17,6 +22,23 @@
 .period {
   @include label;
   @include tnum;
+  position: relative;
+
+  // The node where this row meets the section's rail. Sized and placed
+  // against the same gutter maths as ExperienceSection's rail.
+  @include md {
+    &::after {
+      content: '';
+      position: absolute;
+      inset-block-start: 0.42em;
+      inset-inline-start: calc(100% + var(--space-lg) / 2);
+      inline-size: 5px;
+      block-size: 5px;
+      margin-inline-start: -2px;
+      border-radius: 50%;
+      background: var(--color-accent);
+    }
+  }
 }
 
 .record {

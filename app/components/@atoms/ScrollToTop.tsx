@@ -17,18 +17,21 @@ export default function ScrollToTop() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Always mounted, never conditionally rendered: an element that only
+  // exists while it is visible has no state to transition *from*, so it can
+  // only pop. `inert` keeps the hidden button out of the tab order.
   return (
     <div className={styles.container}>
-      {visible && (
-        <button
-          className={styles.btn}
-          onClick={scrollToTop}
-          type="button"
-          aria-label={t('backToTop')}
-        >
-          <ArrowUp size={18} aria-hidden="true" />
-        </button>
-      )}
+      <button
+        className={styles.btn}
+        onClick={scrollToTop}
+        type="button"
+        aria-label={t('backToTop')}
+        data-visible={visible ? 'true' : 'false'}
+        inert={!visible ? true : undefined}
+      >
+        <ArrowUp size={18} aria-hidden="true" />
+      </button>
     </div>
   );
 }

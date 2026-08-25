@@ -24,10 +24,28 @@
   border-radius: var(--radius-sm);
   background: var(--color-paper);
   color: var(--color-ink-2);
+  // Arrives with a spring; leaves without one. An object that overshoots
+  // on the way out reads as a glitch, not as physics.
+  opacity: 0;
+  transform: translateY(1rem) scale(0.82);
+  pointer-events: none;
   transition:
+    opacity var(--dur-short) var(--ease-out),
+    transform var(--dur-short) var(--ease-in),
     color var(--dur-micro) var(--ease-out),
     border-color var(--dur-micro) var(--ease-out);
   @include control-states;
+
+  &[data-visible='true'] {
+    opacity: 1;
+    transform: translateY(var(--press-y, 0));
+    pointer-events: auto;
+    transition:
+      opacity var(--dur-short) var(--ease-out),
+      transform var(--dur-long) var(--ease-spring),
+      color var(--dur-micro) var(--ease-out),
+      border-color var(--dur-micro) var(--ease-out);
+  }
 
   @include hover-fine {
     &:hover {
@@ -37,7 +55,15 @@
   }
 
   &:active {
-    transform: translateY(1px);
+    --press-y: 1px;
+  }
+
+  @include reduced-motion {
+    transform: none;
+
+    &[data-visible='true'] {
+      transition-timing-function: var(--ease-out);
+    }
   }
 
   &:focus-visible {

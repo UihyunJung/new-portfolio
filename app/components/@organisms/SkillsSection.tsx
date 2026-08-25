@@ -1,5 +1,6 @@
 import { useTranslations } from 'next-intl';
 import SectionWrapper from '@components/@atoms/SectionWrapper';
+import SectionHeading from '@components/@atoms/SectionHeading';
 import { skillCategories } from '@lib/data/skills';
 import styles from './SkillsSection.module.scss';
 
@@ -8,7 +9,7 @@ export default function SkillsSection() {
 
   return (
     <SectionWrapper id="skills" surface>
-      <h2 className={styles.heading}>{t('heading')}</h2>
+      <SectionHeading>{t('heading')}</SectionHeading>
 
       {/* F3 · Tabular spec sheet — name, value, footnote. Hairline rows,
           tabular numerics. No icons, no chips, no cards. */}

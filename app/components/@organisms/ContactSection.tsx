@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Copy, Check } from 'lucide-react';
 import SectionWrapper from '@components/@atoms/SectionWrapper';
+import SectionHeading from '@components/@atoms/SectionHeading';
 import { socialLinks } from '@lib/data/socialLinks';
 import styles from './ContactSection.module.scss';
 
@@ -27,7 +28,7 @@ export default function ContactSection() {
 
   return (
     <SectionWrapper id="contact">
-      <h2 className={styles.heading}>{t('heading')}</h2>
+      <SectionHeading>{t('heading')}</SectionHeading>
       <p className={styles.description}>{t('description')}</p>
 
       <div className={styles.emailRow}>
@@ -41,11 +42,13 @@ export default function ContactSection() {
           onClick={copyEmail}
           data-state={copied ? 'success' : 'idle'}
         >
-          {copied ? (
-            <Check size={13} aria-hidden="true" />
-          ) : (
-            <Copy size={13} aria-hidden="true" />
-          )}
+          {/* Both marks are always mounted so the swap can be a crossfade
+              rather than a pop — a conditional render has nothing to
+              transition from. */}
+          <span className={styles.copyIcon} aria-hidden="true">
+            <Copy size={13} className={styles.copyIdle} />
+            <Check size={13} className={styles.copyDone} />
+          </span>
           {copied ? t('copied') : t('copy')}
         </button>
       </div>

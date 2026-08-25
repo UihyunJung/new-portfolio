@@ -1,17 +1,133 @@
 @use '../../assets/styles/@utilities/mixins' as *;
 
-// H2 · Split diptych — lede left (7), artifact right (5). Never centred,
-// never full-viewport: the hero is the height of what it holds.
-.hero {
-  @include band(var(--space-2xl), var(--space-3xl));
+// ============================================
+// The load entrance
+// ============================================
+//
+// All of it is CSS, and the reason is not preference. A JS entrance writes
+// its hidden state into the server HTML: `opacity: 0` ships on the
+// description, both calls to action and the spec panel, and stays there
+// until hydration runs — permanently, if it never does. Here the base rule
+// is the resting state, the keyframes move *from* hidden, and `both` holds
+// that start through the delay. The hero is complete in the markup and the
+// animation is the enhancement.
+//
+// The cues interleave with the character rise in SplitText, which is timed
+// from HeroSection.tsx: name at 180ms, role from 470ms.
 
-  @include wide {
-    @include band(var(--space-3xl), var(--space-4xl));
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
   }
 }
 
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(0.99);
+  }
+}
+
+@keyframes row-in {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+}
+
+@mixin enter($name, $duration, $delay) {
+  animation: $name $duration var(--ease-out) $delay both;
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+// H2 · Split diptych — lede left (7), artifact right (5). Never centred,
+// never full-viewport: the hero is the height of what it holds.
+//
+// The section closes on the running stack band rather than on empty
+// padding, so the bottom of the band IS the bottom of the hero.
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  @include band(var(--space-2xl), 0);
+
+  @include wide {
+    @include band(var(--space-3xl), 0);
+  }
+}
+
+// ============================================
+// Atmosphere
+// ============================================
+// Sits behind the content in the hero's own stacking context. Entirely
+// decorative: no state depends on it, and none of it is announced.
+
+.field {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.grid {
+  position: absolute;
+  // Bleeds a pixel so the first rule is not clipped in half.
+  inset: -1px;
+  background-image:
+    linear-gradient(to right, var(--color-rule) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-rule) 1px, transparent 1px);
+  background-size: 72px 72px;
+  -webkit-mask-image: radial-gradient(
+    130% 95% at 72% -10%,
+    #000 0%,
+    transparent 74%
+  );
+  mask-image: radial-gradient(130% 95% at 72% -10%, #000 0%, transparent 74%);
+  animation: field-in 1.4s var(--ease-out) both;
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes field-in {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+}
+
+// Follows the cursor. `--pointer-*` are written by usePointerField, which
+// declines to run on a coarse pointer or under reduced motion — so the
+// opacity default of 0 is also the permanent state for those readers.
+.spot {
+  position: absolute;
+  inset: 0;
+  opacity: var(--pointer-on, 0);
+  background: radial-gradient(
+    420px circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
+    color-mix(in oklab, var(--color-accent) 15%, transparent),
+    transparent 68%
+  );
+  transition: opacity var(--dur-long) var(--ease-out);
+}
+
+// A scanning hairline was tried here and cut: crossing the hero every few
+// seconds, on light paper especially, it reads as a rendering artefact
+// rather than as a designed element — and an infinite loop in the hero is
+// motion the reader never asked for.
+
+// ============================================
+// Lede
+// ============================================
+
 .shell {
   @include shell;
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--space-xl);
@@ -31,20 +147,51 @@
   font-size: var(--text-md);
   color: var(--color-muted);
   margin-block-end: var(--space-2xs);
+  @include enter(rise-in, var(--dur-long), 20ms);
 }
 
 .name {
-  @include display(var(--text-display));
-  margin-block-end: var(--space-2xs);
+  @include display(var(--text-display-l));
+  margin-block-end: var(--space-3xs);
 }
 
+// The datasheet voice, at display scale. Uppercased in CSS so the
+// translation files keep sentence case.
 .role {
-  font-family: var(--font-display);
-  font-size: var(--text-xl);
+  position: relative;
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
   font-weight: var(--weight-medium);
-  letter-spacing: var(--tracking-tight);
+  letter-spacing: var(--tracking-label);
+  line-height: var(--leading-tight);
+  text-transform: uppercase;
   color: var(--color-ink-2);
   margin-block-end: var(--space-md);
+
+  @include md {
+    font-size: var(--text-2xl);
+  }
+}
+
+// Draws itself once the last word has landed.
+.roleRule {
+  display: block;
+  block-size: var(--rule-solid);
+  margin-block-start: var(--space-2xs);
+  background: var(--color-accent);
+  transform-origin: left;
+  animation: rule-in var(--dur-long) var(--ease-out) 900ms both;
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes rule-in {
+  from {
+    transform: scaleX(0);
+  }
 }
 
 .description {
@@ -52,6 +199,7 @@
   line-height: var(--leading-relaxed);
   color: var(--color-ink-2);
   text-wrap: pretty;
+  @include enter(rise-in, var(--dur-long), 1s);
 
   @include md {
     white-space: pre-line;
@@ -64,10 +212,15 @@
   align-items: center;
   gap: var(--space-md);
   margin-block-start: var(--space-lg);
+  @include enter(rise-in, var(--dur-long), 1.14s);
 }
 
 // Cobalt's one solid signal button. 6px radius — ruler-drawn, not a pill.
+// `transform` is composed from custom properties so the magnetic pull
+// (written by useMagnetic) and the press state cannot clobber each other.
 .primary {
+  position: relative;
+  overflow: clip;
   display: inline-flex;
   align-items: center;
   gap: var(--space-2xs);
@@ -77,53 +230,106 @@
   color: var(--color-accent-ink);
   font-size: var(--text-sm);
   font-weight: var(--weight-semibold);
+  transform: translate(var(--magnet-x, 0), var(--magnet-y, 0))
+    scale(var(--press, 1));
   transition:
-    background-color var(--dur-micro) var(--ease-out),
-    transform var(--dur-micro) var(--ease-out);
+    transform var(--dur-short) var(--ease-out),
+    box-shadow var(--dur-short) var(--ease-out);
   @include affordance;
   @include tap-target;
   @include control-states;
 
+  // A single pass of light across the fill, on hover only.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      color-mix(in oklab, var(--color-accent-ink) 24%, transparent) 50%,
+      transparent 70%
+    );
+    transform: translateX(-120%);
+    transition: transform 620ms var(--ease-out);
+  }
+
   svg {
+    position: relative;
     transition: transform var(--dur-micro) var(--ease-out);
   }
 
   @include hover-fine {
+    &:hover {
+      box-shadow: 0 0 0 8px color-mix(in oklab, var(--color-accent) 14%, transparent);
+    }
+
+    &:hover::before {
+      transform: translateX(120%);
+    }
+
     &:hover svg {
       transform: translateX(2px);
     }
   }
 
   &:active {
-    transform: translateY(1px);
+    --press: 0.985;
   }
 
   &:focus-visible {
     @include focus-ring;
   }
+
+  @include reduced-motion {
+    &::before {
+      display: none;
+    }
+  }
 }
 
 // C3 · Typographic link — a word and a 1px underline. No box, no fill.
+// The underline wipes in from the cursor's side rather than fading.
 .secondary {
+  position: relative;
   padding-block: var(--space-3xs);
   font-size: var(--text-sm);
   font-weight: var(--weight-medium);
   color: var(--color-ink-2);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-decoration-color: var(--color-rule-2);
-  text-underline-offset: 5px;
-  transition:
-    color var(--dur-micro) var(--ease-out),
-    text-decoration-color var(--dur-micro) var(--ease-out);
+  transition: color var(--dur-micro) var(--ease-out);
   @include affordance;
   @include tap-target;
   @include control-states;
 
+  &::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    block-size: 1px;
+    background: var(--color-rule-2);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    block-size: 1px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--dur-short) var(--ease-out);
+  }
+
   @include hover-fine {
     &:hover {
       color: var(--color-accent-text);
-      text-decoration-color: var(--color-accent);
+    }
+
+    &:hover::before {
+      transform: scaleX(1);
+      transform-origin: left;
     }
   }
 
@@ -142,7 +348,9 @@
   border: var(--rule-hair) solid var(--color-rule);
   border-radius: var(--radius-md);
   background: var(--color-paper-2);
+  // Also the clip the rows slide in behind.
   overflow: clip;
+  @include enter(panel-in, 520ms, 420ms);
 }
 
 .specHead {
@@ -158,11 +366,20 @@
   @include label;
 }
 
+// The panel settles first, then deals its rows out. `.specHead` is the
+// first child, so the rows start at nth-child(2).
 .specRow {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--space-3xs);
   padding: var(--space-xs) var(--space-sm);
+  @include enter(row-in, var(--dur-long), 0ms);
+
+  @for $i from 1 through 5 {
+    &:nth-child(#{$i + 1}) {
+      animation-delay: #{760 + ($i - 1) * 60}ms;
+    }
+  }
 
   & + & {
     border-block-start: var(--rule-hair) solid var(--color-rule);
@@ -186,4 +403,131 @@
   line-height: var(--leading-normal);
   color: var(--color-ink);
   overflow-wrap: anywhere;
+}
+
+// ============================================
+// Scroll cue + running stack
+// ============================================
+
+.cue {
+  @include label;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  inline-size: 100%;
+  max-inline-size: var(--shell-max);
+  margin-inline: auto;
+  margin-block-start: var(--space-xl);
+  padding-inline: var(--shell-pad);
+  animation: cue-in var(--dur-long) var(--ease-out) 1.6s both;
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes cue-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.cueRail {
+  position: relative;
+  flex: none;
+  inline-size: var(--rule-hair);
+  block-size: 2rem;
+  background: var(--color-rule-2);
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    block-size: 0.875rem;
+    background: var(--color-accent);
+    animation: cue-run 2.2s var(--ease-in-out) infinite;
+  }
+
+  @include reduced-motion {
+    &::after {
+      animation: none;
+      inset-block-start: 0;
+    }
+  }
+}
+
+@keyframes cue-run {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(240%);
+  }
+}
+
+.ticker {
+  margin-block-start: var(--space-lg);
+  padding-block: var(--space-sm);
+  border-block: var(--rule-hair) solid var(--color-rule);
+  background: var(--color-paper-2);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
+
+  @include hover-fine {
+    &:hover .tickerTrack {
+      animation-play-state: paused;
+    }
+  }
+}
+
+.tickerTrack {
+  display: flex;
+  inline-size: max-content;
+  // Two identical runs; one full run is exactly 50% of the track, so the
+  // loop point is invisible.
+  animation: ticker-run 64s linear infinite;
+  will-change: transform;
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes ticker-run {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.tickerRun {
+  display: flex;
+  align-items: center;
+}
+
+.tickerItem {
+  @include label;
+  text-transform: none;
+  white-space: nowrap;
+
+  &::after {
+    content: '·';
+    margin-inline: var(--space-md);
+    color: var(--color-accent);
+  }
 }

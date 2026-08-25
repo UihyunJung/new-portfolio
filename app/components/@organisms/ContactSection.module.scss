@@ -1,9 +1,5 @@
 @use '../../assets/styles/@utilities/mixins' as *;
 
-.heading {
-  @include section-heading;
-}
-
 .description {
   font-size: var(--text-md);
   line-height: var(--leading-relaxed);
@@ -91,6 +87,54 @@
   &[data-state='success'] {
     color: var(--color-accent-text);
     border-color: var(--color-accent);
+
+    .copyIdle {
+      opacity: 0;
+      transform: scale(0.4) rotate(25deg);
+    }
+
+    .copyDone {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+// The one place a spring is right on this page: the tick lands, and the
+// slight overshoot is what makes it read as a confirmation rather than a
+// state flip.
+.copyIcon {
+  position: relative;
+  flex: none;
+  inline-size: 13px;
+  block-size: 13px;
+
+  svg {
+    position: absolute;
+    inset: 0;
+    transition:
+      opacity var(--dur-short) var(--ease-out),
+      transform var(--dur-long) var(--ease-spring);
+  }
+}
+
+.copyIdle {
+  opacity: 1;
+}
+
+.copyDone {
+  opacity: 0;
+  transform: scale(0.4) rotate(-25deg);
+}
+
+@include reduced-motion {
+  .copyIcon svg {
+    transition-property: opacity;
+    transform: none;
+  }
+
+  .copyBtn[data-state='success'] .copyIdle {
+    transform: none;
   }
 }
 
