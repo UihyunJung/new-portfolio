@@ -8,6 +8,10 @@
 // for the section rule, one for the accent that fills it.
 .index {
   position: relative;
+  // The drawn rule replaces a `border-block-start`; the padding gives it
+  // back the band that border occupied. Everything below — the rail track
+  // and the rail itself — starts under that band rather than crossing it.
+  padding-block-start: var(--rule-solid);
 
   &::before {
     content: '';
@@ -24,14 +28,14 @@
       var(--color-rule-2),
       var(--color-rule-2)
     );
-    background-size: var(--rule-hair) 100%;
-    background-position: calc(11rem + var(--space-lg) / 2) 0;
+    background-size: var(--rule-hair) calc(100% - var(--rule-solid));
+    background-position: calc(11rem + var(--space-lg) / 2) var(--rule-solid);
     background-repeat: no-repeat;
 
     &::after {
       content: '';
       position: absolute;
-      inset-block: 0;
+      inset-block: var(--rule-solid) 0;
       inset-inline-start: calc(11rem + var(--space-lg) / 2);
       inline-size: var(--rule-hair);
       background: var(--color-accent);

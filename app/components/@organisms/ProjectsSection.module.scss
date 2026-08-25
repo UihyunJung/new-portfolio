@@ -93,6 +93,9 @@
 
 .sequence {
   position: relative;
+  // The drawn rule replaces a `border-block-start`; the padding gives it
+  // back the band that border occupied.
+  padding-block-start: var(--rule-solid);
 
   &::before {
     content: '';

@@ -21,6 +21,11 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   margin-block-start: var(--space-xl);
+  // The rule below is absolutely positioned so it can draw itself, which
+  // means it no longer occupies a band the way `border-block-start` did.
+  // Without this padding the stats start *inside* it and their leading
+  // dividers notch the rule at every column edge.
+  padding-block-start: var(--rule-solid);
 
   // The strip's own rule, drawn rather than declared — the one place the
   // section announces itself before the figures arrive.
