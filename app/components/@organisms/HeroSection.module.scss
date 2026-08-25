@@ -116,10 +116,58 @@
   transition: opacity var(--dur-long) var(--ease-out);
 }
 
-// A scanning hairline was tried here and cut: crossing the hero every few
-// seconds, on light paper especially, it reads as a rendering artefact
-// rather than as a designed element — and an infinite loop in the hero is
-// motion the reader never asked for.
+// A hairline that scans the hero, once every 11s.
+//
+// The element is the full height of the band and the line rides its top
+// edge, so `translateY(100%)` travels exactly the hero's height — a fixed
+// distance in `vh` under-shoots the taller English hero and over-shoots on
+// a short viewport. Transform and opacity only: it stays on the compositor.
+.sweep {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 0;
+  block-size: 100%;
+  animation: sweep 11s var(--ease-in-out) 1.6s infinite;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 0;
+    block-size: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-accent),
+      transparent
+    );
+  }
+
+  @include reduced-motion {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+@keyframes sweep {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  8% {
+    opacity: 0.55;
+  }
+
+  86% {
+    opacity: 0.55;
+  }
+
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
 
 // ============================================
 // Lede

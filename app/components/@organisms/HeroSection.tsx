@@ -43,6 +43,7 @@ export default function HeroSection() {
       <div className={styles.field} aria-hidden="true">
         <span className={styles.grid} />
         <span className={styles.spot} />
+        <span className={styles.sweep} />
       </div>
 
       <div className={styles.shell}>
