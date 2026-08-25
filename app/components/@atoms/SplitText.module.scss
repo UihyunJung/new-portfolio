@@ -22,6 +22,14 @@
   @include visually-hidden;
 }
 
+// Holds a word together. Without it every character is an independent
+// inline-block and the line can break between any two of them — and the
+// reset's `overflow-wrap: anywhere` on headings makes that likely. The
+// space between words stays outside, so that is the only break point.
+.word {
+  white-space: nowrap;
+}
+
 // The clip box. Descenders sit below the baseline, so the box is grown
 // rather than the glyph shaved.
 .mask {
