@@ -18,8 +18,12 @@
 // one object changing lanes instead of a rectangle being redrawn.
 .thumb {
   position: absolute;
-  inset-block: 3px;
-  inset-inline-start: 3px;
+  // These offsets resolve against the PADDING box, which already excludes
+  // the group's 1px border — so they are the group's padding alone. Adding
+  // the border on top parked the thumb a pixel off its option and two
+  // pixels short of its height.
+  inset-block: 2px;
+  inset-inline-start: 2px;
   inline-size: 26px;
   border: var(--rule-hair) solid var(--color-rule);
   border-radius: 4px;
@@ -45,6 +49,10 @@
     color var(--dur-micro) var(--ease-out),
     background-color var(--dur-micro) var(--ease-out);
 
+  svg {
+    transition: transform var(--dur-long) var(--ease-spring);
+  }
+
   @include hover-fine {
     &:hover {
       color: var(--color-ink);
@@ -57,7 +65,25 @@
   }
 }
 
-// The thumb carries the selection now; the option only carries its colour.
+// The thumb carries the selection; the option carries its colour and a
+// small spring on the mark itself, so the icon *arrives* rather than
+// switching on under a box that slid into place without it.
+//
+// Not the 180° rotation the canvas sketch used: that sketch had two
+// options. Here there are three, and a half-turn is invisible on an
+// eight-ray sun and upside-down on the monitor. Scale reads on all three.
 .isSelected {
   color: var(--color-accent-text);
+
+  svg {
+    transform: scale(1.08);
+  }
+}
+
+// The spring overshoots; compressed into the reset's 150ms clamp that
+// reads as a twitch rather than as physics.
+@include reduced-motion {
+  .option svg {
+    transition-timing-function: var(--ease-out);
+  }
 }
