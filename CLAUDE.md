@@ -34,7 +34,7 @@ npm run start      # 프로덕션 서버
 - `@atoms/` — SectionWrapper, ScrollToTop, ErrorPage 등
 - `@molecules/` — SkillCard, ProjectCard, ExperienceCard
 - `@organisms/` — HeroSection, AboutSection, SkillsSection 등 (페이지 섹션 단위)
-- `@layout/` — Header, Footer, ThemeProvider, MotionProvider, LocaleSwitcher
+- `@layout/` — Header, Footer, ThemeProvider, LocaleSwitcher
 
 ### SCSS 아키텍처
 
@@ -68,13 +68,14 @@ npm run start      # 프로덕션 서버
 1. **숨김 상태를 기본 규칙에 쓰지 않는다.** 기본 규칙이 정지 상태이고,
    키프레임이 *숨김에서* 출발한다. 스크롤 타임라인 미지원 브라우저와
    reduced-motion 사용자는 완성된 레이아웃을 본다
-2. **JS로 콘텐츠를 숨기지 않는다.** motion/react의 `initial`은 **서버 HTML에
-   기록**되므로, 페이드인 진입은 하이드레이션 전까지(실패하면 영구히)
-   콘텐츠를 안 보이게 만든다. `app/lib/animations.ts` 참고
+2. **JS로 콘텐츠를 숨기지 않는다.** motion/react 같은 라이브러리의 `initial`은
+   **서버 HTML에 기록**되므로, 페이드인 진입은 하이드레이션 전까지(실패하면
+   영구히) 콘텐츠를 안 보이게 만든다. 히어로의 CTA가 실제로 그렇게 사라졌었다
 
-`MotionProvider`와 `app/lib/animations.ts`는 남아 있지만 현재 미사용.
-JS 애니메이션이 실제로 필요한 경우(중단 가능한 드래그, 공유 레이아웃 전환,
-exit 애니메이션)에만 꺼내 쓰고, 위 2번 규칙을 지킬 것.
+**motion/react는 의존성에서 제거했다.** 페이지의 모든 모션이 CSS로 옮겨간 뒤에도
+`MotionProvider`가 초기 JS에 65KB를 얹고 있었고, 애니메이션하는 것은 하나도
+없었다. JS 애니메이션이 정말 필요해지면(중단 가능한 드래그, 공유 레이아웃 전환,
+요소를 기다려야 하는 exit) 그때 다시 넣되, 위 2번 규칙을 지킬 것.
 
 ### 데이터
 

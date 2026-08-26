@@ -5,7 +5,6 @@ import { getMessages } from 'next-intl/server';
 import localFont from 'next/font/local';
 import { Space_Grotesk, JetBrains_Mono } from 'next/font/google';
 import ThemeProvider from '@/components/@layout/ThemeProvider';
-import MotionProvider from '@/components/@layout/MotionProvider';
 import Header from '@/components/@layout/Header';
 import Footer from '@/components/@layout/Footer';
 import ScrollToTop from '@/components/@atoms/ScrollToTop';
@@ -139,14 +138,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </a>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
-            <MotionProvider>
-              <Header />
-              <main id="main-content">
-                {children}
-                <ScrollToTop />
-              </main>
-              <Footer />
-            </MotionProvider>
+            <Header />
+            <main id="main-content">
+              {children}
+              <ScrollToTop />
+            </main>
+            <Footer />
           </NextIntlClientProvider>
         </ThemeProvider>
         <script

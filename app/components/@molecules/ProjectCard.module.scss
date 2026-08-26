@@ -115,10 +115,12 @@
   @include label;
 }
 
-// 토큰이 아니라 문장이다.
+// 토큰이 아니라 문장이다. rule-strong은 테두리용 토큰이라 종이 위에서
+// 4.24:1밖에 안 나온다 — 작은 본문에 필요한 4.5:1에 못 미친다. 항목명과의
+// 구분은 색이 아니라 굵기로 준다.
 .hint {
   @include label-prose;
-  color: var(--color-rule-strong);
+  font-weight: var(--weight-regular);
 }
 
 .highlights {
