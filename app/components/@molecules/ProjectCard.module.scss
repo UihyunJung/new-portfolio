@@ -7,8 +7,8 @@
   padding-block-end: var(--space-xl);
   padding-inline-start: var(--space-2xs);
 
-    // 경력 섹션이 쓰는 것과 같은 11rem 메타 열. 그래야 두 섹션이 서로
-    // 비슷하기만 한 격자 둘이 아니라 하나의 격자 위에 앉는다.
+  // 경력 섹션이 쓰는 것과 같은 11rem 메타 열. 그래야 두 섹션이 서로
+  // 비슷하기만 한 격자 둘이 아니라 하나의 격자 위에 앉는다.
   @include md {
     grid-template-columns: 11rem minmax(0, 1fr);
     gap: var(--space-lg);
@@ -30,8 +30,8 @@
   padding-block: var(--space-2xs);
   border-block-start: var(--rule-hair) solid var(--color-rule);
 
-    // 좁은 레일에서는 세로로 쌓을 자리가 있어, 값이 7rem 홈통에서 접히는
-    // 대신 11rem을 다 쓴다.
+  // 좁은 레일에서는 세로로 쌓을 자리가 있어, 값이 7rem 홈통에서 접히는
+  // 대신 11rem을 다 쓴다.
   @include md {
     display: block;
   }

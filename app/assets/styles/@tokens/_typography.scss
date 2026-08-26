@@ -6,9 +6,11 @@
 // ============================================
 
 :root {
-  --font-display: var(--font-space-grotesk), var(--font-wanted-sans), sans-serif;
+  --font-display:
+    var(--font-space-grotesk), var(--font-wanted-sans), sans-serif;
   --font-body: var(--font-wanted-sans), system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-mono:
+    var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
 
   // 크기
   --text-2xs: 0.6875rem;

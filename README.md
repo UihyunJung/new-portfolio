@@ -29,12 +29,12 @@ npm run dev      # http://localhost:3000
 
 ## Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | 개발 서버 |
+| Command         | Description                    |
+| --------------- | ------------------------------ |
+| `npm run dev`   | 개발 서버                      |
 | `npm run build` | 프로덕션 빌드 (타입 체크 포함) |
-| `npm run start` | 프로덕션 서버 |
-| `npm run lint` | ESLint |
+| `npm run start` | 프로덕션 서버                  |
+| `npm run lint`  | ESLint                         |
 
 ## Project Structure
 

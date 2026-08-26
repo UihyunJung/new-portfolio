@@ -17,9 +17,9 @@
     padding-block-end: 0;
   }
 
-    // flex 아이템은 안쪽 링크가 아니라 <li>다. 링크에 크기를 주면 아이템이
-    // 자유롭게 줄어들어, 700px 아래에서 썸네일이 스크롤되지 않고 반으로
-    // 찌그러졌다.
+  // flex 아이템은 안쪽 링크가 아니라 <li>다. 링크에 크기를 주면 아이템이
+  // 자유롭게 줄어들어, 700px 아래에서 썸네일이 스크롤되지 않고 반으로
+  // 찌그러졌다.
   > li {
     flex: 0 0 148px;
     scroll-snap-align: start;
@@ -69,8 +69,8 @@
     background: oklch(20% 0.02 258 / 0.86);
   }
 
-    // 기본 규칙이 정지 상태이고 키프레임이 숨김에서 출발하므로,
-    // `@starting-style`이 없는 브라우저에서도 다이얼로그는 그냥 나타난다.
+  // 기본 규칙이 정지 상태이고 키프레임이 숨김에서 출발하므로,
+  // `@starting-style`이 없는 브라우저에서도 다이얼로그는 그냥 나타난다.
   @media (prefers-reduced-motion: no-preference) {
     animation: viewer-in var(--dur-short) var(--ease-out) both;
   }
@@ -114,8 +114,8 @@
   flex: 1 1 auto;
   min-inline-size: 0;
   @include label-prose;
-    // 이 줄은 종이가 아니라 백드롭 위에 있어서, 잉크 토큰 대신 고정된 밝은
-    // 값을 쓴다.
+  // 이 줄은 종이가 아니라 백드롭 위에 있어서, 잉크 토큰 대신 고정된 밝은
+  // 값을 쓴다.
   color: oklch(90% 0.007 253);
 }
 

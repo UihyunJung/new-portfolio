@@ -307,7 +307,8 @@
 
   @include hover-fine {
     &:hover {
-      box-shadow: 0 0 0 8px color-mix(in oklab, var(--color-accent) 14%, transparent);
+      box-shadow: 0 0 0 8px
+        color-mix(in oklab, var(--color-accent) 14%, transparent);
     }
 
     &:hover::before {

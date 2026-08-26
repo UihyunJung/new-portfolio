@@ -23,10 +23,7 @@
   }
 
   @include md {
-    background-image: linear-gradient(
-      var(--color-rule-2),
-      var(--color-rule-2)
-    );
+    background-image: linear-gradient(var(--color-rule-2), var(--color-rule-2));
     background-size: var(--rule-hair) calc(100% - var(--rule-solid));
     background-position: calc(11rem + var(--space-lg) / 2) var(--rule-solid);
     background-repeat: no-repeat;

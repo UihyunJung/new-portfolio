@@ -6,15 +6,15 @@
 문서가 그걸 베끼는 순간 둘이 어긋나기 시작한다. 이 문서는 "왜 그렇게
 정했는가"와 "무엇을 하면 안 되는가"를 담고, 값은 아래 표를 따라간다.
 
-| 무엇 | 어디 |
-|---|---|
-| 색 | `app/assets/styles/@tokens/_colors.scss` |
-| 타이포 | `@tokens/_typography.scss` |
-| 간격·기하 | `@tokens/_spacing.scss` |
-| 모션 | `@tokens/_motion.scss` |
-| 브레이크포인트 | `@tokens/_breakpoints.scss` |
-| 믹스인 | `@utilities/_mixins.scss` |
-| 리셋 | `@global/_reset.scss` |
+| 무엇           | 어디                                     |
+| -------------- | ---------------------------------------- |
+| 색             | `app/assets/styles/@tokens/_colors.scss` |
+| 타이포         | `@tokens/_typography.scss`               |
+| 간격·기하      | `@tokens/_spacing.scss`                  |
+| 모션           | `@tokens/_motion.scss`                   |
+| 브레이크포인트 | `@tokens/_breakpoints.scss`              |
+| 믹스인         | `@utilities/_mixins.scss`                |
+| 리셋           | `@global/_reset.scss`                    |
 
 ---
 
@@ -48,14 +48,14 @@
 
 캔버스로 실제 sRGB를 뽑아 측정한 값이다. 새 조합을 만들면 다시 잰다.
 
-| 조합 | 라이트 | 다크 |
-|---|---|---|
-| `ink` / `paper` | 17.03:1 | 15.69:1 |
-| `ink-2` / `paper` | 12.91:1 | 11.30:1 |
-| `muted` / `paper` | 7.38:1 | 5.23:1 |
-| `accent-text` / `paper` | 9.64:1 | 5.78:1 |
-| `accent-ink` / `accent` | 7.74:1 | 4.98:1 |
-| `rule-strong` / `paper` | 4.24:1 | 3.47:1 |
+| 조합                    | 라이트  | 다크    |
+| ----------------------- | ------- | ------- |
+| `ink` / `paper`         | 17.03:1 | 15.69:1 |
+| `ink-2` / `paper`       | 12.91:1 | 11.30:1 |
+| `muted` / `paper`       | 7.38:1  | 5.23:1  |
+| `accent-text` / `paper` | 9.64:1  | 5.78:1  |
+| `accent-ink` / `accent` | 7.74:1  | 4.98:1  |
+| `rule-strong` / `paper` | 4.24:1  | 3.47:1  |
 
 **`rule-strong`은 글자색으로 쓰지 않는다.** 이름 그대로 테두리용이고,
 비텍스트 대비 기준(3:1)은 넘지만 본문 기준(4.5:1)에는 못 미친다. 아이콘만
@@ -112,7 +112,7 @@ Wanted Sans가 받으므로 한영이 섞인 제목도 하나의 목소리로 �
 ### 절대 규칙 두 가지
 
 1. **숨김 상태를 기본 규칙에 쓰지 않는다.** 기본 규칙이 정지 상태이고
-   키프레임이 *숨김에서* 출발한다. 스크롤 타임라인 미지원 브라우저와
+   키프레임이 _숨김에서_ 출발한다. 스크롤 타임라인 미지원 브라우저와
    reduced-motion 사용자는 완성된 레이아웃을 본다.
 2. **JS로 콘텐츠를 숨기지 않는다.** 라이브러리의 `initial` 상태는 서버 HTML에
    기록되므로, 페이드인 진입은 하이드레이션 전까지(실패하면 영구히) 콘텐츠를

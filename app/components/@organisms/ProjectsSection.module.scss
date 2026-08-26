@@ -24,8 +24,8 @@
   scroll-margin-block-start: var(--scroll-offset);
   border-block-end: var(--rule-hair) solid var(--color-rule);
 
-    // 열려 있는 동안 앞쪽 모서리를 따라 그려진다 — 인덱스 행이 hover에서
-    // 하던 반응을 이제 상태가 대신 나른다.
+  // 열려 있는 동안 앞쪽 모서리를 따라 그려진다 — 인덱스 행이 hover에서
+  // 하던 반응을 이제 상태가 대신 나른다.
   &::before {
     content: '';
     position: absolute;
@@ -58,7 +58,7 @@
   transition: padding-inline-start var(--dur-short) var(--ease-out);
   @include tap-target;
 
-      // 네이티브 펼침 삼각형. 셰브런이 대신한다.
+  // 네이티브 펼침 삼각형. 셰브런이 대신한다.
   &::-webkit-details-marker {
     display: none;
   }

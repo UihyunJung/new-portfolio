@@ -70,7 +70,7 @@
   transition: border-color var(--dur-micro) var(--ease-out);
   @include tap-target;
 
-    // 기본 펼침 삼각형. 셰브런이 대신한다.
+  // 기본 펼침 삼각형. 셰브런이 대신한다.
   &::-webkit-details-marker {
     display: none;
   }

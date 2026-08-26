@@ -21,13 +21,13 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   margin-block-start: var(--space-xl);
-    // 아래 규칙선은 스스로 그려지려고 절대 위치라, `border-block-start`처럼
-    // 띠를 차지하지 않는다. 이 패딩이 없으면 수치가 그 안에서 시작해
-    // 각 열의 앞 구분선이 규칙선을 파낸다.
+  // 아래 규칙선은 스스로 그려지려고 절대 위치라, `border-block-start`처럼
+  // 띠를 차지하지 않는다. 이 패딩이 없으면 수치가 그 안에서 시작해
+  // 각 열의 앞 구분선이 규칙선을 파낸다.
   padding-block-start: var(--rule-solid);
 
-    // 띠 자신의 규칙선. 선언이 아니라 그려진다 — 숫자가 도착하기 전에
-    // 섹션이 스스로를 알리는 유일한 곳이다.
+  // 띠 자신의 규칙선. 선언이 아니라 그려진다 — 숫자가 도착하기 전에
+  // 섹션이 스스로를 알리는 유일한 곳이다.
   &::before {
     content: '';
     position: absolute;
