@@ -35,7 +35,7 @@ export default function StatValue({ children, className }: StatValueProps) {
     if (el === null || target === null) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-      // 이미 화면 안: 수치를 건드리지 않는다.
+    // 이미 화면 안: 수치를 건드리지 않는다.
     if (el.getBoundingClientRect().top < window.innerHeight * 0.85) return;
 
     el.textContent = `0${suffix}`;

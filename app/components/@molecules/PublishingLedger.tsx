@@ -30,11 +30,11 @@ export default function PublishingLedger() {
 
   return (
     <div>
-      <p className={styles.summary}>
-        {t('ledgerSummary', publishingSummary)}
-      </p>
+      <p className={styles.summary}>{t('ledgerSummary', publishingSummary)}</p>
 
-      <ol className={styles.list}>{rows(publishingLedger.slice(0, PREVIEW))}</ol>
+      <ol className={styles.list}>
+        {rows(publishingLedger.slice(0, PREVIEW))}
+      </ol>
 
       <details className={styles.more}>
         {/* flex order로 컨트롤을 그것이 여는 행들 *뒤에* 둔다. 그래야 라벨이
@@ -44,7 +44,11 @@ export default function PublishingLedger() {
             {t('ledgerExpand', { count: publishingSummary.count })}
           </span>
           <span className={styles.whenOpen}>{t('ledgerCollapse')}</span>
-          <ChevronDown size={14} className={styles.chevron} aria-hidden="true" />
+          <ChevronDown
+            size={14}
+            className={styles.chevron}
+            aria-hidden="true"
+          />
         </summary>
         <ol className={styles.list}>{rows(publishingLedger.slice(PREVIEW))}</ol>
       </details>

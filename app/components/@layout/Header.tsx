@@ -23,13 +23,13 @@ export default function Header() {
   const activeSection = useActiveSection();
   const [menuOpen, setMenuOpen] = useState(false);
 
-    // 인덱스의 틱은 다섯 개가 페이드하는 게 아니라 항목 사이를 움직이는 바
-    // 하나다. 읽는 위치는 단일한 물체이므로 하나처럼 보여야 한다. 인덱스에
-    // hover하는 동안은 커서를 따라가고, 벗어나면 실제로 화면에 있는 섹션으로
-    // 돌아간다.
-    //
-    // 위치는 커스텀 프로퍼티로 요소에 직접 쓴다. DOM에서 재서 DOM이 쓰는
-    // 값이라, 상태를 거치면 스크롤로 섹션이 바뀔 때마다 렌더가 하나 늘 뿐이다.
+  // 인덱스의 틱은 다섯 개가 페이드하는 게 아니라 항목 사이를 움직이는 바
+  // 하나다. 읽는 위치는 단일한 물체이므로 하나처럼 보여야 한다. 인덱스에
+  // hover하는 동안은 커서를 따라가고, 벗어나면 실제로 화면에 있는 섹션으로
+  // 돌아간다.
+  //
+  // 위치는 커스텀 프로퍼티로 요소에 직접 쓴다. DOM에서 재서 DOM이 쓰는
+  // 값이라, 상태를 거치면 스크롤로 섹션이 바뀔 때마다 렌더가 하나 늘 뿐이다.
   const listRef = useRef<HTMLUListElement>(null);
   const tickRef = useRef<HTMLSpanElement>(null);
   const [hovered, setHovered] = useState<string | null>(null);
@@ -42,21 +42,21 @@ export default function Header() {
     if (!list || !tick) return;
 
     const entry = list.querySelector<HTMLElement>(`[data-nav='${target}']`);
-      // 와이드 브레이크포인트 아래에서는 인덱스가 display:none이라 폭이 0이고,
-      // 히어로에는 대응하는 항목 자체가 없다.
+    // 와이드 브레이크포인트 아래에서는 인덱스가 display:none이라 폭이 0이고,
+    // 히어로에는 대응하는 항목 자체가 없다.
     if (!entry || entry.offsetWidth === 0) {
       tick.dataset.on = 'false';
       return;
     }
 
-      // 1px 바를 폭만큼 늘린다. 이동 전체가 컴포지터에 남는다.
+    // 1px 바를 폭만큼 늘린다. 이동 전체가 컴포지터에 남는다.
     tick.style.setProperty('--tick-x', `${entry.offsetLeft}px`);
     tick.style.setProperty('--tick-scale', String(entry.offsetWidth));
 
     if (tick.dataset.on !== 'true') {
       tick.dataset.on = 'true';
-        // 전이는 한 프레임 뒤에 켜진다. 그래야 틱의 첫 등장이 왼쪽 끝에서
-        // 미끄러져 오는 게 아니라 제자리에서 나타나는 페이드가 된다.
+      // 전이는 한 프레임 뒤에 켜진다. 그래야 틱의 첫 등장이 왼쪽 끝에서
+      // 미끄러져 오는 게 아니라 제자리에서 나타나는 페이드가 된다.
       requestAnimationFrame(() => {
         if (tickRef.current) tickRef.current.dataset.settled = 'true';
       });
@@ -76,9 +76,9 @@ export default function Header() {
     return () => observer.disconnect();
   }, [measure]);
 
-    // 여기서 body 스크롤을 잠그지 않는다. <body>의 `overflow: hidden`은 body를
-    // 스크롤 컨테이너로 만들고, 그러면 sticky 바의 기준이 뷰포트에서 body 박스로
-    // 옮겨간다 — 바가 문서 맨 위로 튀어 올라가 사라진다.
+  // 여기서 body 스크롤을 잠그지 않는다. <body>의 `overflow: hidden`은 body를
+  // 스크롤 컨테이너로 만들고, 그러면 sticky 바의 기준이 뷰포트에서 body 박스로
+  // 옮겨간다 — 바가 문서 맨 위로 튀어 올라가 사라진다.
 
   const go = (id: string) => {
     setMenuOpen(false);
@@ -178,7 +178,10 @@ export default function Header() {
               <li key={item}>
                 <button
                   type="button"
-                  className={clsx(styles.sheetLink, isActive && styles.isActive)}
+                  className={clsx(
+                    styles.sheetLink,
+                    isActive && styles.isActive,
+                  )}
                   aria-current={isActive ? 'true' : undefined}
                   onClick={() => go(item)}
                 >

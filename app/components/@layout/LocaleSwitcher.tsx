@@ -19,9 +19,7 @@ export default function LocaleSwitcher() {
     <button
       className={styles.switcher}
       onClick={switchLocale}
-      aria-label={
-        locale === 'ko' ? 'Switch to English' : '한국어로 전환'
-      }
+      aria-label={locale === 'ko' ? 'Switch to English' : '한국어로 전환'}
       type="button"
     >
       {/* 두 글자 코드만으로는 "언어 컨트롤"이라는 맥락이 서지 않아 아이콘이

@@ -60,7 +60,9 @@ export default function SplitText({
                 <span key={`${unit}-${u}`} className={styles.mask}>
                   <span
                     className={styles.unit}
-                    style={{ animationDelay: `${delay + (start + u) * step}ms` }}
+                    style={{
+                      animationDelay: `${delay + (start + u) * step}ms`,
+                    }}
                   >
                     {unit}
                   </span>
