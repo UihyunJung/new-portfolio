@@ -1,0 +1,115 @@
+@use '../../assets/styles/@utilities/mixins' as *;
+
+.summary {
+  @include label-prose;
+  @include tnum;
+  margin-block-end: var(--space-2xs);
+}
+
+// One column, on purpose. Two columns would be denser, but the preview and the
+// revealed remainder are separate lists: each would lay out its own pair of
+// columns, so the eye would read three rows down the left, jump right for
+// three more, then come back to the left for the seventh — and the boundary
+// between the two lists would show as a seam across the middle. Stacked, the
+// twenty-five read 1 to 25 in the order they happened, and the full panel
+// width goes to the project names.
+.list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.row {
+  display: grid;
+  // Wide enough for the longest period — 2022.08–2023.02 — so no row
+  // wraps its date and every row is the same height.
+  grid-template-columns: 6.75rem minmax(0, 1fr);
+  gap: var(--space-2xs);
+  align-items: baseline;
+  padding-block: var(--space-2xs);
+  border-block-end: var(--rule-hair) solid var(--color-rule);
+}
+
+.period {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  @include tnum;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+.client {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--color-ink);
+}
+
+.title {
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+}
+
+.more {
+  display: flex;
+  flex-direction: column;
+}
+
+.control {
+  order: 2; // after the rows it reveals
+  display: inline-flex;
+  align-self: start;
+  align-items: center;
+  gap: var(--space-2xs);
+  margin-block-start: var(--space-sm);
+  padding: var(--space-2xs) var(--space-sm);
+  border: var(--rule-hair) solid var(--color-rule-2);
+  border-radius: var(--radius-sm);
+  background: var(--color-paper);
+  cursor: pointer;
+  @include label-prose;
+  color: var(--color-ink-2);
+  list-style: none;
+  transition: border-color var(--dur-micro) var(--ease-out);
+  @include tap-target;
+
+  // The default disclosure triangle; the chevron replaces it.
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  @include hover-fine {
+    &:hover {
+      border-color: var(--color-rule-strong);
+    }
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+    outline-offset: 2px;
+  }
+}
+
+.chevron {
+  transition: transform var(--dur-short) var(--ease-out);
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+.whenOpen {
+  display: none;
+}
+
+.more[open] {
+  .whenClosed {
+    display: none;
+  }
+
+  .whenOpen {
+    display: inline;
+  }
+
+  .chevron {
+    transform: rotate(180deg);
+  }
+}

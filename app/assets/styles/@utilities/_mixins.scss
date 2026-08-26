@@ -73,6 +73,20 @@
   color: var(--color-muted);
 }
 
+// `label` is for uppercase Latin tokens — ROLE, STACK, 01. Two things make it
+// wrong for Hangul: its 0.08em tracking prises 하이라이트 into 하 이 라 이 트,
+// and JetBrains Mono carries no Hangul at all, so those syllables fall through
+// to a monospaced Korean fallback that sets each one a full em wide.
+//
+// Locale copy at label size uses this instead — the body face, quiet and
+// untracked. Keep `label` for anything that is actually a Latin token.
+@mixin label-prose {
+  font-family: var(--font-body);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-medium);
+  color: var(--color-muted);
+}
+
 @mixin display($size: var(--text-3xl)) {
   font-family: var(--font-display);
   font-size: $size;

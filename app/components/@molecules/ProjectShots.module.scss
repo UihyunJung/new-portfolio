@@ -1,0 +1,155 @@
+@use '../../assets/styles/@utilities/mixins' as *;
+
+// A single scrolling row on phones — wrapped two-up it costs three rows inside
+// a panel that is already tall, and sideways is the gesture a thumb expects.
+// scroll-snap does the work a carousel library would otherwise be imported for.
+.strip {
+  display: flex;
+  gap: var(--space-2xs);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-block-end: var(--space-2xs);
+  overscroll-behavior-x: contain;
+
+  @include md {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    padding-block-end: 0;
+  }
+
+  // The flex item is the <li>, not the link inside it. Sizing the link left
+  // the item free to shrink, and below ~700px the thumbnails collapsed to
+  // half width instead of scrolling.
+  > li {
+    flex: 0 0 148px;
+    scroll-snap-align: start;
+  }
+}
+
+.thumb {
+  display: block;
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-sm);
+  overflow: clip;
+  background: var(--color-paper);
+  transition: border-color var(--dur-micro) var(--ease-out);
+
+  img {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+  }
+
+  @include hover-fine {
+    &:hover {
+      border-color: var(--color-accent);
+    }
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+    outline-offset: 2px;
+  }
+}
+
+// ---- viewer ---------------------------------------------------------------
+// `<dialog>` is deliberate: the focus trap, Escape, inert background and the
+// top layer all come from the browser. A hand-rolled overlay gets one of them
+// wrong more often than not.
+.viewer {
+  inline-size: 100%;
+  max-inline-size: min(1100px, 94vw);
+  max-block-size: 92dvh;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  overflow: visible;
+
+  &::backdrop {
+    background: oklch(20% 0.02 258 / 0.86);
+  }
+
+  // The base rule is the resting state; the keyframe starts from hidden, so a
+  // browser without `@starting-style` still gets a dialog that simply appears.
+  @media (prefers-reduced-motion: no-preference) {
+    animation: viewer-in var(--dur-short) var(--ease-out) both;
+  }
+}
+
+@keyframes viewer-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.99);
+  }
+}
+
+.frame {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin: 0;
+}
+
+// Width and height ride on the element as attributes, so the pair of maxima
+// plus `auto` is what keeps the aspect ratio while fitting both axes.
+.full {
+  display: block;
+  inline-size: auto;
+  block-size: auto;
+  max-inline-size: 100%;
+  max-block-size: 78dvh;
+  margin-inline: auto;
+  border-radius: var(--radius-md);
+  background: var(--color-paper);
+}
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2xs) var(--space-sm);
+}
+
+.caption {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  @include label-prose;
+  // The bar sits on the backdrop, not on paper, so these two ignore the ink
+  // tokens and take fixed light values instead.
+  color: oklch(90% 0.007 253);
+}
+
+.position {
+  @include label;
+  @include tnum;
+  color: oklch(72% 0.012 254);
+}
+
+.controls {
+  display: flex;
+  gap: var(--space-3xs);
+}
+
+.control {
+  display: grid;
+  place-items: center;
+  inline-size: 44px;
+  block-size: 44px;
+  border: var(--rule-hair) solid oklch(60% 0.012 255);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: oklch(95% 0.006 250);
+  transition: border-color var(--dur-micro) var(--ease-out);
+
+  @include hover-fine {
+    &:hover {
+      border-color: oklch(85% 0.01 253);
+    }
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+    outline-offset: 2px;
+  }
+}
