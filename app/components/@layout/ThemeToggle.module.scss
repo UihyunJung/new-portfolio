@@ -101,7 +101,13 @@
   }
 
   // The crescent has no rotational symmetry; only a full turn brings it
-  // back upright.
+  // back upright. (The canvas spins it 180° like the sun, which leaves the
+  // moon lying upside down — deliberately not copied.)
+  //
+  // A full turn is not the no-op it looks like: --ease-spring overshoots to
+  // 1.163, so this travels to ~419° and springs back to 360°. Passing the
+  // top by 59° and settling is what makes it read as a wobble rather than a
+  // rotation. Do not "simplify" this away.
   &[data-option='dark'] svg {
     transform: rotate(360deg) scale(1.08);
   }
