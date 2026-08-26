@@ -1,0 +1,3 @@
+# The seeded canvas — ~3 MB of editor payload plus base64 images, rebuilt from
+# the .dc.html sources and canvas.json whenever it is needed.
+project-dossier.html
