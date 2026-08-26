@@ -17,9 +17,9 @@ export default function ScrollToTop() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Always mounted, never conditionally rendered: an element that only
-  // exists while it is visible has no state to transition *from*, so it can
-  // only pop. `inert` keeps the hidden button out of the tab order.
+  // 항상 마운트해 두고 조건부로 렌더링하지 않는다. 보이는 동안에만 존재하는
+  // 요소는 전이할 출발 상태가 없어 툭 튀는 수밖에 없다. 숨은 버튼은 `inert`로
+  // 탭 순서에서 빼둔다.
   return (
     <div className={styles.container}>
       <button

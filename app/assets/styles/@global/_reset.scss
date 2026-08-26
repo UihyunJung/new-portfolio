@@ -1,5 +1,5 @@
 // ============================================
-// Reset
+// 리셋
 // ============================================
 
 *,
@@ -10,7 +10,8 @@
   padding: 0;
 }
 
-// gate 34 — clip, never hidden, on BOTH html and body
+// hidden이 아니라 clip. hidden은 스크롤 컨테이너를 만들어 position: sticky와
+// 스크롤 타임라인을 깨뜨린다. 한쪽만 걸면 다른 쪽이 여전히 스크롤되므로 둘 다.
 html,
 body {
   overflow-x: clip;
@@ -66,7 +67,7 @@ ol {
   list-style: none;
 }
 
-// gate 51 — display headers wrap inside long words
+// 긴 단어가 들어간 제목이 컨테이너를 밀어내지 않게 한다.
 h1,
 h2,
 h3,
@@ -91,7 +92,7 @@ button {
   border: none;
 }
 
-// Anchored sections clear the mobile top bar
+// 앵커로 이동한 섹션이 모바일 상단 바를 비켜 가게
 :target,
 section[id] {
   scroll-margin-block-start: var(--scroll-offset);
@@ -108,7 +109,7 @@ section[id] {
   color: var(--color-accent-ink);
 }
 
-// Skip to content
+// 본문 바로가기
 .skip-to-content {
   position: absolute;
   top: -100%;
@@ -127,7 +128,7 @@ section[id] {
   }
 }
 
-// Reduced motion — spatial motion collapses, scroll snaps to instant
+// reduced-motion — 공간 이동을 접고, 스크롤은 즉시 이동으로
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

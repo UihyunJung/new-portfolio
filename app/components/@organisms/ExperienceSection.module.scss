@@ -2,15 +2,14 @@
 
 @include rule-keyframes;
 
-// The rail sits in the gutter between the period column (11rem) and the
-// record — see ExperienceCard.module.scss for the grid it belongs to. The
-// track is painted as a background so both pseudo-elements stay free: one
-// for the section rule, one for the accent that fills it.
+// 레일은 기간 열(11rem)과 기록 사이의 홈통에 있다. 어느 격자에 속하는지는
+// ExperienceCard.module.scss를 볼 것. 트랙을 background로 칠해 두면 의사
+// 요소 둘이 모두 남는다 — 하나는 섹션 규칙선, 하나는 레일을 채우는 액센트.
 .index {
   position: relative;
-  // The drawn rule replaces a `border-block-start`; the padding gives it
-  // back the band that border occupied. Everything below — the rail track
-  // and the rail itself — starts under that band rather than crossing it.
+  // 그려지는 규칙선이 `border-block-start`를 대신한다. 패딩이 그 테두리가
+  // 차지하던 띠를 돌려주므로, 아래의 레일 트랙과 레일이 그 띠를 가로지르지
+  // 않고 그 밑에서 시작한다.
   padding-block-start: var(--rule-solid);
 
   &::before {

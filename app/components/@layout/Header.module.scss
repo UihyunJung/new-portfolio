@@ -3,11 +3,10 @@
 @include rule-keyframes;
 
 // ============================================
-// Top bar — one bar at every width.
-// Deliberately conventional in placement, but not the AI-nav fingerprint:
-// the links are a numbered index with an active tick (the side-rail's job,
-// laid out horizontally) and there is no CTA button on the right. The page's
-// call to action lives in the hero, where the reader is.
+// 상단 바 — 어느 폭에서든 바 하나.
+// 위치는 일부러 관습을 따르지만 흔한 AI 내비게이션 모양은 아니다. 링크는 활성
+// 틱이 붙은 번호 인덱스(사이드 레일이 하던 일을 가로로 편 것)이고, 오른쪽에
+// CTA 버튼이 없다. 행동 유도는 독자가 있는 히어로에 둔다.
 // ============================================
 
 .bar {
@@ -49,7 +48,7 @@
   }
 }
 
-// ---- Desktop index -------------------------------------------------------
+// ---- 데스크톱 인덱스 -----------------------------------------------------
 
 .index {
   display: none;
@@ -90,11 +89,10 @@
   }
 }
 
-// ---- The tick ------------------------------------------------------------
-// One bar for the whole index, not one per entry: the reading position is a
-// single object, so it moves rather than cross-fading. Position and width
-// are measured in Header.tsx and handed over as custom properties; a 1px
-// bar scaled to width keeps the move on the compositor.
+// ---- 틱 ------------------------------------------------------------------
+// 항목마다 하나가 아니라 인덱스 전체에 하나. 읽는 위치는 단일한 물체이므로
+// 크로스페이드가 아니라 이동한다. 위치와 폭은 Header.tsx에서 재서 커스텀
+// 프로퍼티로 넘기고, 1px 바를 폭만큼 늘리므로 이동이 컴포지터에 남는다.
 
 .indexTrack {
   position: relative;
@@ -118,8 +116,8 @@
   opacity: 1;
 }
 
-// Only once the first measurement has landed, so the tick never slides in
-// from the left edge on load.
+// 첫 측정이 끝난 뒤에만 건다. 그래야 로드 때 틱이 왼쪽 끝에서
+// 미끄러져 들어오지 않는다.
 .tick[data-settled='true'] {
   transition:
     transform var(--dur-long) var(--ease-spring),
@@ -130,10 +128,10 @@
   }
 }
 
-// ---- Reading progress ----------------------------------------------------
-// Nothing without scroll timelines: scaleX(0) is the base rule and the
-// animation only exists inside the @supports guard, so an unsupporting
-// browser gets no bar rather than a permanently full one.
+// ---- 읽기 진행률 ---------------------------------------------------------
+// 스크롤 타임라인이 없으면 아무것도 없다. scaleX(0)이 기본 규칙이고
+// 애니메이션은 @supports 안에만 있으므로, 미지원 브라우저는 늘 꽉 찬 바가
+// 아니라 아예 바가 없는 상태가 된다.
 
 .progress {
   position: absolute;
@@ -159,7 +157,7 @@
   }
 }
 
-// ---- Utilities -----------------------------------------------------------
+// ---- 유틸리티 ------------------------------------------------------------
 
 .actions {
   display: flex;
@@ -194,9 +192,9 @@
   }
 }
 
-// ---- Mobile sheet --------------------------------------------------------
-// Fixed, not sticky. A sticky sheet occupies flow height, so collapsing it on
-// menu-click shortened the document mid-scroll and the anchor overshot.
+// ---- 모바일 시트 ---------------------------------------------------------
+// sticky가 아니라 fixed다. sticky 시트는 흐름에서 높이를 차지하므로, 메뉴를
+// 누를 때 접히면 스크롤 도중에 문서가 짧아져 앵커가 목표를 지나쳤다.
 
 .sheet {
   position: fixed;
@@ -206,8 +204,8 @@
   display: grid;
   grid-template-rows: 0fr;
   background: var(--color-paper-2);
-  // Deliberately not the spring: an overshoot on `grid-template-rows`
-  // resolves to more than 1fr, which opens a gap under the last item.
+  // 일부러 스프링이 아니다. `grid-template-rows`에서 오버슈트는 1fr을
+  // 넘는 값이 되고, 그러면 마지막 항목 아래에 틈이 벌어진다.
   transition: grid-template-rows var(--dur-long) var(--ease-out);
 
   @include wide {
@@ -226,9 +224,9 @@
   min-height: 0;
 }
 
-// Hidden while the sheet is closed — which is simply true of a closed
-// sheet, not a pre-animation state parked on a visible element. They deal
-// out one at a time as it opens, and leave together when it closes.
+// 시트가 닫혀 있는 동안 숨는다 — 보이는 요소에 세워 둔 사전 애니메이션
+// 상태가 아니라, 닫힌 시트에 대해 그냥 참인 사실이다. 열릴 때는 하나씩
+// 차례로 나오고, 닫힐 때는 함께 사라진다.
 .sheetLink {
   display: flex;
   align-items: baseline;

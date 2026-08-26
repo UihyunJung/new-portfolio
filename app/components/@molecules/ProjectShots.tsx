@@ -12,32 +12,30 @@ interface ProjectShotsProps {
   shots: ProjectShot[];
 }
 
-/** Displayed width of a thumbnail; the source file is 320px for retina. */
+/** 썸네일 표시 폭. 원본 파일은 레티나를 위해 320px다. */
 const THUMB_W = 148;
 
 const thumbSrc = (id: string) => `/images/projects/${id}-thumb.jpg`;
 const fullSrc = (id: string) => `/images/projects/${id}.jpg`;
 
 /**
- * A strip of screenshot thumbnails that opens a viewer.
+ * 스크린샷 썸네일 스트립과 그것이 여는 뷰어.
  *
- * The strip costs about 92px where an inline slider cost 475px, and the image
- * is larger when it opens than the slider ever showed it — the section gets
- * its length back and the screens get more room, not less.
+ * 인라인 슬라이더가 475px를 쓰던 자리를 92px로 줄이면서, 열었을 때 이미지는
+ * 슬라이더가 보여주던 것보다 크다. 섹션은 길이를 돌려받고 화면은 자리를 더
+ * 얻는다.
  *
- * Each thumbnail is a real link to the full image, so without JavaScript it
- * simply opens that image and a modifier-click still opens a new tab. The
- * viewer is a native `<dialog>`: focus trapping, Escape and the backdrop are
- * the browser's job rather than a hand-rolled one.
+ * 썸네일 하나하나가 원본 이미지로 가는 실제 링크라, JS 없이도 그 이미지가
+ * 열리고 수정키를 누른 클릭은 새 탭으로 간다. 뷰어는 네이티브 `<dialog>`다 —
+ * 포커스 가둠, Esc, 백드롭이 직접 만든 것이 아니라 브라우저 몫이다.
  */
 export default function ProjectShots({ projectKey, shots }: ProjectShotsProps) {
   const t = useTranslations('projects');
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [index, setIndex] = useState<number | null>(null);
 
-  // Opening is a DOM call rather than markup: the render carrying the new
-  // index has already committed by the time this runs, so the dialog never
-  // paints a frame of the previously-viewed shot.
+  // 여는 것은 마크업이 아니라 DOM 호출이다. 새 인덱스를 담은 렌더가 이미
+  // 커밋된 뒤에 실행되므로, 이전에 보던 화면이 한 프레임도 비치지 않는다.
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
@@ -89,8 +87,7 @@ export default function ProjectShots({ projectKey, shots }: ProjectShotsProps) {
           if (event.key === 'ArrowLeft') step(-1);
           if (event.key === 'ArrowRight') step(1);
         }}
-        // A click lands on the dialog itself only when it misses the frame —
-        // that is the backdrop.
+        // 클릭이 프레임을 빗나갔을 때만 dialog 자신에게 떨어진다 — 그게 백드롭이다.
         onClick={(event) => {
           if (event.target === dialogRef.current) dialogRef.current?.close();
         }}

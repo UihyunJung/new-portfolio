@@ -24,8 +24,8 @@
   @include tnum;
   position: relative;
 
-  // The node where this row meets the section's rail. Sized and placed
-  // against the same gutter maths as ExperienceSection's rail.
+  // 이 행이 섹션 레일과 만나는 지점. ExperienceSection의 레일과 같은
+  // 홈통 계산으로 크기와 위치를 잡는다.
   @include md {
     &::after {
       content: '';
@@ -68,6 +68,6 @@
   line-height: var(--leading-relaxed);
   color: var(--color-ink-2);
   // Korean wraps at 어절 boundaries (word-break: keep-all), which strands a
-  // single unit on the last line more often than Latin does.
+  // 마지막 줄에 한 덩어리만 남는 일이 라틴보다 잦다.
   text-wrap: pretty;
 }

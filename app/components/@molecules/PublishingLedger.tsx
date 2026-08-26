@@ -3,16 +3,16 @@ import { ChevronDown } from 'lucide-react';
 import { publishingLedger, publishingSummary } from '@lib/data/publishing';
 import styles from './PublishingLedger.module.scss';
 
-/** Rows shown before the reader asks for the rest. */
+/** 나머지를 요청하기 전에 보이는 행 수. */
 const PREVIEW = 6;
 
 /**
- * The 25 client projects behind the publishing entry.
+ * 퍼블리싱 항목 뒤에 있는 25건의 고객사 프로젝트.
  *
- * This is the section's densest object and the only evidence that entry has —
- * "dozens of projects over six years" is a claim, a named list of eighteen
- * clients is not. It expands with `<details>` rather than state so the other
- * nineteen rows are in the HTML, findable by Ctrl+F, and printable.
+ * 섹션에서 가장 밀도 높은 물체이자 그 항목이 가진 유일한 증거다.
+ * "6년간 수십 건"은 주장이지만 이름이 적힌 고객사 18곳은 그렇지 않다.
+ * 상태가 아니라 `<details>`로 펼치므로 나머지 19행도 HTML에 있고,
+ * Ctrl+F로 찾히며 인쇄된다.
  */
 export default function PublishingLedger() {
   const t = useTranslations('projects');
@@ -37,8 +37,8 @@ export default function PublishingLedger() {
       <ol className={styles.list}>{rows(publishingLedger.slice(0, PREVIEW))}</ol>
 
       <details className={styles.more}>
-        {/* Flex order puts the control *after* the rows it reveals, so the
-            label reads as the end of the list rather than a seam in it. */}
+        {/* flex order로 컨트롤을 그것이 여는 행들 *뒤에* 둔다. 그래야 라벨이
+            목록 중간의 이음매가 아니라 끝으로 읽힌다. */}
         <summary className={styles.control}>
           <span className={styles.whenClosed}>
             {t('ledgerExpand', { count: publishingSummary.count })}

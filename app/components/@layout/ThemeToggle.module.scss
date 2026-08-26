@@ -1,7 +1,6 @@
 @use '../../assets/styles/@utilities/mixins' as *;
 
-// Segmented control: shows the selected setting *and* both alternatives.
-// Hairlines and a raised surface carry the selection — no coloured glow.
+// 세그먼트 컨트롤. 선택된 설정과 나머지 선택지를 함께 보여준다.
 .group {
   position: relative;
   display: flex;
@@ -14,29 +13,23 @@
   background: var(--color-paper-2);
 }
 
-// 26px option + 2px gap = a 28px step. The spring is what makes it read as
-// one object changing lanes instead of a rectangle being redrawn.
+// 26px 옵션 + 2px 간격 = 28px 한 칸. 스프링이 있어야 사각형이 다시 그려지는
+// 게 아니라 하나의 물체가 칸을 옮기는 것으로 읽힌다.
 .thumb {
   position: absolute;
-  // These offsets resolve against the PADDING box, which already excludes
-  // the group's 1px border — so they are the group's padding alone. Adding
-  // the border on top parked the thumb a pixel off its option and two
-  // pixels short of its height.
+  // 이 오프셋은 패딩 박스 기준이라 group의 1px 테두리가 이미 빠져 있다.
+  // 테두리를 다시 더하면 썸이 옵션에서 1px 어긋나고 높이가 2px 모자란다.
   inset-block: 2px;
   inset-inline-start: 2px;
   inline-size: 26px;
   border-radius: 4px;
-  // A solid accent fill, no hairline. This is the one place the accent is
-  // allowed to carry a selection as a *fill*: the thumb is the only object
-  // on the header that moves, so the fill is what makes the move legible —
-  // and it is what lets the selected glyph invert onto `accent-ink`.
+  // 액센트를 *면*으로 쓰는 유일한 곳. 헤더에서 움직이는 물체가 이것뿐이라
+  // 채움이 있어야 이동이 읽히고, 선택된 글리프를 accent-ink로 반전할 수 있다.
   background: var(--color-accent);
   transform: translateX(calc(var(--thumb-index, 0) * 28px));
-  // --dur-short, not --dur-long. The spring's overshoot is a fixed 16% of
-  // the travel, and one lane here is only 28px — about 4.5px. Spread over
-  // 420ms that reads as settling rather than as a bounce; at 220ms the
-  // same 4.5px lands as a distinct pop. The header's index tick keeps the
-  // longer duration because it crosses far more ground.
+  // --dur-long이 아니라 --dur-short. 스프링의 오버슈트는 이동 거리의 16%로
+  // 고정인데 한 칸이 28px뿐이라 약 4.5px다. 420ms에 펴 바르면 안착으로
+  // 읽히고, 220ms면 같은 4.5px가 또렷한 튕김이 된다.
   transition: transform var(--dur-short) var(--ease-spring);
   pointer-events: none;
 
@@ -58,10 +51,9 @@
     background-color var(--dur-micro) var(--ease-out);
 
   svg {
-    // An explicit function list on BOTH ends of the transition. With
-    // `none` on one side a browser may fall back to interpolating
-    // matrices, and rotate(360deg) is the same matrix as rotate(0deg) —
-    // the moon's full turn would silently collapse into no turn at all.
+    // 전이 양끝에 함수 목록을 명시한다. 한쪽이 `none`이면 브라우저가 행렬
+    // 보간으로 빠질 수 있는데, rotate(360deg)는 rotate(0deg)와 같은 행렬이라
+    // 달의 한 바퀴가 소리 없이 사라진다.
     transform: rotate(0deg) scale(1);
     transition: transform var(--dur-long) var(--ease-spring);
   }
@@ -78,54 +70,40 @@
   }
 }
 
-// The thumb carries the selection; the option carries its colour and a
-// spring on the mark itself, so the icon *arrives* rather than switching
-// on under a box that slid into place without it.
-//
-// The scale is the baseline, shared by all three. The spin is not: each
-// glyph only survives the rotation that lands it back on itself.
 .isSelected {
-  // Inverted onto the accent fill, not the accent itself — `accent-text` is
-  // the darkened variant for body copy *on paper*, and on a cobalt thumb it
-  // is close to invisible.
+  // accent가 아니라 accent-ink. accent-text는 *종이 위* 본문용 어두운 변형이라
+  // 코발트 썸 위에서는 거의 안 보인다.
   color: var(--color-accent-ink);
 
   svg {
     transform: rotate(0deg) scale(1.08);
   }
 
-  // Eight rays at 45° — a half turn maps the sun onto itself, so it spins
-  // and lands identical.
+  // 광선 여덟 개가 45° 간격이라 반 바퀴면 해가 자기 자신과 겹친다.
   &[data-option='light'] svg {
     transform: rotate(180deg) scale(1.08);
   }
 
-  // The crescent has no rotational symmetry; only a full turn brings it
-  // back upright. (The canvas spins it 180° like the sun, which leaves the
-  // moon lying upside down — deliberately not copied.)
-  //
-  // A full turn is not the no-op it looks like: --ease-spring overshoots to
-  // 1.163, so this travels to ~419° and springs back to 360°. Passing the
-  // top by 59° and settling is what makes it read as a wobble rather than a
-  // rotation. Do not "simplify" this away.
+  // 초승달은 회전 대칭이 없어 한 바퀴를 돌아야 제자리로 온다.
+  // 이건 보이는 것과 달리 no-op이 아니다 — --ease-spring이 1.163까지
+  // 넘어가므로 약 419°까지 갔다 360°로 되돌아온다. 정상을 59° 지나쳤다
+  // 안착하는 그 움직임이 회전이 아니라 튕김으로 읽히게 만든다. 지우지 말 것.
   &[data-option='dark'] svg {
     transform: rotate(360deg) scale(1.08);
   }
 
-  // The monitor is deliberately left out. There is no angle that both
-  // spins and lands upright, and a screen resting upside down is a bug,
-  // not a flourish.
+  // 모니터는 일부러 뺐다. 돌면서 똑바로 끝나는 각도가 없고, 뒤집힌 화면은
+  // 장식이 아니라 버그로 보인다.
 }
 
 @include reduced-motion {
-  // The spring overshoots; compressed into the reset's 150ms clamp that
-  // reads as a twitch rather than as physics.
+  // 스프링은 오버슈트한다. 리셋의 150ms 제한에 눌리면 물리가 아니라 경련이 된다.
   .option svg {
     transition-timing-function: var(--ease-out);
   }
 
-  // Keep the state change, drop the spin — a whirling icon is exactly the
-  // unrequested movement this query exists to suppress.
+  // 상태 변화는 남기고 회전만 뺀다 — 빙그르 도는 아이콘이야말로 이 쿼리가
+  // 억제하려는 종류의 움직임이다.
   .isSelected[data-option='light'] svg,
   .isSelected[data-option='dark'] svg {
     transform: rotate(0deg) scale(1.08);

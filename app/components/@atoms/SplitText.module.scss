@@ -3,8 +3,8 @@
 @keyframes split-rise {
   from {
     opacity: 0;
-    // A touch of rotation so the unit arrives rather than slides — the
-    // clip box hides the pivot, only the settle is visible.
+    // 회전을 살짝 섞어 단위가 미끄러지는 게 아니라 도착하게 한다.
+    // 클립 박스가 회전축을 가리므로 안착만 보인다.
     transform: translateY(112%) rotate(5deg);
   }
 
@@ -22,16 +22,15 @@
   @include visually-hidden;
 }
 
-// Holds a word together. Without it every character is an independent
-// inline-block and the line can break between any two of them — and the
-// reset's `overflow-wrap: anywhere` on headings makes that likely. The
-// space between words stays outside, so that is the only break point.
+// 단어를 붙들어 둔다. 이게 없으면 글자마다 독립된 inline-block이라 아무 두
+// 글자 사이에서든 줄이 바뀌고, 리셋의 제목용 `overflow-wrap: anywhere`가
+// 그걸 부추긴다. 단어 사이 공백은 바깥에 남으므로 분리점은 거기뿐이다.
 .word {
   white-space: nowrap;
 }
 
-// The clip box. Descenders sit below the baseline, so the box is grown
-// rather than the glyph shaved.
+// 클립 박스. 디센더가 베이스라인 아래에 있으므로 글자를 깎지 않고
+// 박스를 키운다.
 .mask {
   display: inline-block;
   overflow: hidden;
@@ -39,13 +38,12 @@
   padding-block-end: 0.06em;
 }
 
-// The resting state IS the base rule. The keyframes move *from* hidden,
-// with `both` holding the start through the delay — so switching the
-// animation off leaves the line correctly typeset.
+// 정지 상태가 곧 기본 규칙이다. 키프레임이 숨김에서 출발하고 `both`가 지연
+// 동안 그 시작을 잡아 두므로, 애니메이션을 꺼도 줄은 제대로 조판된 채 남는다.
 .unit {
   display: inline-block;
   animation: split-rise var(--dur-long) var(--ease-out) both;
-  // A transform-only animation the compositor can own.
+  // transform만 쓰는 애니메이션이라 컴포지터가 맡을 수 있다.
   will-change: transform;
 
   @include reduced-motion {

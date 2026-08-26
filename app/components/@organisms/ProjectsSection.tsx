@@ -9,11 +9,10 @@ import styles from './ProjectsSection.module.scss';
 const anchorId = (key: string) => `project-${key}`;
 
 /**
- * The opening sentence, shown on the closed row.
+ * 접힌 행에 보이는 첫 문장.
  *
- * Derived rather than authored so it cannot drift from the description it
- * previews, and locale-agnostic: `.`, `!` and `?` all end a sentence in both
- * the Korean and the English copy.
+ * 따로 쓰지 않고 설명문에서 뽑는다. 그래야 미리보기가 본문과 어긋나지 않고,
+ * `.` `!` `?`는 한국어 카피와 영문 카피 모두에서 문장을 끝낸다.
  */
 const opener = (text: string) => {
   const end = text.search(/[.!?](\s|$)/);
@@ -21,17 +20,15 @@ const opener = (text: string) => {
 };
 
 /**
- * Six projects as a disclosure list.
+ * 여섯 프로젝트를 펼침 목록으로.
  *
- * This section used to carry an overview index AND six full-length blocks —
- * the same six projects, said twice, running about 5,400px on a page whose
- * other sections are a quarter of that. The index is now the interface: each
- * row opens in place.
+ * 이 섹션은 개요 인덱스와 여섯 개의 전체 블록을 함께 갖고 있었다. 같은 여섯
+ * 개를 두 번 말하면서 약 5,400px를 썼고, 다른 섹션은 그 4분의 1이다. 이제
+ * 인덱스가 곧 인터페이스이고 행이 제자리에서 열린다.
  *
- * `<details>` rather than React state, deliberately. It costs no JavaScript,
- * every panel is in the server HTML (so find-in-page, print and a failed
- * hydration all still show the work), and the keyboard and screen-reader
- * behaviour is the browser's rather than something to re-implement.
+ * React 상태가 아니라 `<details>`인 건 의도적이다. JS가 들지 않고, 모든 패널이
+ * 서버 HTML에 있어 find-in-page·인쇄·하이드레이션 실패에서도 내용이 남으며,
+ * 키보드와 스크린 리더 동작은 다시 구현할 필요 없이 브라우저 몫이다.
  */
 export default function ProjectsSection() {
   const t = useTranslations('projects');
@@ -46,8 +43,8 @@ export default function ProjectsSection() {
             <details
               id={anchorId(project.key)}
               className={styles.item}
-              // The first is open so the section reads as work rather than as
-              // a list of links; the rest are one click away.
+              // 첫 항목만 열어 둔다. 그래야 섹션이 링크 목록이 아니라 작업으로
+              // 읽힌다. 나머지는 클릭 한 번 거리다.
               open={i === 0}
             >
               <summary className={styles.row}>

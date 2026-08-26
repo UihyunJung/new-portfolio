@@ -4,9 +4,8 @@
 
 .list {
   position: relative;
-  // The drawn rule replaces a `border-block-start`; the padding gives it back
-  // the band that border occupied, so the first row's own hairline cannot
-  // paint over it.
+  // 그려지는 규칙선이 `border-block-start`를 대신한다. 패딩이 그 테두리가
+  // 차지하던 띠를 돌려주므로, 첫 행의 헤어라인이 그 위에 덧칠하지 않는다.
   padding-block-start: var(--rule-solid);
 
   &::before {
@@ -25,8 +24,8 @@
   scroll-margin-block-start: var(--scroll-offset);
   border-block-end: var(--rule-hair) solid var(--color-rule);
 
-  // Drawn down the leading edge while open — the same acknowledgement the
-  // index rows used to make on hover, now carrying state instead.
+    // 열려 있는 동안 앞쪽 모서리를 따라 그려진다 — 인덱스 행이 hover에서
+    // 하던 반응을 이제 상태가 대신 나른다.
   &::before {
     content: '';
     position: absolute;
@@ -59,7 +58,7 @@
   transition: padding-inline-start var(--dur-short) var(--ease-out);
   @include tap-target;
 
-  // The native disclosure triangle; the chevron replaces it.
+      // 네이티브 펼침 삼각형. 셰브런이 대신한다.
   &::-webkit-details-marker {
     display: none;
   }
@@ -119,8 +118,8 @@
   }
 }
 
-// One line, clipped. It previews the description rather than repeating it, so
-// it steps aside once the panel below is showing the whole thing.
+// 한 줄로 자른다. 설명문을 반복하는 게 아니라 미리 보여주는 것이라,
+// 아래 패널이 전문을 보여주기 시작하면 물러난다.
 .opener {
   display: block;
   margin-block-start: var(--space-3xs);
@@ -140,7 +139,7 @@
   display: none;
 }
 
-// 업무 / 개인 — a Hangul badge, so it takes the untracked variant.
+// 업무 / 개인 — 한글 배지라 자간 없는 변형을 쓴다.
 .type {
   @include label-prose;
   @include affordance;
@@ -165,10 +164,10 @@
   transform: rotate(180deg);
 }
 
-// The panel's own arrival. `<details>` swaps `display` on its content, so the
-// height cannot be transitioned — the content is animated instead, from
-// hidden, in a keyframe. The resting state stays the base rule, so a browser
-// that runs no animation still shows a fully open panel.
+// 패널의 도착. `<details>`는 내용의 `display`를 바꾸므로 높이를 전이할 수
+// 없다. 대신 내용을 숨김에서 출발하는 키프레임으로 움직인다. 정지 상태는
+// 기본 규칙에 남으므로 애니메이션이 돌지 않는 브라우저도 완전히 열린
+// 패널을 본다.
 @keyframes panel-in {
   from {
     opacity: 0;

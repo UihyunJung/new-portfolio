@@ -1,12 +1,11 @@
 export interface ProjectShot {
   /**
-   * File stem and message key. Resolves to two files under
-   * `public/images/projects/` — `<id>-thumb.jpg` for the strip and
-   * `<id>.jpg` for the viewer — and to a caption at
-   * `projects.items.<key>.shots.<id>`.
+   * 파일 이름이자 메시지 키. `public/images/projects/` 아래 두 파일
+   * (`<id>-thumb.jpg`는 스트립용, `<id>.jpg`는 뷰어용)과
+   * `projects.items.<key>.shots.<id>`의 캡션으로 이어진다.
    */
   id: string;
-  /** Intrinsic size of the full image, so nothing reflows as it loads. */
+  /** 원본 이미지의 고유 크기. 로드되는 동안 레이아웃이 밀리지 않게 한다. */
   width: number;
   height: number;
 }
@@ -16,14 +15,14 @@ export interface Project {
   type: 'work' | 'personal';
   techStack: string[];
   highlightKeys: string[];
-  /** Screenshots, in the order the strip and the viewer show them. */
+  /** 스크린샷. 스트립과 뷰어가 보여주는 순서 그대로. */
   shots?: ProjectShot[];
   /**
-   * Work under NDA. The panel says so where the screens would be, because
-   * an empty slot reads as an oversight rather than as a reason.
+   * NDA 대상 작업. 화면이 들어갈 자리에 그 사실을 적는다. 빈 칸은 사유가
+   * 아니라 누락으로 읽히기 때문이다.
    */
   confidential?: boolean;
-  /** Renders the 25-entry client ledger where the screens would be. */
+  /** 화면이 들어갈 자리에 25건 고객사 원장을 렌더링한다. */
   ledger?: boolean;
   links?: {
     github?: string;

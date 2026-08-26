@@ -17,8 +17,8 @@
   border-block-end: var(--rule-hair) solid var(--color-rule);
 }
 
-// Solid ink at display scale. The old gradient text fill measured
-// 3.4–4.3:1 across its stops — a WCAG AA failure on the primary action.
+// 디스플레이 크기의 단색 잉크. 이전의 그라데이션 글자 채움은 정지점에
+// 따라 3.4–4.3:1이었다 — 주요 동작에서 WCAG AA 미달이다.
 .email {
   font-family: var(--font-display);
   font-size: var(--text-xl);
@@ -83,7 +83,7 @@
     @include focus-ring;
   }
 
-  // Silent success — the label and mark change, nothing celebrates.
+  // 조용한 성공 — 라벨과 표시만 바뀌고 축하하지 않는다.
   &[data-state='success'] {
     color: var(--color-accent-text);
     border-color: var(--color-accent);
@@ -100,9 +100,8 @@
   }
 }
 
-// The one place a spring is right on this page: the tick lands, and the
-// slight overshoot is what makes it read as a confirmation rather than a
-// state flip.
+// 이 페이지에서 스프링이 맞는 유일한 곳. 체크가 안착하고, 그 살짝의
+// 오버슈트가 상태 전환이 아니라 확인으로 읽히게 만든다.
 .copyIcon {
   position: relative;
   flex: none;

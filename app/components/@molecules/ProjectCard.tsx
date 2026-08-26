@@ -17,17 +17,15 @@ type ProjectCardProps = Pick<
 > & { projectKey: string };
 
 /**
- * The body of one project, revealed by its row in ProjectsSection.
+ * ProjectsSection의 행이 펼치는 프로젝트 본문.
  *
- * Everything here is a key over a value: a narrow rail of fields on the left,
- * and on the right a lede followed by labelled groups. The key is 11px mono at
- * `--color-muted`; the value is body-face ink. Family, size, weight and
- * lightness all differ, because two things a pixel apart in size are not a
- * hierarchy — the first pass proved that.
+ * 전부 항목명 위에 내용이 오는 구조다. 왼쪽은 좁은 필드 레일, 오른쪽은 리드
+ * 문장과 라벨이 붙은 그룹들. 항목명은 11px mono에 --color-muted, 내용은 본문
+ * 서체에 먹색이다. 서체·크기·굵기·명도가 모두 다른 이유는, 크기가 1px 차이
+ * 나는 두 가지는 계층이 아니기 때문이다.
  *
- * The last group is the project's evidence, and its content depends on what
- * the project actually has: screens, a client ledger, or a stated reason there
- * are none.
+ * 마지막 그룹은 그 프로젝트의 증거이고, 실제로 가진 것에 따라 내용이 달라진다 —
+ * 화면, 고객사 원장, 또는 보여줄 수 없다는 사유.
  */
 export default function ProjectCard({
   projectKey,
@@ -87,8 +85,8 @@ export default function ProjectCard({
       </dl>
 
       <div className={styles.body}>
-        {/* The one unlabelled block, and a size and a shade above the rest —
-            that is what makes it read as the lede. */}
+        {/* 라벨이 없는 유일한 블록이고 나머지보다 한 단계 크고 진하다.
+            그래서 리드로 읽힌다. */}
         <p className={styles.description}>
           {t(`items.${projectKey}.description`)}
         </p>

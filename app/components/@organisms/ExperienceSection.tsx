@@ -12,9 +12,9 @@ export default function ExperienceSection() {
     <SectionWrapper id="experience">
       <SectionHeading>{t('heading')}</SectionHeading>
 
-      {/* An index of ruled rows — period in the margin, the record beside
-          it, and a rail down the gutter that fills as the section passes.
-          The rail is the only place scroll position is drawn literally. */}
+      {/* 규칙선으로 나뉜 행의 인덱스 — 기간은 여백에, 기록은 그 옆에, 섹션이
+          지나가는 동안 채워지는 레일이 홈통을 따라 내려간다. 스크롤 위치를
+          문자 그대로 그리는 유일한 곳이다. */}
       <div className={styles.index}>
         {experiences.map((exp) => (
           <ExperienceCard

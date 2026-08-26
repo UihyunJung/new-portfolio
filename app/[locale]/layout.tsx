@@ -19,8 +19,8 @@ const wantedSans = localFont({
   weight: '100 900',
 });
 
-// 2+1 pairing. Space Grotesk carries Latin display; Wanted Sans carries
-// Hangul in the same stack so mixed KO/EN headlines stay in one voice.
+// 2+1 조합. 라틴 디스플레이는 Space Grotesk가, 한글은 같은 스택의
+// Wanted Sans가 받아 한영이 섞인 제목도 하나의 목소리로 유지된다.
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
   variable: '--font-space-grotesk',
@@ -35,11 +35,10 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ['400', '500'],
 });
 
-// Analytics belongs to the production deployment only. Vercel sets VERCEL_ENV
-// to 'production' | 'preview' | 'development'; it is absent locally, so
-// `npm run dev`, `npm run start` and every preview deployment stay out of the
-// GA property. Read server-side — the layout is a Server Component, so this
-// never needs the NEXT_PUBLIC_ prefix.
+// 애널리틱스는 프로덕션 배포에만 붙는다. Vercel이 VERCEL_ENV를
+// 'production' | 'preview' | 'development'로 설정하고 로컬에는 없으므로
+// `npm run dev`, `npm run start`, 모든 프리뷰 배포가 GA 속성에서 빠진다.
+// 서버에서 읽으므로(레이아웃은 서버 컴포넌트) NEXT_PUBLIC_ 접두사가 필요 없다.
 const analyticsEnabled = process.env.VERCEL_ENV === 'production';
 
 const META = {
@@ -106,9 +105,9 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      // Opts into Next's route-transition handling for the global
-      // `scroll-behavior: smooth` in _reset.scss: anchor jumps stay smooth,
-      // route changes (including locale switches) snap.
+      // _reset.scss의 전역 `scroll-behavior: smooth`에 대해 Next의 라우트 전환
+      // 처리를 켠다. 앵커 이동은 부드럽게 유지되고, 라우트 변경(언어 전환
+      // 포함)은 즉시 이동한다.
       data-scroll-behavior="smooth"
       className={`${wantedSans.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning

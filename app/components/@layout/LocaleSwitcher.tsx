@@ -24,9 +24,9 @@ export default function LocaleSwitcher() {
       }
       type="button"
     >
-      {/* The icon supplies the "this is a language control" context that a
-          bare two-letter code can't. The code itself stays action-labelled:
-          it names the language you get, not the one you're in. */}
+      {/* 두 글자 코드만으로는 "언어 컨트롤"이라는 맥락이 서지 않아 아이콘이
+          그 역할을 맡는다. 코드 자체는 동작 기준이다 — 지금 언어가 아니라
+          누르면 바뀔 언어를 가리킨다. */}
       <Languages size={14} aria-hidden="true" />
       {locale === 'ko' ? 'EN' : 'KO'}
     </button>

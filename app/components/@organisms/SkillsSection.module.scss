@@ -5,8 +5,8 @@
 
 .sheet {
   position: relative;
-  // The drawn rule replaces a `border-block-start`; the padding gives it
-  // back the band that border occupied.
+  // 그려지는 규칙선이 `border-block-start`를 대신한다. 패딩이 그 테두리가
+  // 차지하던 띠를 돌려준다.
   padding-block-start: var(--rule-solid);
 
   &::before {
@@ -20,12 +20,11 @@
   }
 }
 
-// The rows are stacked, so scroll position staggers them on its own — no
-// per-row delay is needed or wanted.
+// 행이 세로로 쌓여 있으니 스크롤 위치가 알아서 시차를 만든다. 행마다
+// 지연을 줄 필요도, 줄 이유도 없다.
 //
-// Hover sweeps a band of accent light across the row. It is contained by
-// the row's own stacking context so it can sit under the type without
-// escaping into the band behind it.
+// hover하면 액센트 빛의 띠가 행을 가로지른다. 행 자신의 쌓임 맥락에 갇혀
+// 있어 글자 아래에 깔리면서도 뒤 밴드로 새어 나가지 않는다.
 .row {
   position: relative;
   isolation: isolate;
@@ -52,13 +51,11 @@
       transparent
     );
     transform: translateX(-100%);
-    // `linear`, and deliberately none of the four easings. Those all shape
-    // an arrival — they front- or back-load the travel so an object settles.
-    // This band never arrives; it passes through and leaves. Under
-    // `--ease-out` it was 70% across by 20% of the duration, so the whole
-    // visible crossing happened in the first fraction and the rest of the
-    // time was spent off-screen: a blink rather than a sweep. Constant
-    // velocity is what makes it read as one band moving.
+    // `linear`이고, 네 이징 중 어느 것도 아니다. 그것들은 전부 *도착*을
+    // 만드느라 이동을 앞뒤로 쏠리게 한다. 이 띠는 도착하지 않고 지나갈
+    // 뿐이다. `--ease-out`에서는 전체 시간의 20%에 이미 70% 지점이라
+    // 눈에 보이는 통과가 앞부분에 다 끝나고 나머지는 화면 밖에서 흘렀다.
+    // 등속이어야 하나의 띠가 움직이는 것으로 읽힌다.
     transition: transform var(--dur-travel) linear;
     pointer-events: none;
   }

@@ -1,19 +1,17 @@
 @use '../../assets/styles/@utilities/mixins' as *;
 
 // ============================================
-// The load entrance
+// 로드 진입
 // ============================================
 //
-// All of it is CSS, and the reason is not preference. A JS entrance writes
-// its hidden state into the server HTML: `opacity: 0` ships on the
-// description, both calls to action and the spec panel, and stays there
-// until hydration runs — permanently, if it never does. Here the base rule
-// is the resting state, the keyframes move *from* hidden, and `both` holds
-// that start through the delay. The hero is complete in the markup and the
-// animation is the enhancement.
+// 전부 CSS다. 취향이 아니라 이유가 있다. JS 진입은 숨김 상태를 서버 HTML에
+// 기록한다 — 설명문과 CTA 두 개, 스펙 패널에 `opacity: 0`이 실려 나가고
+// 하이드레이션이 돌 때까지, 실패하면 영구히 남는다. 여기서는 기본 규칙이
+// 정지 상태이고 키프레임이 숨김에서 출발하며 `both`가 지연 동안 그 시작을
+// 잡아 둔다. 마크업만으로 히어로가 완성되고 애니메이션은 덤이다.
 //
-// The cues interleave with the character rise in SplitText, which is timed
-// from HeroSection.tsx: name at 180ms, role from 470ms.
+// 큐는 SplitText의 글자 상승과 맞물린다. 타이밍은 HeroSection.tsx에 있다 —
+// 이름 180ms, 역할 470ms부터.
 
 @keyframes rise-in {
   from {
@@ -44,11 +42,11 @@
   }
 }
 
-// H2 · Split diptych — lede left (7), artifact right (5). Never centred,
-// never full-viewport: the hero is the height of what it holds.
+// 좌측 리드(7) + 우측 아티팩트(5)의 분할 구성. 가운데 정렬도, 전체 화면
+// 높이도 아니다 — 히어로의 높이는 담고 있는 것의 높이다.
 //
-// The section closes on the running stack band rather than on empty
-// padding, so the bottom of the band IS the bottom of the hero.
+// 빈 패딩이 아니라 흐르는 스택 밴드에서 끝나므로, 밴드의 아래가 곧 히어로의
+// 아래다.
 .hero {
   position: relative;
   isolation: isolate;
@@ -61,10 +59,10 @@
 }
 
 // ============================================
-// Atmosphere
+// 분위기 층
 // ============================================
-// Sits behind the content in the hero's own stacking context. Entirely
-// decorative: no state depends on it, and none of it is announced.
+// 히어로 자체 쌓임 맥락에서 콘텐츠 뒤에 깔린다. 완전히 장식이라
+// 어떤 상태도 여기에 의존하지 않고 낭독되지도 않는다.
 
 .field {
   position: absolute;
@@ -75,7 +73,7 @@
 
 .grid {
   position: absolute;
-  // Bleeds a pixel so the first rule is not clipped in half.
+  // 1px 흘려서 첫 규칙선이 반으로 잘리지 않게 한다.
   inset: -1px;
   background-image:
     linear-gradient(to right, var(--color-rule) 1px, transparent 1px),
@@ -101,9 +99,9 @@
   }
 }
 
-// Follows the cursor. `--pointer-*` are written by usePointerField, which
-// declines to run on a coarse pointer or under reduced motion — so the
-// opacity default of 0 is also the permanent state for those readers.
+// 커서를 따라간다. `--pointer-*`는 usePointerField가 쓰는데, coarse 포인터나
+// reduced-motion에서는 아예 붙지 않는다 — 그래서 opacity 기본값 0이 그
+// 사용자들에게는 영구 상태가 된다.
 .spot {
   position: absolute;
   inset: 0;
@@ -116,12 +114,12 @@
   transition: opacity var(--dur-long) var(--ease-out);
 }
 
-// A hairline that scans the hero, once every 11s.
+// 11초에 한 번 히어로를 훑는 헤어라인.
 //
-// The element is the full height of the band and the line rides its top
-// edge, so `translateY(100%)` travels exactly the hero's height — a fixed
-// distance in `vh` under-shoots the taller English hero and over-shoots on
-// a short viewport. Transform and opacity only: it stays on the compositor.
+// 요소가 밴드의 전체 높이이고 선이 그 위쪽 모서리를 타므로 translateY(100%)가
+// 정확히 히어로 높이만큼 이동한다. `vh` 같은 고정 거리는 두 줄짜리 영문
+// 히어로에서 모자라고 짧은 화면에서는 넘친다. transform과 opacity만 쓰므로
+// 컴포지터에서 처리된다.
 .sweep {
   position: absolute;
   inset-inline: 0;
@@ -170,7 +168,7 @@
 }
 
 // ============================================
-// Lede
+// 리드
 // ============================================
 
 .shell {
@@ -203,8 +201,8 @@
   margin-block-end: var(--space-3xs);
 }
 
-// The datasheet voice, at display scale. Uppercased in CSS so the
-// translation files keep sentence case.
+// 디스플레이 크기의 데이터시트 목소리. 대문자 변환은 CSS에서 하므로
+// 번역 파일은 문장 대소문자를 유지한다.
 .role {
   position: relative;
   display: inline-block;
@@ -222,7 +220,7 @@
   }
 }
 
-// Draws itself once the last word has landed.
+// 마지막 단어가 안착한 뒤 스스로 그려진다.
 .roleRule {
   display: block;
   block-size: var(--rule-solid);
@@ -263,9 +261,9 @@
   @include enter(rise-in, var(--dur-long), 1.14s);
 }
 
-// Cobalt's one solid signal button. 6px radius — ruler-drawn, not a pill.
-// `transform` is composed from custom properties so the magnetic pull
-// (written by useMagnetic) and the press state cannot clobber each other.
+// 시스템에서 유일한 단색 신호 버튼. 반경 6px — 자로 그은 값이지 알약이 아니다.
+// `transform`을 커스텀 프로퍼티로 합성해서, useMagnetic이 쓰는 자석 인력과
+// 눌림 상태가 서로를 덮어쓰지 않게 한다.
 .primary {
   position: relative;
   overflow: clip;
@@ -287,7 +285,7 @@
   @include tap-target;
   @include control-states;
 
-  // A single pass of light across the fill, on hover only.
+  // hover에서만, 빛이 면을 한 번 지나간다.
   &::before {
     content: '';
     position: absolute;
@@ -336,8 +334,8 @@
   }
 }
 
-// C3 · Typographic link — a word and a 1px underline. No box, no fill.
-// The underline wipes in from the cursor's side rather than fading.
+// 타이포그래피 링크 — 단어와 1px 밑줄뿐. 상자도 채움도 없다.
+// 밑줄은 페이드가 아니라 커서가 있는 쪽에서 쓸려 들어온다.
 .secondary {
   position: relative;
   padding-block: var(--space-3xs);
@@ -388,7 +386,7 @@
 }
 
 // ============================================
-// The artifact slot
+// 아티팩트 슬롯
 // ============================================
 
 .spec {
@@ -396,7 +394,7 @@
   border: var(--rule-hair) solid var(--color-rule);
   border-radius: var(--radius-md);
   background: var(--color-paper-2);
-  // Also the clip the rows slide in behind.
+  // 행들이 뒤에서 미끄러져 들어올 때 잘리는 경계이기도 하다.
   overflow: clip;
   @include enter(panel-in, 520ms, 420ms);
 }
@@ -414,8 +412,8 @@
   @include label;
 }
 
-// The panel settles first, then deals its rows out. `.specHead` is the
-// first child, so the rows start at nth-child(2).
+// 패널이 먼저 안착한 뒤 행을 차례로 돌린다. `.specHead`가 첫 자식이라
+// 행은 nth-child(2)부터 시작한다.
 .specRow {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -454,7 +452,7 @@
 }
 
 // ============================================
-// Scroll cue + running stack
+// 스크롤 큐 + 흐르는 스택
 // ============================================
 
 .cue {
@@ -547,8 +545,7 @@
 .tickerTrack {
   display: flex;
   inline-size: max-content;
-  // Two identical runs; one full run is exactly 50% of the track, so the
-  // loop point is invisible.
+  // 동일한 묶음 둘. 한 묶음이 트랙의 정확히 50%라 이어지는 지점이 보이지 않는다.
   animation: ticker-run 64s linear infinite;
   will-change: transform;
 

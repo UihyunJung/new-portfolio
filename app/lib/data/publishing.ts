@@ -1,12 +1,12 @@
-// Publishing ledger — the 25 client projects behind the "대규모 웹 퍼블리싱"
-// entry. Periods are data and never translated; client and title live in
-// `messages/*.json` under `projects.ledger.<id>` because both differ per
-// locale. Newest first — the list renders in this order.
+// 퍼블리싱 원장 — "대규모 웹 퍼블리싱" 항목 뒤의 고객사 프로젝트 25건.
+// 기간은 데이터라 번역하지 않고, 고객사와 프로젝트명은 언어마다 달라
+// `messages/*.json`의 `projects.ledger.<id>`에 둔다. 최신순이고, 이 순서대로
+// 렌더링된다.
 
 export interface LedgerEntry {
-  /** Message key under `projects.ledger`. */
+  /** `projects.ledger` 아래의 메시지 키. */
   id: string;
-  /** Already formatted for display; not localised. */
+  /** 표시용으로 이미 다듬은 문자열. 번역하지 않는다. */
   period: string;
 }
 
@@ -38,7 +38,7 @@ export const publishingLedger: LedgerEntry[] = [
   { id: 'keit', period: '2017.12–2018.01' },
 ];
 
-/** Counts shown beside the ledger heading. Derived once, not at render.*/
+/** 원장 제목 옆에 보이는 집계. 렌더링 때가 아니라 한 번만 계산한다. */
 export const publishingSummary = {
   count: publishingLedger.length,
   clients: 18,

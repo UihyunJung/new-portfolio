@@ -7,8 +7,8 @@ export default function MotionProvider({
 }: {
   children: React.ReactNode;
 }) {
-  // The CSS `prefers-reduced-motion` block only reaches CSS transitions.
-  // motion/react drives inline transforms, so it needs telling separately.
+  // CSS의 `prefers-reduced-motion` 블록은 CSS 전이에만 닿는다.
+  // motion/react는 인라인 transform을 다루므로 따로 알려 줘야 한다.
   return (
     <MotionConfig reducedMotion="user">
       <LazyMotion features={domAnimation}>{children}</LazyMotion>

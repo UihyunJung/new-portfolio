@@ -7,8 +7,8 @@
   padding-block-end: var(--space-xl);
   padding-inline-start: var(--space-2xs);
 
-  // The same 11rem metadata column the Experience section uses, so the two
-  // sections sit on one grid rather than two that nearly agree.
+    // 경력 섹션이 쓰는 것과 같은 11rem 메타 열. 그래야 두 섹션이 서로
+    // 비슷하기만 한 격자 둘이 아니라 하나의 격자 위에 앉는다.
   @include md {
     grid-template-columns: 11rem minmax(0, 1fr);
     gap: var(--space-lg);
@@ -16,7 +16,7 @@
   }
 }
 
-// ---- rail -----------------------------------------------------------------
+// ---- 레일 ----------------------------------------------------------------
 .rail {
   display: flex;
   flex-direction: column;
@@ -30,8 +30,8 @@
   padding-block: var(--space-2xs);
   border-block-start: var(--rule-hair) solid var(--color-rule);
 
-  // Above the fold of the narrow rail there is room to stack, which lets the
-  // value take the full 11rem instead of wrapping in a 7rem gutter.
+    // 좁은 레일에서는 세로로 쌓을 자리가 있어, 값이 7rem 홈통에서 접히는
+    // 대신 11rem을 다 쓴다.
   @include md {
     display: block;
   }
@@ -82,7 +82,7 @@
   }
 }
 
-// ---- body -----------------------------------------------------------------
+// ---- 본문 ----------------------------------------------------------------
 .body {
   display: flex;
   flex-direction: column;
@@ -115,7 +115,7 @@
   @include label;
 }
 
-// A sentence, not a token.
+// 토큰이 아니라 문장이다.
 .hint {
   @include label-prose;
   color: var(--color-rule-strong);
@@ -152,8 +152,8 @@
   gap: var(--space-3xs);
 }
 
-// The stack was one long monospaced sentence you had to read. As chips the eye
-// counts it instead, and the group key carries the total.
+// 스택은 읽어야 하는 긴 등폭 문장이었다. 칩으로 두면 눈이 대신 세고,
+// 총 개수는 그룹 항목명이 나른다.
 .chip {
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
@@ -166,8 +166,8 @@
   white-space: nowrap;
 }
 
-// Locale copy, so the body face — the mono stack has no Hangul and would set
-// this one syllable per em.
+// 로케일 카피라 본문 서체를 쓴다 — mono 스택에는 한글이 없어
+// 한 글자를 한 em으로 세운다.
 .sealed {
   display: flex;
   align-items: center;

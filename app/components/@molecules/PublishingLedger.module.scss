@@ -6,13 +6,12 @@
   margin-block-end: var(--space-2xs);
 }
 
-// One column, on purpose. Two columns would be denser, but the preview and the
-// revealed remainder are separate lists: each would lay out its own pair of
-// columns, so the eye would read three rows down the left, jump right for
-// three more, then come back to the left for the seventh — and the boundary
-// between the two lists would show as a seam across the middle. Stacked, the
-// twenty-five read 1 to 25 in the order they happened, and the full panel
-// width goes to the project names.
+// 한 단인 건 의도다. 두 단이 밀도는 높지만, 미리보기와 펼쳐지는 나머지는
+// 별개의 목록이라 각자 자기 두 단을 만든다. 그러면 왼쪽으로 세 행 읽고
+// 오른쪽으로 건너뛰어 세 행 더 읽은 뒤 일곱 번째를 위해 다시 왼쪽으로
+// 돌아가야 하고, 두 목록의 경계가 가운데를 가로지르는 이음매로 드러난다.
+// 쌓아 두면 스물다섯이 일어난 순서대로 1에서 25까지 읽히고, 패널 폭 전부가
+// 프로젝트명에 간다.
 .list {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -20,8 +19,8 @@
 
 .row {
   display: grid;
-  // Wide enough for the longest period — 2022.08–2023.02 — so no row
-  // wraps its date and every row is the same height.
+  // 가장 긴 기간(2022.08–2023.02)이 들어갈 만큼 넓게. 그래야 날짜가
+  // 접히는 행이 없고 모든 행 높이가 같다.
   grid-template-columns: 6.75rem minmax(0, 1fr);
   gap: var(--space-2xs);
   align-items: baseline;
@@ -54,7 +53,7 @@
 }
 
 .control {
-  order: 2; // after the rows it reveals
+  order: 2; // 이 컨트롤이 여는 행들 뒤로
   display: inline-flex;
   align-self: start;
   align-items: center;
@@ -71,7 +70,7 @@
   transition: border-color var(--dur-micro) var(--ease-out);
   @include tap-target;
 
-  // The default disclosure triangle; the chevron replaces it.
+    // 기본 펼침 삼각형. 셰브런이 대신한다.
   &::-webkit-details-marker {
     display: none;
   }

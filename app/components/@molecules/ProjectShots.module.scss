@@ -1,8 +1,8 @@
 @use '../../assets/styles/@utilities/mixins' as *;
 
-// A single scrolling row on phones — wrapped two-up it costs three rows inside
-// a panel that is already tall, and sideways is the gesture a thumb expects.
-// scroll-snap does the work a carousel library would otherwise be imported for.
+// 휴대폰에서는 가로로 스크롤되는 한 줄. 2열로 감싸면 이미 긴 패널 안에서
+// 세 줄을 먹고, 옆으로 미는 건 엄지가 기대하는 동작이다. 캐러셀 라이브러리를
+// 들여야 할 일을 scroll-snap이 대신한다.
 .strip {
   display: flex;
   gap: var(--space-2xs);
@@ -17,9 +17,9 @@
     padding-block-end: 0;
   }
 
-  // The flex item is the <li>, not the link inside it. Sizing the link left
-  // the item free to shrink, and below ~700px the thumbnails collapsed to
-  // half width instead of scrolling.
+    // flex 아이템은 안쪽 링크가 아니라 <li>다. 링크에 크기를 주면 아이템이
+    // 자유롭게 줄어들어, 700px 아래에서 썸네일이 스크롤되지 않고 반으로
+    // 찌그러졌다.
   > li {
     flex: 0 0 148px;
     scroll-snap-align: start;
@@ -52,10 +52,9 @@
   }
 }
 
-// ---- viewer ---------------------------------------------------------------
-// `<dialog>` is deliberate: the focus trap, Escape, inert background and the
-// top layer all come from the browser. A hand-rolled overlay gets one of them
-// wrong more often than not.
+// ---- 뷰어 ----------------------------------------------------------------
+// `<dialog>`는 의도적이다. 포커스 가둠, Esc, 배경 비활성화, 최상위 레이어가
+// 전부 브라우저에서 온다. 직접 만든 오버레이는 이 중 하나를 틀리기 쉽다.
 .viewer {
   inline-size: 100%;
   max-inline-size: min(1100px, 94vw);
@@ -70,8 +69,8 @@
     background: oklch(20% 0.02 258 / 0.86);
   }
 
-  // The base rule is the resting state; the keyframe starts from hidden, so a
-  // browser without `@starting-style` still gets a dialog that simply appears.
+    // 기본 규칙이 정지 상태이고 키프레임이 숨김에서 출발하므로,
+    // `@starting-style`이 없는 브라우저에서도 다이얼로그는 그냥 나타난다.
   @media (prefers-reduced-motion: no-preference) {
     animation: viewer-in var(--dur-short) var(--ease-out) both;
   }
@@ -91,8 +90,8 @@
   margin: 0;
 }
 
-// Width and height ride on the element as attributes, so the pair of maxima
-// plus `auto` is what keeps the aspect ratio while fitting both axes.
+// 폭과 높이가 속성으로 요소에 실려 있으므로, 두 최댓값과 `auto`의 조합이
+// 양쪽 축에 맞추면서 비율을 지킨다.
 .full {
   display: block;
   inline-size: auto;
@@ -115,8 +114,8 @@
   flex: 1 1 auto;
   min-inline-size: 0;
   @include label-prose;
-  // The bar sits on the backdrop, not on paper, so these two ignore the ink
-  // tokens and take fixed light values instead.
+    // 이 줄은 종이가 아니라 백드롭 위에 있어서, 잉크 토큰 대신 고정된 밝은
+    // 값을 쓴다.
   color: oklch(90% 0.007 253);
 }
 

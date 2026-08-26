@@ -15,9 +15,9 @@ export default function AboutSection() {
 
       <p className={styles.bio}>{t('bio')}</p>
 
-      {/* T4 · Numbered stat strip — real figures, hairline-divided.
-          Replaces three equal cards; the numbers carry the section, and
-          they count up the first time they are scrolled to. */}
+      {/* 번호가 붙은 수치 띠 — 실제 숫자를 헤어라인으로 나눈다. 동일한 카드
+          세 장을 대체했고, 숫자가 섹션을 지탱하며 처음 스크롤될 때 한 번
+          올라간다. */}
       <dl className={styles.strip}>
         {HIGHLIGHTS.map((key) => (
           <div key={key} className={styles.stat}>

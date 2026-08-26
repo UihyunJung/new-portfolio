@@ -8,7 +8,7 @@
   pointer-events: none;
 }
 
-// A bordered square, not a filled gradient disc with a coloured glow.
+// 테두리가 있는 정사각형. 색을 띤 글로우가 있는 그라데이션 원반이 아니다.
 .btn {
   position: absolute;
   inset-block-end: var(--space-lg);
@@ -18,14 +18,14 @@
   place-items: center;
   width: 40px;
   height: 40px;
-  // Icon-only control: the border is its only boundary, so it must
-  // carry 3:1 against paper (WCAG 1.4.11).
+  // 아이콘만 있는 컨트롤이라 테두리가 유일한 경계다. 종이 대비 3:1을
+  // 지켜야 한다 (WCAG 1.4.11).
   border: var(--rule-hair) solid var(--color-rule-strong);
   border-radius: var(--radius-sm);
   background: var(--color-paper);
   color: var(--color-ink-2);
-  // Arrives with a spring; leaves without one. An object that overshoots
-  // on the way out reads as a glitch, not as physics.
+  // 도착할 때만 스프링을 쓰고 나갈 때는 쓰지 않는다. 사라지면서 오버슈트하는
+  // 물체는 물리가 아니라 오류로 읽힌다.
   opacity: 0;
   transform: translateY(1rem) scale(0.82);
   pointer-events: none;

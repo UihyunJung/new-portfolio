@@ -10,8 +10,8 @@ import usePointerField from '@hooks/usePointerField';
 import { SKILL_NAMES } from '@lib/data/skills';
 import styles from './HeroSection.module.scss';
 
-// Every value here is drawn from the project's own data files —
-// skills.ts, projects.ts, experience.ts. Nothing is invented.
+// 여기 값은 전부 프로젝트의 데이터 파일에서 온다 — skills.ts, projects.ts,
+// experience.ts. 지어낸 값은 없다.
 const SPEC = [
   { key: 'EXPERIENCE', i18nKey: 'years' },
   { key: 'CORE', value: 'React · Next.js · TypeScript' },
@@ -20,12 +20,11 @@ const SPEC = [
   { key: 'I18N', value: 'next-intl · 11 locales' },
 ] as const;
 
-// The entrance is CSS from end to end, and deliberately so: a JS entrance
-// writes its hidden state into the server HTML, which leaves the
-// description, both calls to action and the whole spec panel invisible
-// until hydration — and permanently invisible if it never happens. The
-// block-level cues live in HeroSection.module.scss beside the keyframes;
-// only the two split lines need their timing passed in.
+// 진입은 처음부터 끝까지 CSS이고, 의도적이다. JS 진입은 숨김 상태를 서버
+// HTML에 기록하므로 설명문과 CTA 두 개, 스펙 패널 전체가 하이드레이션 전까지
+// 안 보이고, 하이드레이션이 실패하면 영구히 안 보인다. 블록 단위 큐는
+// HeroSection.module.scss의 키프레임 옆에 있고, 여기서 타이밍을 넘겨야 하는
+// 건 쪼개진 두 줄뿐이다.
 const NAME_CUE = 180;
 const NAME_STEP = 70;
 const ROLE_CUE = 470;
@@ -38,8 +37,8 @@ export default function HeroSection() {
 
   return (
     <section id="hero" className={styles.hero} ref={fieldRef}>
-      {/* Atmosphere. A ruled field the accent light moves across — the only
-          place on the page where anything follows the cursor. */}
+      {/* 분위기 층. 액센트 빛이 가로지르는 규칙선 밭 — 페이지에서 커서를
+          따라가는 것이 있는 유일한 곳이다. */}
       <div className={styles.field} aria-hidden="true">
         <span className={styles.grid} />
         <span className={styles.spot} />
@@ -48,9 +47,8 @@ export default function HeroSection() {
 
       <div className={styles.shell}>
         <div className={styles.lede}>
-          {/* A greeting, not an eyebrow — sentence case, body face, no
-              tracking. The page should say hello before it hands over a
-              datasheet. */}
+          {/* 소제목이 아니라 인사말 — 문장 대소문자, 본문 서체, 자간 없음.
+              데이터시트를 건네기 전에 페이지가 먼저 인사해야 한다. */}
           <p className={styles.greeting}>{t('greeting')}</p>
 
           <h1 className={styles.name}>
@@ -59,9 +57,9 @@ export default function HeroSection() {
             </SplitText>
           </h1>
 
-          {/* Split by word, not character: at mono display size the line is
-              one shell wide on a phone, and character masks let the browser
-              break it mid-word. */}
+          {/* 글자가 아니라 단어 단위로 나눈다. mono 디스플레이 크기에서 이 줄은
+              휴대폰 화면 하나 폭이라, 글자 마스크로 두면 브라우저가 단어
+              중간에서 줄을 바꾼다. */}
           <p className={styles.role}>
             <SplitText by="word" delay={ROLE_CUE} step={ROLE_STEP}>
               {t('title')}
@@ -91,9 +89,9 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* The Workbench artifact slot. A typographic frame — top rule,
-            label, bottom rule — never re-drawn window chrome. The panel
-            settles first, then deals its rows out. */}
+        {/* 아티팩트 슬롯. 타이포그래피 프레임 — 위 규칙선, 라벨, 아래 규칙선.
+            윈도우 크롬을 다시 그리지 않는다. 패널이 먼저 안착한 뒤 행을 차례로
+            돌린다. */}
         <dl className={styles.spec}>
           <div className={styles.specHead}>
             <span className={styles.specTitle}>{t('specTitle')}</span>
@@ -118,9 +116,8 @@ export default function HeroSection() {
         SCROLL
       </span>
 
-      {/* The stack, running. Decorative repetition of the skills sheet
-          below, so it is hidden from the reading order rather than read
-          out twice. */}
+      {/* 흐르는 스택. 아래 스킬 시트의 장식적 반복이라, 두 번 읽히지 않도록
+          읽기 순서에서 숨긴다. */}
       <div className={styles.ticker} aria-hidden="true">
         <div className={styles.tickerTrack}>
           {[0, 1].map((copy) => (

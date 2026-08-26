@@ -10,7 +10,7 @@ export default function Footer() {
   return (
     <footer className={styles.foot}>
       <div className={styles.shell}>
-        {/* Ft4 · Dense typographic colophon — credits, not a sitemap. */}
+        {/* 밀도 있는 타이포그래피 콜로폰 — 사이트맵이 아니라 크레딧이다. */}
         <dl className={styles.colophon}>
           <div className={styles.row}>
             <dt className={styles.key}>{t('builtLabel')}</dt>

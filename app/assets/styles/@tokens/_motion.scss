@@ -1,18 +1,16 @@
 // ============================================
-// Motion tokens
-// Three named easings. The browser default `ease` is banned —
-// it is what uncrafted motion looks like.
+// 모션 토큰
+// 이징 네 종류. 브라우저 기본값 `ease`는 금지 — 다듬지 않은 모션의 모양이다.
 // ============================================
 
 :root {
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); // entering
-  --ease-in: cubic-bezier(0.7, 0, 0.84, 0); // leaving
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); // state toggles
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); // 들어올 때
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0); // 나갈 때
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); // 상태 전환
 
-  // A real damped spring, sampled into a linear() easing — no JS runtime,
-  // no spring library. Overshoots to 1.16 and settles. Reserved for objects
-  // that *arrive*: a sheet, a tick that jumps rails, a confirmation mark.
-  // Never for a colour or an opacity — overshooting those reads as a glitch.
+  // 실제 감쇠 스프링을 linear() 이징으로 샘플링한 것. JS 런타임도 스프링
+  // 라이브러리도 없다. 1.16까지 넘어갔다 안착한다. *도착하는* 물체 전용 —
+  // 시트, 레일을 건너뛰는 틱, 확인 표시. 색이나 투명도에는 쓰지 않는다.
   --ease-spring: linear(
     0,
     0.009,
@@ -45,13 +43,12 @@
   --dur-short: 220ms;
   --dur-long: 420ms;
 
-  // For motion that crosses a whole surface rather than settling in place.
-  // The three durations above are sized for objects that move a few pixels
-  // to tens of pixels; a band travelling twice a row's width at 420ms is
-  // gone before the eye picks it up and reads as a flash, not a pass.
+  // 제자리에 안착하지 않고 표면을 가로질러 지나가는 움직임용.
+  // 위의 세 값은 수 픽셀에서 수십 픽셀을 움직이는 물체 크기라, 행 너비의
+  // 두 배를 가는 띠에 420ms를 쓰면 눈에 걸리기 전에 지나가 번쩍임이 된다.
   --dur-travel: 720ms;
 
-  // The one interval between siblings in a revealed run. Below ~40ms a list
-  // reads as simultaneous; above ~90ms the last item feels late.
+  // 한 묶음 안에서 형제 요소 사이의 유일한 간격. 40ms 아래면 동시에 나온
+  // 것처럼 읽히고, 90ms 위면 마지막 항목이 늦게 느껴진다.
   --stagger: 60ms;
 }

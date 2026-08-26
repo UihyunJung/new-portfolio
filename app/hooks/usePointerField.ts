@@ -3,13 +3,12 @@
 import { useEffect, useRef } from 'react';
 
 /**
- * Publishes the cursor's position inside an element as CSS variables:
- * `--pointer-x`, `--pointer-y` and `--pointer-on` (1 while the cursor is
- * over it, 0 otherwise).
+ * 요소 안 커서 위치를 CSS 변수로 내보낸다 — `--pointer-x`, `--pointer-y`,
+ * 그리고 `--pointer-on`(커서가 위에 있으면 1, 아니면 0).
  *
- * What the element does with them is the stylesheet's business — a
- * spotlight, a tint, a parallax offset. Nothing renders from React, so a
- * pointer moving across the hero never triggers a re-render.
+ * 그걸로 무엇을 할지는 스타일시트의 몫이다. 스포트라이트든 색조든 시차든.
+ * React에서 렌더링하는 게 없으므로 커서가 히어로를 가로질러도 리렌더가
+ * 일어나지 않는다.
  */
 export default function usePointerField<T extends HTMLElement>() {
   const ref = useRef<T>(null);
