@@ -57,7 +57,11 @@ npm run start      # 프로덕션 서버
   둘 다 CSS 커스텀 프로퍼티만 쓰고 리렌더를 일으키지 않으며,
   coarse 포인터·reduced-motion에서는 아예 붙지 않는다
 - **토큰**: `@tokens/_motion.scss` — 이징 4종(`--ease-out`/`in`/`in-out`/
-  `--ease-spring`), 지속시간 3종, `--stagger: 60ms`. 이 밖의 값 금지
+  `--ease-spring`), 지속시간 4종(`--dur-micro`/`short`/`long`/`travel`),
+  `--stagger: 60ms`. 이 밖의 값 금지.
+  유일한 예외는 **표면을 가로질러 지나가는 띠**(스킬 행 hover sweep):
+  네 이징은 전부 *안착*을 만들려고 앞뒤로 쏠려 있어서, 지나가기만 하는
+  움직임에 쓰면 번쩍임이 된다. 이 경우만 `linear`를 쓴다
 
 **절대 규칙 두 가지**
 

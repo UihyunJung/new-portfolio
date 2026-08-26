@@ -45,6 +45,12 @@
   --dur-short: 220ms;
   --dur-long: 420ms;
 
+  // For motion that crosses a whole surface rather than settling in place.
+  // The three durations above are sized for objects that move a few pixels
+  // to tens of pixels; a band travelling twice a row's width at 420ms is
+  // gone before the eye picks it up and reads as a flash, not a pass.
+  --dur-travel: 720ms;
+
   // The one interval between siblings in a revealed run. Below ~40ms a list
   // reads as simultaneous; above ~90ms the last item feels late.
   --stagger: 60ms;

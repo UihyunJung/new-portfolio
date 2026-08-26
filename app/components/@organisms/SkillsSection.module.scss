@@ -52,7 +52,14 @@
       transparent
     );
     transform: translateX(-100%);
-    transition: transform var(--dur-long) var(--ease-out);
+    // `linear`, and deliberately none of the four easings. Those all shape
+    // an arrival — they front- or back-load the travel so an object settles.
+    // This band never arrives; it passes through and leaves. Under
+    // `--ease-out` it was 70% across by 20% of the duration, so the whole
+    // visible crossing happened in the first fraction and the rest of the
+    // time was spent off-screen: a blink rather than a sweep. Constant
+    // velocity is what makes it read as one band moving.
+    transition: transform var(--dur-travel) linear;
     pointer-events: none;
   }
 
