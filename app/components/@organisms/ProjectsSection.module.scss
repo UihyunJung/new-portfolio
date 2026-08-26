@@ -1,40 +1,66 @@
 @use '../../assets/styles/@utilities/mixins' as *;
 
-.heading {
-  @include section-heading;
-}
+@include rule-keyframes;
 
-// Overview index — a table of contents, not a repeat of the blocks.
-.index {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  margin-block-end: var(--space-2xl);
-  border-block-start: var(--rule-hair) solid var(--color-rule);
+.list {
+  position: relative;
+  // 그려지는 규칙선이 `border-block-start`를 대신한다. 패딩이 그 테두리가
+  // 차지하던 띠를 돌려주므로, 첫 행의 헤어라인이 그 위에 덧칠하지 않는다.
+  padding-block-start: var(--rule-solid);
 
-  @include md {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: var(--space-2xl);
+  &::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 0;
+    block-size: var(--rule-solid);
+    background: var(--color-ink);
+    @include rule-draw-on-scroll(entry 4% entry 58%);
   }
 }
 
-.indexLink {
-  display: grid;
-  grid-template-columns: 2rem minmax(0, 1fr) auto;
-  gap: var(--space-2xs);
-  align-items: baseline;
-  padding-block: var(--space-2xs);
+.item {
+  position: relative;
+  scroll-margin-block-start: var(--scroll-offset);
   border-block-end: var(--rule-hair) solid var(--color-rule);
-  transition: color var(--dur-micro) var(--ease-out);
+
+    // 열려 있는 동안 앞쪽 모서리를 따라 그려진다 — 인덱스 행이 hover에서
+    // 하던 반응을 이제 상태가 대신 나른다.
+  &::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    inline-size: var(--rule-solid);
+    background: var(--color-accent);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform var(--dur-short) var(--ease-out);
+
+    @include reduced-motion {
+      transition: none;
+    }
+  }
+
+  &[open]::before {
+    transform: scaleY(1);
+  }
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr) 1.25rem;
+  gap: var(--space-2xs);
+  align-items: center;
+  padding-block: var(--space-sm);
+  cursor: pointer;
+  list-style: none;
+  transition: padding-inline-start var(--dur-short) var(--ease-out);
   @include tap-target;
 
-  @include hover-fine {
-    &:hover {
-      color: var(--color-accent-text);
-
-      .indexTitle {
-        text-decoration-color: currentColor;
-      }
-    }
+      // 네이티브 펼침 삼각형. 셰브런이 대신한다.
+  &::-webkit-details-marker {
+    display: none;
   }
 
   &:focus-visible {
@@ -42,31 +68,115 @@
     outline-offset: -2px;
     border-radius: 2px;
   }
+
+  @include reduced-motion {
+    transition: none;
+  }
+
+  @include md {
+    grid-template-columns: 2.75rem minmax(0, 1fr) auto 1.5rem;
+    gap: var(--space-sm);
+    padding-block: var(--space-md);
+  }
 }
 
-.indexNum {
-  @include label;
-  @include tnum;
+.item[open] .row {
+  padding-inline-start: var(--space-2xs);
+
+  @include md {
+    padding-inline-start: var(--space-sm);
+  }
 }
 
-.indexTitle {
-  min-width: 0;
+.num {
+  font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-weight: var(--weight-medium);
-  color: inherit;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-decoration-color: transparent;
-  text-underline-offset: 4px;
-  transition: text-decoration-color var(--dur-micro) var(--ease-out);
-  overflow-wrap: anywhere;
+  @include tnum;
+  color: var(--color-rule-2);
+  transition: color var(--dur-short) var(--ease-out);
+
+  @include md {
+    font-size: var(--text-md);
+  }
 }
 
-.indexType {
-  @include label;
+.item[open] .num {
+  color: var(--color-accent);
+}
+
+.main {
+  min-inline-size: 0;
+}
+
+.title {
+  @include display(var(--text-md));
+  line-height: var(--leading-tight);
+
+  @include md {
+    font-size: var(--text-xl);
+  }
+}
+
+// 한 줄로 자른다. 설명문을 반복하는 게 아니라 미리 보여주는 것이라,
+// 아래 패널이 전문을 보여주기 시작하면 물러난다.
+.opener {
+  display: block;
+  margin-block-start: var(--space-3xs);
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  color: var(--color-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @include md {
+    font-size: var(--text-sm);
+  }
+}
+
+.item[open] .opener {
+  display: none;
+}
+
+// 업무 / 개인 — 한글 배지라 자간 없는 변형을 쓴다.
+.type {
+  @include label-prose;
   @include affordance;
+  display: none;
+
+  @include md {
+    display: block;
+  }
 }
 
-.sequence {
-  border-block-start: var(--rule-solid) solid var(--color-ink);
+.chevron {
+  justify-self: end;
+  color: var(--color-rule-strong);
+  transition: transform var(--dur-short) var(--ease-out);
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+.item[open] .chevron {
+  transform: rotate(180deg);
+}
+
+// 패널의 도착. `<details>`는 내용의 `display`를 바꾸므로 높이를 전이할 수
+// 없다. 대신 내용을 숨김에서 출발하는 키프레임으로 움직인다. 정지 상태는
+// 기본 규칙에 남으므로 애니메이션이 돌지 않는 브라우저도 완전히 열린
+// 패널을 본다.
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .item[open] > :not(.row) {
+    animation: panel-in var(--dur-short) var(--ease-out) both;
+  }
 }

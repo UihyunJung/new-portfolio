@@ -1,16 +1,16 @@
 @use '../../assets/styles/@utilities/mixins' as *;
 
-// One rhythm for every content section, bottom-heavy so each band settles
-// into the next instead of floating. Vertical variety is carried by the
-// tonal surface and the density contrast, not by arbitrary padding.
+// 모든 콘텐츠 섹션이 같은 리듬을 쓴다. 아래를 무겁게 둬서 밴드가 떠 있지
+// 않고 다음 밴드로 내려앉는다. 세로 방향의 변화는 임의의 패딩이 아니라
+// 색조 면과 밀도 대비가 만든다.
 .section {
   position: relative;
   @include band(var(--space-2xl), var(--space-3xl));
 }
 
-// A tonal step, not a stripe. Reserved for the page's dense, tabular
-// content — the shift says "this band is an instrument panel", which is
-// why it is not alternated section by section.
+// 줄무늬가 아니라 색조 한 단계. 밀도 높은 표 형태 콘텐츠에만 쓴다.
+// 이 변화가 "이 밴드는 계기판이다"라고 말하기 때문에 섹션마다 번갈아
+// 넣지 않는다.
 .surface {
   background: var(--color-paper-2);
   border-block: var(--rule-hair) solid var(--color-rule);

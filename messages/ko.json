@@ -131,6 +131,13 @@
           "h2": "TypeScript 기반 Google Maps 리뷰 스크레이퍼 설계 및 Vitest 픽스처 테스트로 DOM 구조 변경에 대응",
           "h3": "Cloudflare Workers + Supabase + Gemini API로 분석 파이프라인 구축, 레이트 리밋·사용량 추적·프리미엄 권한 검증 로직 분리",
           "h4": "Paddle Billing 기반 구독 결제 및 무료 티어 일일 한도 시스템, 90일 분석 히스토리 저장 구현"
+        },
+        "shots": {
+          "review-analyzer-1": "지도 위 진입점",
+          "review-analyzer-2": "AI 항목별 점수",
+          "review-analyzer-3": "무료 미리보기",
+          "review-analyzer-4": "Pro 상세 분석",
+          "review-analyzer-5": "팝업 · 사용량"
         }
       },
       "averageDown": {
@@ -142,6 +149,13 @@
           "h2": "8개 언어(EN/KO/JA/ZH-CN/ZH-TW/DE/ES/PT) 다국어 지원 및 다크모드 자동 대응",
           "h3": "Vercel Serverless + Upstash Redis 기반 구독 상태 검증 백엔드 설계, Paddle Billing(Merchant of Record) 연동",
           "h4": "Pro 구독으로 추가 통화(KRW/JPY/EUR/GBP/CNY/INR/BRL) 잠금 해제 기능 구현 및 Chrome Web Store 정식 배포"
+        },
+        "shots": {
+          "average-down-1": "계산 결과",
+          "average-down-2": "목표 평단가",
+          "average-down-3": "포트폴리오 트래커",
+          "average-down-4": "시나리오 시뮬레이터",
+          "average-down-5": "다중 통화"
         }
       },
       "noopdaaBlog": {
@@ -152,12 +166,135 @@
           "h1": "Turborepo 모노레포 아키텍처로 블로그 앱 / 어드민 대시보드 / 공유 패키지(DB, UI, Config) 분리",
           "h2": "Supabase RLS 정책 기반 보안 모델 설계, DB 트리거를 활용한 조회수 자동 집계 및 프로필 자동 생성",
           "h3": "방문자 분석 대시보드 구축 — 디바이스, 브라우저, 리퍼러 추적 및 Recharts 기반 시각화"
+        },
+        "shots": {
+          "noopdaa-blog-1": "블로그 홈",
+          "noopdaa-blog-2": "포스트 목록"
         }
       }
     },
     "stackLabel": "STACK",
     "linkGithub": "GitHub",
-    "linkLive": "바로가기"
+    "linkLive": "바로가기",
+    "highlightsLabel": "HIGHLIGHTS",
+    "shotsLabel": "SCREENS",
+    "shotsHint": "눌러서 크게 보기",
+    "accessLabel": "ACCESS",
+    "confidential": "비공개 — 사내 서비스라 화면을 공개할 수 없습니다",
+    "ledgerLabel": "CLIENTS",
+    "ledgerSummary": "{count}건 · 고객사 {clients}곳 · {from} – {to}",
+    "ledgerExpand": "전체 {count}건 펼치기",
+    "ledgerCollapse": "접기",
+    "viewerLabel": "화면 크게 보기",
+    "viewerPrev": "이전 화면",
+    "viewerNext": "다음 화면",
+    "viewerClose": "닫기",
+    "viewerPosition": "{index} / {total}",
+    "detailsToggle": "상세 보기",
+    "ledger": {
+      "nh-recording": {
+        "client": "NH농협은행",
+        "title": "상품판매 녹취 관리 시스템 개편"
+      },
+      "kiwoom-clover": {
+        "client": "키움증권",
+        "title": "상담사 주식거래 시스템 클로버 개편"
+      },
+      "hana-site": {
+        "client": "하나금융그룹",
+        "title": "홈페이지 리뉴얼"
+      },
+      "volvo-app": {
+        "client": "볼보트럭코리아",
+        "title": "APP 메인 페이지 개편"
+      },
+      "mettit": {
+        "client": "FMC커뮤니케이션",
+        "title": "메타버스 크리에이터 플랫폼 Mettit 홈페이지 구축"
+      },
+      "downing-shop": {
+        "client": "다우닝",
+        "title": "쇼핑몰 리뉴얼"
+      },
+      "samsung-edp": {
+        "client": "삼성엔지니어링",
+        "title": "EDP · ITB 구축"
+      },
+      "gline": {
+        "client": "글라인",
+        "title": "크리에이터 창작집단 홈페이지 신규 구축"
+      },
+      "keyin": {
+        "client": "라오나크",
+        "title": "디지털도어락 키인 홈페이지 신규 구축"
+      },
+      "lgu-inbound": {
+        "client": "LG U+",
+        "title": "인바운드 로밍 리뉴얼"
+      },
+      "hanwha-lcp": {
+        "client": "한화생명",
+        "title": "LCP App 구축"
+      },
+      "tworld-improve": {
+        "client": "SKT",
+        "title": "T world 리뉴얼 및 개선"
+      },
+      "mitsubishi": {
+        "client": "미쓰비시 엘리베이터",
+        "title": "홈페이지 리뉴얼"
+      },
+      "lgu-point": {
+        "client": "미디어로그",
+        "title": "LG U+ 알뜰모바일 포인트 보상"
+      },
+      "cu-cms": {
+        "client": "신용협동조합",
+        "title": "CMS 리뉴얼"
+      },
+      "lgu-prepaid": {
+        "client": "미디어로그",
+        "title": "LG U+ 알뜰모바일 선불충전앱 구축"
+      },
+      "skt-chatbot": {
+        "client": "SKT",
+        "title": "상담사 챗봇 관리시스템 구축"
+      },
+      "lgu-drone": {
+        "client": "LG U+",
+        "title": "스마트드론 홈페이지 구축"
+      },
+      "purunet": {
+        "client": "금성출판사",
+        "title": "푸르넷 아이스쿨 · 푸르넷 에듀 홈페이지 구축"
+      },
+      "tworld-renewal": {
+        "client": "SKT",
+        "title": "T world 웹 · 앱 리뉴얼"
+      },
+      "suprema": {
+        "client": "슈프리마",
+        "title": "보안 솔루션 기업 홈페이지 구축"
+      },
+      "onestore": {
+        "client": "미디어로그",
+        "title": "원스토어 운영"
+      },
+      "lgu-roaming": {
+        "client": "LG U+",
+        "title": "로밍 리뉴얼"
+      },
+      "teachinghub": {
+        "client": "금성출판사",
+        "title": "티칭허브 리뉴얼"
+      },
+      "keit": {
+        "client": "KEIT",
+        "title": "한국산업기술평가관리원 홈페이지 리뉴얼"
+      }
+    },
+    "typeLabel": "TYPE",
+    "linkLabel": "LINK"
   },
   "contact": {
     "heading": "Contact",

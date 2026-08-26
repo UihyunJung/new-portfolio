@@ -1,5 +1,5 @@
 // ============================================
-// Spacing + shell tokens — 4pt baseline
+// 간격 + 셸 토큰 — 4pt 기준선
 // ============================================
 
 :root {
@@ -14,23 +14,23 @@
   --space-3xl: 7rem; // 112
   --space-4xl: 9.5rem; // 152
 
-  // Shell
+  // 셸
   --shell-max: 1180px;
   --shell-pad: clamp(1.25rem, 4vw, 3rem);
 
-  // The sticky top bar. Anchored sections must clear it, or the section
-  // heading lands underneath the bar instead of below it.
+  // 고정된 상단 바. 앵커로 이동하는 섹션은 이 높이를 비켜야 하고,
+  // 아니면 섹션 제목이 바 아래가 아니라 바 밑에 깔린다.
   --bar-h: 3.5rem; // 56
   --scroll-offset: calc(var(--bar-h) + var(--space-sm));
 
-  // Geometry — drawn with a ruler, not softened
+  // 기하 — 자로 그은 값. 둥글리지 않는다.
   --radius-sm: 6px;
   --radius-md: 10px;
   --rule-hair: 1px;
   --rule-solid: 2px;
 }
 
-// SCSS mirrors
+// SCSS 사본
 $space-2xs: 0.5rem;
 $space-sm: 1rem;
 $space-md: 1.5rem;

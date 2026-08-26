@@ -1,8 +1,8 @@
 // ============================================
-// Typography tokens — Hallmark / Cobalt
-// 2+1 pairing: Space Grotesk (display) + Wanted Sans (body) + JetBrains Mono (labels).
-// Space Grotesk carries Latin; Wanted Sans carries Hangul in the same stack,
-// so mixed KO/EN display lines stay in one voice.
+// 타이포그래피 토큰 — Hallmark / Cobalt
+// 2+1 조합: Space Grotesk(디스플레이) + Wanted Sans(본문) + JetBrains Mono(라벨).
+// 라틴은 Space Grotesk, 한글은 같은 스택의 Wanted Sans가 받으므로
+// 한영이 섞인 디스플레이 줄도 하나의 목소리로 유지된다.
 // ============================================
 
 :root {
@@ -10,7 +10,7 @@
   --font-body: var(--font-wanted-sans), system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
 
-  // Scale
+  // 크기
   --text-2xs: 0.6875rem;
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
@@ -22,26 +22,30 @@
   --text-3xl: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
   --text-display-s: clamp(2rem, 1.5rem + 2.4vw, 3.25rem);
   --text-display: clamp(2.75rem, 1.9rem + 3.8vw, 4.75rem);
+  // --text-display 바로 위 단계로, 히어로의 이름에만 쓴다. 이름은 페이지에서
+  // 가장 큰 물체이고, 글자 단위 상승이 경련이 아니라 움직임으로 읽히려면
+  // 이 크기가 필요하다. 다른 곳에서는 쓰지 않는다.
+  --text-display-l: clamp(3.5rem, 2.2rem + 5.6vw, 7rem);
 
-  // Weights (Wanted Sans variable 100–900, Space Grotesk 400–700)
+  // 굵기 (Wanted Sans 가변 100–900, Space Grotesk 400–700)
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
   --weight-bold: 700;
 
-  // Line heights
+  // 행간
   --leading-display: 1.02;
   --leading-tight: 1.2;
   --leading-normal: 1.5;
   --leading-relaxed: 1.75;
 
-  // Tracking — Space Grotesk sets tight; mono labels set wide
+  // 자간 — Space Grotesk는 좁게, mono 라벨은 넓게
   --tracking-display: -0.03em;
   --tracking-tight: -0.015em;
   --tracking-label: 0.08em;
 }
 
-// SCSS mirrors, for the few places that need compile-time values.
+// 컴파일 타임 값이 필요한 몇 군데를 위한 SCSS 사본.
 $font-size-xs: 0.75rem;
 $font-size-sm: 0.875rem;
 $font-size-base: 1rem;

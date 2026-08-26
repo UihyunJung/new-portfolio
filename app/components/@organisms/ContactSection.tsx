@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Copy, Check } from 'lucide-react';
 import SectionWrapper from '@components/@atoms/SectionWrapper';
+import SectionHeading from '@components/@atoms/SectionHeading';
 import { socialLinks } from '@lib/data/socialLinks';
 import styles from './ContactSection.module.scss';
 
@@ -21,17 +22,17 @@ export default function ContactSection() {
       clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => setCopied(false), 2000);
     } catch {
-      /* clipboard API unavailable (e.g. insecure context) — silently ignore */
+      /* 클립보드 API를 쓸 수 없는 경우(예: 비보안 컨텍스트) — 조용히 넘긴다 */
     }
   };
 
   return (
     <SectionWrapper id="contact">
-      <h2 className={styles.heading}>{t('heading')}</h2>
+      <SectionHeading>{t('heading')}</SectionHeading>
       <p className={styles.description}>{t('description')}</p>
 
       <div className={styles.emailRow}>
-        {/* C3 · Typographic link — solid ink, not a gradient text fill. */}
+        {/* 타이포그래피 링크 — 그라데이션 글자 채움이 아니라 단색 잉크. */}
         <a href={`mailto:${EMAIL}`} className={styles.email}>
           {EMAIL}
         </a>
@@ -41,11 +42,12 @@ export default function ContactSection() {
           onClick={copyEmail}
           data-state={copied ? 'success' : 'idle'}
         >
-          {copied ? (
-            <Check size={13} aria-hidden="true" />
-          ) : (
-            <Copy size={13} aria-hidden="true" />
-          )}
+          {/* 두 표시를 항상 마운트해 둬야 교체가 툭 튀지 않고 크로스페이드가
+              된다. 조건부 렌더는 전이할 출발점이 없다. */}
+          <span className={styles.copyIcon} aria-hidden="true">
+            <Copy size={13} className={styles.copyIdle} />
+            <Check size={13} className={styles.copyDone} />
+          </span>
           {copied ? t('copied') : t('copy')}
         </button>
       </div>

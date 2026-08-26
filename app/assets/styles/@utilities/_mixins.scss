@@ -1,7 +1,7 @@
 @use '../@tokens/breakpoints' as *;
 
 // ============================================
-// Responsive — mobile-first, min-width only
+// 반응형 — 모바일 우선, min-width만 쓴다
 // ============================================
 
 @mixin sm {
@@ -28,7 +28,7 @@
   }
 }
 
-// Desktop threshold: the inline section index appears, the sheet retires.
+// 데스크톱 경계: 인라인 섹션 인덱스가 나타나고 모바일 시트가 물러난다.
 @mixin wide {
   @media (min-width: 60rem) {
     @content;
@@ -42,7 +42,7 @@
 }
 
 // ============================================
-// Layout
+// 레이아웃
 // ============================================
 
 @mixin shell {
@@ -52,24 +52,35 @@
   padding-inline: var(--shell-pad);
 }
 
-// Bottom-heavy by default: a band should settle into the next one rather
-// than float between two equal gaps.
+// 기본값은 아래가 무겁다. 밴드는 위아래 여백이 같아 떠 있기보다
+// 다음 밴드 쪽으로 내려앉아야 한다.
 @mixin band($top: var(--space-2xl), $bottom: var(--space-3xl)) {
   padding-block: $top $bottom;
 }
 
 // ============================================
-// Voice
+// 목소리
 // ============================================
 
-// The machine-readout voice. Used for spec-table keys, meta rows and
-// status chips — never as a kicker above a section heading.
+// 기계 판독체. 스펙 표의 항목명, 메타 행, 상태 칩에 쓴다.
+// 섹션 제목 위의 소제목으로는 절대 쓰지 않는다.
 @mixin label {
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
   font-weight: 500;
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+// `label`은 대문자 라틴 토큰(ROLE, STACK, 01)용이다. 한글에는 두 가지가
+// 어긋난다 — 0.08em 자간이 하이라이트를 하 이 라 이 트로 벌리고,
+// JetBrains Mono에 한글 글리프가 없어 모노스페이스 대체 폰트가 한 글자를
+// 한 em으로 세운다. 라벨 크기의 한글 문장은 이쪽을 쓴다.
+@mixin label-prose {
+  font-family: var(--font-body);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-medium);
   color: var(--color-muted);
 }
 
@@ -83,7 +94,7 @@
   color: var(--color-ink);
 }
 
-// S2 Hanging — the heading floats in negative space. No rule, no eyebrow.
+// 제목은 여백 속에 걸린다. 규칙선도, 위에 얹는 소제목도 없다.
 @mixin section-heading {
   @include display(var(--text-3xl));
   margin-block-end: var(--space-xl);
@@ -94,7 +105,7 @@
 }
 
 // ============================================
-// Accessibility
+// 접근성
 // ============================================
 
 @mixin visually-hidden {
@@ -109,13 +120,13 @@
   border-width: 0;
 }
 
-// Never transitioned — the ring must be there the instant focus lands.
+// 전이를 걸지 않는다 — 포커스가 닿는 즉시 링이 있어야 한다.
 @mixin focus-ring {
   outline: var(--rule-solid) solid var(--color-focus);
   outline-offset: 2px;
 }
 
-// Clickable affordances are single-line objects (gate 49).
+// 누를 수 있는 요소는 한 줄짜리 물체다.
 @mixin affordance {
   white-space: nowrap;
 }
@@ -126,9 +137,8 @@
   }
 }
 
-// Completes the eight-state contract for a control: the disabled channel
-// (opacity + cursor + the native attribute) and the reduced-motion escape
-// for any spatial hover/press feedback.
+// 컨트롤 상태 계약의 나머지: 비활성 채널(투명도 + 커서 + 네이티브 속성)과,
+// 공간 이동을 쓰는 hover/press 피드백의 reduced-motion 해제.
 @mixin control-states {
   &:disabled,
   &[aria-disabled='true'] {
@@ -146,11 +156,145 @@
 }
 
 // ============================================
-// Animation
+// 애니메이션
 // ============================================
 
 @mixin reduced-motion {
   @media (prefers-reduced-motion: reduce) {
     @content;
+  }
+}
+
+// ============================================
+// 스크롤 구동 모션
+// ============================================
+//
+// 아래 전부를 지배하는 하나의 원칙: 요소의 *일반* 규칙이 이미 정지 상태이고,
+// 키프레임이 숨김 상태에서 출발한다. 그래서 스크롤 타임라인 미지원 브라우저와
+// reduced-motion 사용자는 완성된 레이아웃을 본다 — 실행되지 않을 애니메이션을
+// 기다리는 빈 화면이 아니라. 숨김 상태를 기본 규칙에 쓰지 말 것. 스크롤 리빌이
+// 빈 화면 버그가 되는 경로가 정확히 그것이다.
+//
+// 리셋의 reduced-motion 블록은 `animation-duration`을 제한하는데, 타임라인
+// 구동 애니메이션에는 아무 효과가 없다. 진행이 시간이 아니라 스크롤 위치에서
+// 오기 때문이다. 여기서 가드를 따로 두는 이유다.
+
+@mixin supports-scroll-timeline {
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      @content;
+    }
+  }
+}
+
+// --- 시야에 들어오며 떠오르기 -----------------------------------------
+// 키프레임은 모듈당 한 번, 최상위에서 내보낸다.
+
+@mixin reveal-keyframes {
+  @keyframes reveal-up {
+    from {
+      opacity: 0;
+      transform: translateY(var(--reveal-shift, 1.5rem));
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@mixin reveal-on-scroll($range: entry 8% entry 76%) {
+  @include supports-scroll-timeline {
+    animation: reveal-up linear both;
+    animation-timeline: view();
+    animation-range: $range;
+  }
+}
+
+// --- 자기 클립 박스에서 올라오는 제목 줄 -------------------------------
+// 요소가 둘 필요하다: 바깥이 자르고 안쪽이 움직인다.
+
+@mixin line-keyframes {
+  @keyframes line-up {
+    from {
+      transform: translateY(105%);
+    }
+
+    to {
+      transform: none;
+    }
+  }
+}
+
+@mixin line-mask {
+  display: block;
+  overflow: hidden;
+  // 한글과 라틴 모두 디센더가 베이스라인 아래에 있어, 이게 없으면 잘린다.
+  padding-block-end: 0.08em;
+}
+
+@mixin line-rise($range: entry 12% entry 80%) {
+  display: block;
+
+  @include supports-scroll-timeline {
+    animation: line-up linear both;
+    animation-timeline: view();
+    animation-range: $range;
+  }
+}
+
+// --- 스스로 그려지는 규칙선 --------------------------------------------
+
+@mixin rule-keyframes {
+  @keyframes rule-draw {
+    from {
+      transform: scaleX(0);
+    }
+
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes rail-draw {
+    from {
+      transform: scaleY(0);
+    }
+
+    to {
+      transform: scaleY(1);
+    }
+  }
+}
+
+@mixin rule-draw-on-scroll($range: entry 14% entry 82%) {
+  transform-origin: left;
+
+  @include supports-scroll-timeline {
+    animation: rule-draw linear both;
+    animation-timeline: view();
+    animation-range: $range;
+  }
+}
+
+// 섹션이 화면을 지나는 동안 채워지는 세로 레일 — 타임라인을 눈에 보이게 한 것.
+@mixin rail-draw-on-scroll($range: cover 10% cover 82%) {
+  transform-origin: top;
+
+  @include supports-scroll-timeline {
+    animation: rail-draw linear both;
+    animation-timeline: view();
+    animation-range: $range;
+  }
+}
+
+// 문서 전체의 읽기 진행률. 루트 스크롤러에 묶는다.
+@mixin document-progress {
+  transform-origin: left;
+
+  @include supports-scroll-timeline {
+    animation: rule-draw linear both;
+    animation-timeline: scroll(root block);
   }
 }

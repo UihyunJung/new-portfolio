@@ -34,7 +34,7 @@ npm run start      # 프로덕션 서버
 - `@atoms/` — SectionWrapper, ScrollToTop, ErrorPage 등
 - `@molecules/` — SkillCard, ProjectCard, ExperienceCard
 - `@organisms/` — HeroSection, AboutSection, SkillsSection 등 (페이지 섹션 단위)
-- `@layout/` — Header, Footer, ThemeProvider, MotionProvider, LocaleSwitcher
+- `@layout/` — Header, Footer, ThemeProvider, LocaleSwitcher
 
 ### SCSS 아키텍처
 
@@ -43,12 +43,39 @@ npm run start      # 프로덕션 서버
 - 컴포넌트별 `.module.scss` (CSS Modules)
 - `next.config.ts`에서 `app/assets/styles`를 SCSS include path로 설정 → `@use '@tokens/colors'` 형태로 직접 import 가능
 
-### 애니메이션
+### 애니메이션 (Kinetic Cobalt)
 
-- `motion/react`의 `m` 컴포넌트 사용 (`motion` 아닌 `m` — LazyMotion 최적화)
-- `MotionProvider`가 `LazyMotion + domAnimation`을 제공
-- 공유 variants: `app/lib/animations.ts` (`fadeUp`, `stagger`)
-- `prefers-reduced-motion` 반드시 대응 (`@include reduced-motion` mixin)
+**전부 CSS다.** JS 애니메이션 라이브러리는 현재 페이지에서 쓰지 않는다.
+
+- **스크롤 연동**: `@utilities/_mixins.scss`의 스크롤 구동 믹스인 —
+  `reveal-on-scroll`, `line-rise`, `rule-draw-on-scroll`,
+  `rail-draw-on-scroll`, `document-progress`. `animation-timeline: view()` /
+  `scroll(root)` 기반. 스크롤 리스너·IntersectionObserver 없음
+- **로드 진입**: 히어로만. `SplitText` 아톰(문자/단어 단위 마스크 상승) +
+  `HeroSection.module.scss`의 `@mixin enter` 블록 큐
+- **포인터**: `useMagnetic`(자석 CTA), `usePointerField`(커서 스포트라이트).
+  둘 다 CSS 커스텀 프로퍼티만 쓰고 리렌더를 일으키지 않으며,
+  coarse 포인터·reduced-motion에서는 아예 붙지 않는다
+- **토큰**: `@tokens/_motion.scss` — 이징 4종(`--ease-out`/`in`/`in-out`/
+  `--ease-spring`), 지속시간 4종(`--dur-micro`/`short`/`long`/`travel`),
+  `--stagger: 60ms`. 이 밖의 값 금지.
+  유일한 예외는 **표면을 가로질러 지나가는 띠**(스킬 행 hover sweep):
+  네 이징은 전부 *안착*을 만들려고 앞뒤로 쏠려 있어서, 지나가기만 하는
+  움직임에 쓰면 번쩍임이 된다. 이 경우만 `linear`를 쓴다
+
+**절대 규칙 두 가지**
+
+1. **숨김 상태를 기본 규칙에 쓰지 않는다.** 기본 규칙이 정지 상태이고,
+   키프레임이 *숨김에서* 출발한다. 스크롤 타임라인 미지원 브라우저와
+   reduced-motion 사용자는 완성된 레이아웃을 본다
+2. **JS로 콘텐츠를 숨기지 않는다.** motion/react 같은 라이브러리의 `initial`은
+   **서버 HTML에 기록**되므로, 페이드인 진입은 하이드레이션 전까지(실패하면
+   영구히) 콘텐츠를 안 보이게 만든다. 히어로의 CTA가 실제로 그렇게 사라졌었다
+
+**motion/react는 의존성에서 제거했다.** 페이지의 모든 모션이 CSS로 옮겨간 뒤에도
+`MotionProvider`가 초기 JS에 65KB를 얹고 있었고, 애니메이션하는 것은 하나도
+없었다. JS 애니메이션이 정말 필요해지면(중단 가능한 드래그, 공유 레이아웃 전환,
+요소를 기다려야 하는 exit) 그때 다시 넣되, 위 2번 규칙을 지킬 것.
 
 ### 데이터
 

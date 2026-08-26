@@ -131,6 +131,13 @@
           "h2": "Designed a TypeScript-based Google Maps review scraper with Vitest fixture tests to stay resilient against DOM structure changes",
           "h3": "Built the analysis pipeline on Cloudflare Workers + Supabase + Gemini API, separating rate limiting, usage tracking, and premium entitlement logic",
           "h4": "Implemented Paddle Billing subscriptions with free-tier daily quotas and 90-day analysis history storage"
+        },
+        "shots": {
+          "review-analyzer-1": "Entry point on the map",
+          "review-analyzer-2": "AI aspect scores",
+          "review-analyzer-3": "Free preview",
+          "review-analyzer-4": "Pro full insights",
+          "review-analyzer-5": "Popup and usage"
         }
       },
       "averageDown": {
@@ -142,6 +149,13 @@
           "h2": "Implemented 8-language i18n (EN/KO/JA/ZH-CN/ZH-TW/DE/ES/PT) with automatic dark mode support",
           "h3": "Designed a Vercel Serverless + Upstash Redis backend for subscription state verification, integrated with Paddle Billing (Merchant of Record)",
           "h4": "Built Pro-subscription unlock for additional currencies (KRW/JPY/EUR/GBP/CNY/INR/BRL) and shipped to the Chrome Web Store"
+        },
+        "shots": {
+          "average-down-1": "Calculation result",
+          "average-down-2": "Target average price",
+          "average-down-3": "Portfolio tracker",
+          "average-down-4": "Scenario simulator",
+          "average-down-5": "Multiple currencies"
         }
       },
       "noopdaaBlog": {
@@ -152,12 +166,135 @@
           "h1": "Turborepo monorepo architecture — blog app / admin dashboard / shared packages (DB, UI, Config)",
           "h2": "Designed security model with Supabase RLS policies, auto view-count aggregation and profile creation via DB triggers",
           "h3": "Built visitor analytics dashboard — device, browser, referrer tracking with Recharts visualization"
+        },
+        "shots": {
+          "noopdaa-blog-1": "Blog home",
+          "noopdaa-blog-2": "Post list"
         }
       }
     },
     "stackLabel": "STACK",
     "linkGithub": "GitHub",
-    "linkLive": "Visit"
+    "linkLive": "Visit",
+    "highlightsLabel": "HIGHLIGHTS",
+    "shotsLabel": "SCREENS",
+    "shotsHint": "Click to enlarge",
+    "accessLabel": "ACCESS",
+    "confidential": "Confidential — an internal service, so its screens cannot be shown",
+    "ledgerLabel": "CLIENTS",
+    "ledgerSummary": "{count} projects · {clients} clients · {from} – {to}",
+    "ledgerExpand": "Show all {count}",
+    "ledgerCollapse": "Collapse",
+    "viewerLabel": "Screenshot viewer",
+    "viewerPrev": "Previous screen",
+    "viewerNext": "Next screen",
+    "viewerClose": "Close",
+    "viewerPosition": "{index} / {total}",
+    "detailsToggle": "Show details",
+    "ledger": {
+      "nh-recording": {
+        "client": "NH Nonghyup Bank",
+        "title": "Sales Call Recording Management System revamp"
+      },
+      "kiwoom-clover": {
+        "client": "Kiwoom Securities",
+        "title": "Clover agent stock trading system revamp"
+      },
+      "hana-site": {
+        "client": "Hana Financial Group",
+        "title": "Corporate website renewal"
+      },
+      "volvo-app": {
+        "client": "Volvo Trucks Korea",
+        "title": "App main page revamp"
+      },
+      "mettit": {
+        "client": "FMC Communications",
+        "title": "Mettit metaverse creator platform website"
+      },
+      "downing-shop": {
+        "client": "Downing",
+        "title": "Online store renewal"
+      },
+      "samsung-edp": {
+        "client": "Samsung Engineering",
+        "title": "EDP and ITB portal build"
+      },
+      "gline": {
+        "client": "Gline",
+        "title": "Creator collective website build"
+      },
+      "keyin": {
+        "client": "Laonark",
+        "title": "Key-in digital door lock website build"
+      },
+      "lgu-inbound": {
+        "client": "LG U+",
+        "title": "Inbound roaming renewal"
+      },
+      "hanwha-lcp": {
+        "client": "Hanwha Life",
+        "title": "LCP app build"
+      },
+      "tworld-improve": {
+        "client": "SKT",
+        "title": "T world renewal and enhancement"
+      },
+      "mitsubishi": {
+        "client": "Mitsubishi Elevator",
+        "title": "Corporate website renewal"
+      },
+      "lgu-point": {
+        "client": "Medialog",
+        "title": "LG U+ MVNO point rewards"
+      },
+      "cu-cms": {
+        "client": "Credit Union",
+        "title": "CMS renewal"
+      },
+      "lgu-prepaid": {
+        "client": "Medialog",
+        "title": "LG U+ MVNO prepaid top-up app build"
+      },
+      "skt-chatbot": {
+        "client": "SKT",
+        "title": "Agent chatbot management system build"
+      },
+      "lgu-drone": {
+        "client": "LG U+",
+        "title": "Smart drone website build"
+      },
+      "purunet": {
+        "client": "Kumsung Publishing",
+        "title": "Purunet i-School and Purunet Edu websites"
+      },
+      "tworld-renewal": {
+        "client": "SKT",
+        "title": "T world web and app renewal"
+      },
+      "suprema": {
+        "client": "Suprema",
+        "title": "Security solutions corporate website build"
+      },
+      "onestore": {
+        "client": "Medialog",
+        "title": "ONE store operations"
+      },
+      "lgu-roaming": {
+        "client": "LG U+",
+        "title": "Roaming renewal"
+      },
+      "teachinghub": {
+        "client": "Kumsung Publishing",
+        "title": "Teaching Hub renewal"
+      },
+      "keit": {
+        "client": "KEIT",
+        "title": "Korea Evaluation Institute of Industrial Technology website renewal"
+      }
+    },
+    "typeLabel": "TYPE",
+    "linkLabel": "LINK"
   },
   "contact": {
     "heading": "Contact",

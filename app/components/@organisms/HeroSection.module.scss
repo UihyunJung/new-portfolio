@@ -1,17 +1,179 @@
 @use '../../assets/styles/@utilities/mixins' as *;
 
-// H2 · Split diptych — lede left (7), artifact right (5). Never centred,
-// never full-viewport: the hero is the height of what it holds.
-.hero {
-  @include band(var(--space-2xl), var(--space-3xl));
+// ============================================
+// 로드 진입
+// ============================================
+//
+// 전부 CSS다. 취향이 아니라 이유가 있다. JS 진입은 숨김 상태를 서버 HTML에
+// 기록한다 — 설명문과 CTA 두 개, 스펙 패널에 `opacity: 0`이 실려 나가고
+// 하이드레이션이 돌 때까지, 실패하면 영구히 남는다. 여기서는 기본 규칙이
+// 정지 상태이고 키프레임이 숨김에서 출발하며 `both`가 지연 동안 그 시작을
+// 잡아 둔다. 마크업만으로 히어로가 완성되고 애니메이션은 덤이다.
+//
+// 큐는 SplitText의 글자 상승과 맞물린다. 타이밍은 HeroSection.tsx에 있다 —
+// 이름 180ms, 역할 470ms부터.
 
-  @include wide {
-    @include band(var(--space-3xl), var(--space-4xl));
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
   }
 }
 
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(0.99);
+  }
+}
+
+@keyframes row-in {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+}
+
+@mixin enter($name, $duration, $delay) {
+  animation: $name $duration var(--ease-out) $delay both;
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+// 좌측 리드(7) + 우측 아티팩트(5)의 분할 구성. 가운데 정렬도, 전체 화면
+// 높이도 아니다 — 히어로의 높이는 담고 있는 것의 높이다.
+//
+// 빈 패딩이 아니라 흐르는 스택 밴드에서 끝나므로, 밴드의 아래가 곧 히어로의
+// 아래다.
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  @include band(var(--space-2xl), 0);
+
+  @include wide {
+    @include band(var(--space-3xl), 0);
+  }
+}
+
+// ============================================
+// 분위기 층
+// ============================================
+// 히어로 자체 쌓임 맥락에서 콘텐츠 뒤에 깔린다. 완전히 장식이라
+// 어떤 상태도 여기에 의존하지 않고 낭독되지도 않는다.
+
+.field {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.grid {
+  position: absolute;
+  // 1px 흘려서 첫 규칙선이 반으로 잘리지 않게 한다.
+  inset: -1px;
+  background-image:
+    linear-gradient(to right, var(--color-rule) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-rule) 1px, transparent 1px);
+  background-size: 72px 72px;
+  -webkit-mask-image: radial-gradient(
+    130% 95% at 72% -10%,
+    #000 0%,
+    transparent 74%
+  );
+  mask-image: radial-gradient(130% 95% at 72% -10%, #000 0%, transparent 74%);
+  animation: field-in 1.4s var(--ease-out) both;
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes field-in {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+}
+
+// 커서를 따라간다. `--pointer-*`는 usePointerField가 쓰는데, coarse 포인터나
+// reduced-motion에서는 아예 붙지 않는다 — 그래서 opacity 기본값 0이 그
+// 사용자들에게는 영구 상태가 된다.
+.spot {
+  position: absolute;
+  inset: 0;
+  opacity: var(--pointer-on, 0);
+  background: radial-gradient(
+    420px circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
+    color-mix(in oklab, var(--color-accent) 15%, transparent),
+    transparent 68%
+  );
+  transition: opacity var(--dur-long) var(--ease-out);
+}
+
+// 11초에 한 번 히어로를 훑는 헤어라인.
+//
+// 요소가 밴드의 전체 높이이고 선이 그 위쪽 모서리를 타므로 translateY(100%)가
+// 정확히 히어로 높이만큼 이동한다. `vh` 같은 고정 거리는 두 줄짜리 영문
+// 히어로에서 모자라고 짧은 화면에서는 넘친다. transform과 opacity만 쓰므로
+// 컴포지터에서 처리된다.
+.sweep {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 0;
+  block-size: 100%;
+  animation: sweep 11s var(--ease-in-out) 1.6s infinite;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 0;
+    block-size: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-accent),
+      transparent
+    );
+  }
+
+  @include reduced-motion {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+@keyframes sweep {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  8% {
+    opacity: 0.55;
+  }
+
+  86% {
+    opacity: 0.55;
+  }
+
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+// ============================================
+// 리드
+// ============================================
+
 .shell {
   @include shell;
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--space-xl);
@@ -31,20 +193,51 @@
   font-size: var(--text-md);
   color: var(--color-muted);
   margin-block-end: var(--space-2xs);
+  @include enter(rise-in, var(--dur-long), 20ms);
 }
 
 .name {
-  @include display(var(--text-display));
-  margin-block-end: var(--space-2xs);
+  @include display(var(--text-display-l));
+  margin-block-end: var(--space-3xs);
 }
 
+// 디스플레이 크기의 데이터시트 목소리. 대문자 변환은 CSS에서 하므로
+// 번역 파일은 문장 대소문자를 유지한다.
 .role {
-  font-family: var(--font-display);
-  font-size: var(--text-xl);
+  position: relative;
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
   font-weight: var(--weight-medium);
-  letter-spacing: var(--tracking-tight);
+  letter-spacing: var(--tracking-label);
+  line-height: var(--leading-tight);
+  text-transform: uppercase;
   color: var(--color-ink-2);
   margin-block-end: var(--space-md);
+
+  @include md {
+    font-size: var(--text-2xl);
+  }
+}
+
+// 마지막 단어가 안착한 뒤 스스로 그려진다.
+.roleRule {
+  display: block;
+  block-size: var(--rule-solid);
+  margin-block-start: var(--space-2xs);
+  background: var(--color-accent);
+  transform-origin: left;
+  animation: rule-in var(--dur-long) var(--ease-out) 900ms both;
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes rule-in {
+  from {
+    transform: scaleX(0);
+  }
 }
 
 .description {
@@ -52,6 +245,7 @@
   line-height: var(--leading-relaxed);
   color: var(--color-ink-2);
   text-wrap: pretty;
+  @include enter(rise-in, var(--dur-long), 1s);
 
   @include md {
     white-space: pre-line;
@@ -64,10 +258,15 @@
   align-items: center;
   gap: var(--space-md);
   margin-block-start: var(--space-lg);
+  @include enter(rise-in, var(--dur-long), 1.14s);
 }
 
-// Cobalt's one solid signal button. 6px radius — ruler-drawn, not a pill.
+// 시스템에서 유일한 단색 신호 버튼. 반경 6px — 자로 그은 값이지 알약이 아니다.
+// `transform`을 커스텀 프로퍼티로 합성해서, useMagnetic이 쓰는 자석 인력과
+// 눌림 상태가 서로를 덮어쓰지 않게 한다.
 .primary {
+  position: relative;
+  overflow: clip;
   display: inline-flex;
   align-items: center;
   gap: var(--space-2xs);
@@ -77,53 +276,106 @@
   color: var(--color-accent-ink);
   font-size: var(--text-sm);
   font-weight: var(--weight-semibold);
+  transform: translate(var(--magnet-x, 0), var(--magnet-y, 0))
+    scale(var(--press, 1));
   transition:
-    background-color var(--dur-micro) var(--ease-out),
-    transform var(--dur-micro) var(--ease-out);
+    transform var(--dur-short) var(--ease-out),
+    box-shadow var(--dur-short) var(--ease-out);
   @include affordance;
   @include tap-target;
   @include control-states;
 
+  // hover에서만, 빛이 면을 한 번 지나간다.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      color-mix(in oklab, var(--color-accent-ink) 24%, transparent) 50%,
+      transparent 70%
+    );
+    transform: translateX(-120%);
+    transition: transform 620ms var(--ease-out);
+  }
+
   svg {
+    position: relative;
     transition: transform var(--dur-micro) var(--ease-out);
   }
 
   @include hover-fine {
+    &:hover {
+      box-shadow: 0 0 0 8px color-mix(in oklab, var(--color-accent) 14%, transparent);
+    }
+
+    &:hover::before {
+      transform: translateX(120%);
+    }
+
     &:hover svg {
       transform: translateX(2px);
     }
   }
 
   &:active {
-    transform: translateY(1px);
+    --press: 0.985;
   }
 
   &:focus-visible {
     @include focus-ring;
   }
+
+  @include reduced-motion {
+    &::before {
+      display: none;
+    }
+  }
 }
 
-// C3 · Typographic link — a word and a 1px underline. No box, no fill.
+// 타이포그래피 링크 — 단어와 1px 밑줄뿐. 상자도 채움도 없다.
+// 밑줄은 페이드가 아니라 커서가 있는 쪽에서 쓸려 들어온다.
 .secondary {
+  position: relative;
   padding-block: var(--space-3xs);
   font-size: var(--text-sm);
   font-weight: var(--weight-medium);
   color: var(--color-ink-2);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-decoration-color: var(--color-rule-2);
-  text-underline-offset: 5px;
-  transition:
-    color var(--dur-micro) var(--ease-out),
-    text-decoration-color var(--dur-micro) var(--ease-out);
+  transition: color var(--dur-micro) var(--ease-out);
   @include affordance;
   @include tap-target;
   @include control-states;
 
+  &::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    block-size: 1px;
+    background: var(--color-rule-2);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    block-size: 1px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--dur-short) var(--ease-out);
+  }
+
   @include hover-fine {
     &:hover {
       color: var(--color-accent-text);
-      text-decoration-color: var(--color-accent);
+    }
+
+    &:hover::before {
+      transform: scaleX(1);
+      transform-origin: left;
     }
   }
 
@@ -134,7 +386,7 @@
 }
 
 // ============================================
-// The artifact slot
+// 아티팩트 슬롯
 // ============================================
 
 .spec {
@@ -142,7 +394,9 @@
   border: var(--rule-hair) solid var(--color-rule);
   border-radius: var(--radius-md);
   background: var(--color-paper-2);
+  // 행들이 뒤에서 미끄러져 들어올 때 잘리는 경계이기도 하다.
   overflow: clip;
+  @include enter(panel-in, 520ms, 420ms);
 }
 
 .specHead {
@@ -158,11 +412,20 @@
   @include label;
 }
 
+// 패널이 먼저 안착한 뒤 행을 차례로 돌린다. `.specHead`가 첫 자식이라
+// 행은 nth-child(2)부터 시작한다.
 .specRow {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--space-3xs);
   padding: var(--space-xs) var(--space-sm);
+  @include enter(row-in, var(--dur-long), 0ms);
+
+  @for $i from 1 through 5 {
+    &:nth-child(#{$i + 1}) {
+      animation-delay: #{760 + ($i - 1) * 60}ms;
+    }
+  }
 
   & + & {
     border-block-start: var(--rule-hair) solid var(--color-rule);
@@ -186,4 +449,130 @@
   line-height: var(--leading-normal);
   color: var(--color-ink);
   overflow-wrap: anywhere;
+}
+
+// ============================================
+// 스크롤 큐 + 흐르는 스택
+// ============================================
+
+.cue {
+  @include label;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  inline-size: 100%;
+  max-inline-size: var(--shell-max);
+  margin-inline: auto;
+  margin-block-start: var(--space-xl);
+  padding-inline: var(--shell-pad);
+  animation: cue-in var(--dur-long) var(--ease-out) 1.6s both;
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes cue-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.cueRail {
+  position: relative;
+  flex: none;
+  inline-size: var(--rule-hair);
+  block-size: 2rem;
+  background: var(--color-rule-2);
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    block-size: 0.875rem;
+    background: var(--color-accent);
+    animation: cue-run 2.2s var(--ease-in-out) infinite;
+  }
+
+  @include reduced-motion {
+    &::after {
+      animation: none;
+      inset-block-start: 0;
+    }
+  }
+}
+
+@keyframes cue-run {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(240%);
+  }
+}
+
+.ticker {
+  margin-block-start: var(--space-lg);
+  padding-block: var(--space-sm);
+  border-block: var(--rule-hair) solid var(--color-rule);
+  background: var(--color-paper-2);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
+
+  @include hover-fine {
+    &:hover .tickerTrack {
+      animation-play-state: paused;
+    }
+  }
+}
+
+.tickerTrack {
+  display: flex;
+  inline-size: max-content;
+  // 동일한 묶음 둘. 한 묶음이 트랙의 정확히 50%라 이어지는 지점이 보이지 않는다.
+  animation: ticker-run 64s linear infinite;
+  will-change: transform;
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes ticker-run {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.tickerRun {
+  display: flex;
+  align-items: center;
+}
+
+.tickerItem {
+  @include label;
+  text-transform: none;
+  white-space: nowrap;
+
+  &::after {
+    content: '·';
+    margin-inline: var(--space-md);
+    color: var(--color-accent);
+  }
 }

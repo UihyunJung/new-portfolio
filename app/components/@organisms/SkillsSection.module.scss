@@ -1,14 +1,34 @@
 @use '../../assets/styles/@utilities/mixins' as *;
 
-.heading {
-  @include section-heading;
-}
+@include reveal-keyframes;
+@include rule-keyframes;
 
 .sheet {
-  border-block-start: var(--rule-solid) solid var(--color-ink);
+  position: relative;
+  // 그려지는 규칙선이 `border-block-start`를 대신한다. 패딩이 그 테두리가
+  // 차지하던 띠를 돌려준다.
+  padding-block-start: var(--rule-solid);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 0;
+    block-size: var(--rule-solid);
+    background: var(--color-ink);
+    @include rule-draw-on-scroll(entry 4% entry 58%);
+  }
 }
 
+// 행이 세로로 쌓여 있으니 스크롤 위치가 알아서 시차를 만든다. 행마다
+// 지연을 줄 필요도, 줄 이유도 없다.
+//
+// hover하면 액센트 빛의 띠가 행을 가로지른다. 행 자신의 쌓임 맥락에 갇혀
+// 있어 글자 아래에 깔리면서도 뒤 밴드로 새어 나가지 않는다.
 .row {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas:
@@ -17,6 +37,45 @@
   gap: var(--space-3xs) var(--space-sm);
   padding-block: var(--space-sm);
   border-block-end: var(--rule-hair) solid var(--color-rule);
+  @include reveal-on-scroll(entry 6% entry 62%);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklab, var(--color-accent) 12%, transparent),
+      transparent
+    );
+    transform: translateX(-100%);
+    // `linear`이고, 네 이징 중 어느 것도 아니다. 그것들은 전부 *도착*을
+    // 만드느라 이동을 앞뒤로 쏠리게 한다. 이 띠는 도착하지 않고 지나갈
+    // 뿐이다. `--ease-out`에서는 전체 시간의 20%에 이미 70% 지점이라
+    // 눈에 보이는 통과가 앞부분에 다 끝나고 나머지는 화면 밖에서 흘렀다.
+    // 등속이어야 하나의 띠가 움직이는 것으로 읽힌다.
+    transition: transform var(--dur-travel) linear;
+    pointer-events: none;
+  }
+
+  @include hover-fine {
+    &:hover::before {
+      transform: translateX(100%);
+    }
+
+    &:hover .count {
+      color: var(--color-accent-text);
+      transform: translateY(-2px);
+    }
+  }
+
+  @include reduced-motion {
+    &::before {
+      display: none;
+    }
+  }
 
   @include md {
     grid-template-columns: 10rem minmax(0, 1fr) 2.5rem;
@@ -46,6 +105,9 @@
   @include label;
   @include tnum;
   grid-area: count;
+  transition:
+    color var(--dur-micro) var(--ease-out),
+    transform var(--dur-short) var(--ease-out);
 
   @include md {
     text-align: end;

@@ -4,7 +4,7 @@ import styles from './SectionWrapper.module.scss';
 interface SectionWrapperProps {
   id: string;
   children: React.ReactNode;
-  /** One tonal step up, for the page's dense tabular bands. */
+  /** 색조 한 단계 위. 밀도 높은 표 형태 밴드에 쓴다. */
   surface?: boolean;
   className?: string;
 }

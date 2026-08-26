@@ -1,32 +1,50 @@
 @use '../../assets/styles/@utilities/mixins' as *;
 
-.heading {
-  @include section-heading;
-}
+@include reveal-keyframes;
+@include rule-keyframes;
 
 .bio {
   font-size: var(--text-md);
   line-height: var(--leading-relaxed);
   color: var(--color-ink-2);
   text-wrap: pretty;
+  @include reveal-on-scroll;
 
   @include md {
     white-space: pre-line;
   }
 }
 
-// T4 · Numbered stat strip
+// 번호가 붙은 수치 띠
 .strip {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   margin-block-start: var(--space-xl);
-  border-block-start: var(--rule-solid) solid var(--color-ink);
+    // 아래 규칙선은 스스로 그려지려고 절대 위치라, `border-block-start`처럼
+    // 띠를 차지하지 않는다. 이 패딩이 없으면 수치가 그 안에서 시작해
+    // 각 열의 앞 구분선이 규칙선을 파낸다.
+  padding-block-start: var(--rule-solid);
+
+    // 띠 자신의 규칙선. 선언이 아니라 그려진다 — 숫자가 도착하기 전에
+    // 섹션이 스스로를 알리는 유일한 곳이다.
+  &::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 0;
+    block-size: var(--rule-solid);
+    background: var(--color-ink);
+    @include rule-draw-on-scroll(entry 4% entry 58%);
+  }
 
   @include sm {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
+// 나란히 놓여 스크롤 위치를 공유한다. 시차를 만드는 건 지연이 아니라
+// 각자의 animation-range다.
 .stat {
   display: flex;
   flex-direction: column;
@@ -34,6 +52,15 @@
   padding-block: var(--space-md);
   padding-inline-end: var(--space-md);
   border-block-end: var(--rule-hair) solid var(--color-rule);
+  @include reveal-on-scroll(entry 8% entry 64%);
+
+  &:nth-child(2) {
+    @include reveal-on-scroll(entry 14% entry 70%);
+  }
+
+  &:nth-child(3) {
+    @include reveal-on-scroll(entry 20% entry 76%);
+  }
 
   @include sm {
     border-block-end: none;

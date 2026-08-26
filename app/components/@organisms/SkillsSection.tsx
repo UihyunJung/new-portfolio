@@ -1,5 +1,6 @@
 import { useTranslations } from 'next-intl';
 import SectionWrapper from '@components/@atoms/SectionWrapper';
+import SectionHeading from '@components/@atoms/SectionHeading';
 import { skillCategories } from '@lib/data/skills';
 import styles from './SkillsSection.module.scss';
 
@@ -8,10 +9,10 @@ export default function SkillsSection() {
 
   return (
     <SectionWrapper id="skills" surface>
-      <h2 className={styles.heading}>{t('heading')}</h2>
+      <SectionHeading>{t('heading')}</SectionHeading>
 
-      {/* F3 · Tabular spec sheet — name, value, footnote. Hairline rows,
-          tabular numerics. No icons, no chips, no cards. */}
+      {/* 표 형식 스펙 시트 — 이름, 값, 각주. 헤어라인 행과 등폭 숫자.
+          아이콘도 칩도 카드도 없다. */}
       <dl className={styles.sheet}>
         {skillCategories.map((category) => (
           <div key={category.key} className={styles.row}>

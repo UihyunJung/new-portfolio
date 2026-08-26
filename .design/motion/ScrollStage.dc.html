@@ -1,0 +1,469 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Sans+KR:wght@300;400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; background: oklch(15% 0.014 258); }
+
+  .root {
+    --paper: oklch(15% 0.014 258);
+    --paper-2: oklch(18.5% 0.015 258);
+    --paper-3: oklch(22% 0.016 259);
+    --rule: oklch(28% 0.014 258);
+    --rule-2: oklch(36% 0.016 258);
+    --rule-strong: oklch(56% 0.016 258);
+    --ink: oklch(95% 0.006 250);
+    --ink-2: oklch(86% 0.01 252);
+    --muted: oklch(70% 0.014 254);
+    --accent: oklch(72% 0.16 256);
+    --accent-text: oklch(78% 0.14 256);
+    --accent-ink: oklch(16% 0.02 258);
+
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+    --font-display: 'Space Grotesk', 'Noto Sans KR', sans-serif;
+    --font-body: 'Noto Sans KR', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+    width: 100%; height: 900px;
+    background: var(--paper); color: var(--ink);
+    font-family: var(--font-body); font-weight: 350;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent-text); text-decoration: none; }
+  a:hover { color: var(--accent); }
+
+  .scroller {
+    position: relative;
+    height: 900px; overflow-y: auto; overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: var(--rule-2) transparent;
+  }
+  .scroller::-webkit-scrollbar { width: 8px; }
+  .scroller::-webkit-scrollbar-thumb { background: var(--rule-2); border-radius: 4px; }
+
+  .lbl {
+    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0;
+  }
+
+  /* ---- sticky bar + scroll progress ------------------------------ */
+  .bar {
+    position: sticky; top: 0; z-index: 40;
+    background: color-mix(in oklab, var(--paper) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .barInner {
+    max-width: 1180px; margin-inline: auto; padding-inline: 48px;
+    height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  }
+  .mark { font-family: var(--font-display); font-size: 1.1875rem; font-weight: 700; letter-spacing: -0.015em; }
+  .pct { font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.08em; color: var(--muted); }
+
+  .pTrack { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: transparent; }
+  .pFill {
+    height: 100%; background: var(--accent); transform-origin: left; transform: scaleX(0);
+    animation: pGrow linear both;
+    animation-timeline: scroll(nearest);
+  }
+  @keyframes pGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+  /* ---- stage grid ------------------------------------------------ */
+  .stage {
+    max-width: 1180px; margin-inline: auto; padding: 0 48px;
+    display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 48px;
+    align-items: start;
+  }
+
+  .rail { position: sticky; top: 112px; align-self: start; padding-top: 96px; }
+  .railTrack { position: relative; padding-left: 20px; }
+  .railTrack::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--rule-2);
+  }
+  .railBar {
+    position: absolute; left: -0.5px; top: 0; width: 2px; height: 34px;
+    background: var(--accent);
+    animation: railRun linear both;
+    animation-timeline: scroll(nearest);
+  }
+  @keyframes railRun { from { transform: translateY(0); } to { transform: translateY(126px); } }
+  .chList { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .ch {
+    display: flex; align-items: baseline; gap: 8px;
+    font-size: 0.875rem; color: var(--muted);
+    transition: color 220ms var(--ease-out), transform 320ms var(--ease-out);
+  }
+  .chNum { font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.08em; }
+  .ch.on { color: var(--ink); transform: translateX(4px); }
+  .ch.on .chNum { color: var(--accent-text); }
+
+  /* ---- shared scroll reveals ------------------------------------- */
+  .rev {
+    opacity: 1; transform: none;
+    animation: revIn linear both;
+    animation-timeline: view();
+    animation-range: entry 8% entry 78%;
+  }
+  @keyframes revIn { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+
+  .lineMask { display: block; overflow: hidden; padding-bottom: 0.08em; }
+  .lineIn {
+    display: block; transform: none;
+    animation: lineUp linear both;
+    animation-timeline: view();
+    animation-range: entry 12% entry 82%;
+  }
+  @keyframes lineUp { from { transform: translateY(105%); } to { transform: none; } }
+
+  .h2 {
+    font-family: var(--font-display); font-size: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
+    font-weight: 600; letter-spacing: -0.03em; line-height: 1.02;
+    margin: 0 0 48px; color: var(--ink);
+  }
+
+  .sect { padding-block: 96px; }
+  .bio {
+    margin: 0; max-width: 60ch; white-space: pre-line;
+    font-size: 1.0625rem; line-height: 1.75; color: var(--ink-2); text-wrap: pretty;
+  }
+
+  /* ---- scroll-linked counters ------------------------------------ */
+  .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 48px; }
+  .stat { border-top: 2px solid var(--accent); padding-top: 16px; }
+  .statVal {
+    font-family: var(--font-display); font-size: 3.25rem; font-weight: 600;
+    letter-spacing: -0.03em; line-height: 1; color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .statLbl { margin: 10px 0 0; font-size: 0.875rem; color: var(--muted); }
+
+  @property --n1 { syntax: '<integer>'; initial-value: 0; inherits: false; }
+  @property --n2 { syntax: '<integer>'; initial-value: 0; inherits: false; }
+  .c1 { --n1: 10; counter-reset: n1 var(--n1); animation: cnt1 linear both; animation-timeline: view(); animation-range: entry 25% cover 42%; }
+  .c1::before { content: counter(n1); }
+  @keyframes cnt1 { from { --n1: 0; } to { --n1: 10; } }
+  .c2 { --n2: 11; counter-reset: n2 var(--n2); animation: cnt2 linear both; animation-timeline: view(); animation-range: entry 25% cover 42%; }
+  .c2::before { content: counter(n2); }
+  @keyframes cnt2 { from { --n2: 0; } to { --n2: 11; } }
+
+  /* ---- pinned scrub section -------------------------------------- */
+  .pin {
+    height: 1900px; position: relative;
+    view-timeline-name: --pinT; view-timeline-axis: block;
+  }
+  .pinSticky {
+    position: sticky; top: 56px; height: 844px;
+    display: flex; align-items: center;
+  }
+  .pinCard {
+    width: 100%; position: relative;
+    border: 1px solid var(--rule); border-radius: 10px;
+    background: var(--paper-2); padding: 40px;
+    animation: pinExit linear both;
+    animation-timeline: --pinT; animation-range: cover 80% cover 96%;
+  }
+  @keyframes pinExit { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-44px) scale(0.97); } }
+
+  .pinFrame {
+    position: absolute; inset: -1px; border-radius: 10px; pointer-events: none;
+    border: 2px solid var(--accent);
+    clip-path: inset(0 0 0 0);
+    animation: frameDraw linear both;
+    animation-timeline: --pinT; animation-range: cover 10% cover 32%;
+  }
+  @keyframes frameDraw { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+
+  .pinNum {
+    font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.08em;
+    color: var(--accent-text); margin: 0 0 10px;
+  }
+  .pinTitle {
+    font-family: var(--font-display); font-size: 2.5rem; font-weight: 600;
+    letter-spacing: -0.03em; line-height: 1.1; margin: 0 0 16px; color: var(--ink);
+  }
+  .pinTitle span {
+    display: block; transform: none;
+    animation: lineUp linear both;
+    animation-timeline: --pinT; animation-range: cover 8% cover 24%;
+  }
+  .pinDesc {
+    margin: 0 0 28px; max-width: 62ch; font-size: 1rem; line-height: 1.75; color: var(--ink-2);
+    animation: revIn linear both;
+    animation-timeline: --pinT; animation-range: cover 16% cover 30%;
+  }
+  .manifest { margin: 0 0 24px; border-top: 1px solid var(--rule); }
+  .mRow {
+    display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 16px;
+    align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--rule);
+    animation: slideIn linear both;
+    animation-timeline: --pinT;
+  }
+  @keyframes slideIn { from { opacity: 0; transform: translateX(26px); } to { opacity: 1; transform: none; } }
+  .mKey { margin: 0; font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .mVal { margin: 0; font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.5; color: var(--ink); }
+
+  .hl { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .hlItem {
+    position: relative; padding-left: 20px; font-size: 0.9375rem; line-height: 1.6; color: var(--ink-2);
+    animation: slideIn linear both;
+    animation-timeline: --pinT;
+  }
+  .hlItem::before {
+    content: ''; position: absolute; left: 0; top: 0.62em; width: 8px; height: 1px; background: var(--accent);
+  }
+
+  /* ---- skills sheet ---------------------------------------------- */
+  .sheet { margin: 0; border-top: 1px solid var(--rule); }
+  .sRow {
+    display: grid; grid-template-columns: 11rem minmax(0, 1fr) 3rem; gap: 24px;
+    align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--rule);
+    position: relative;
+    animation: revIn linear both;
+    animation-timeline: view();
+    animation-range: entry 10% entry 72%;
+  }
+  .sRow::after {
+    content: ''; position: absolute; left: 0; bottom: -1px; height: 1px; width: 100%;
+    background: var(--accent); transform-origin: left;
+    animation: ruleDraw linear both;
+    animation-timeline: view(); animation-range: entry 14% entry 80%;
+  }
+  @keyframes ruleDraw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  .sKey { margin: 0; font-family: var(--font-display); font-size: 1.1875rem; font-weight: 500; letter-spacing: -0.015em; color: var(--ink); }
+  .sVal { margin: 0; font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.6; color: var(--ink-2); }
+  .sNum { font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.08em; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* ---- horizontal scrub strip ------------------------------------ */
+  .strip { overflow: hidden; padding-block: 8px; }
+  .stripTrack {
+    display: flex; gap: 24px; width: max-content;
+    animation: hslide linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+  @keyframes hslide { from { transform: translateX(6%); } to { transform: translateX(-46%); } }
+  .job {
+    width: 300px; flex: none;
+    border: 1px solid var(--rule); border-top: 2px solid var(--accent);
+    border-radius: 10px; background: var(--paper-2); padding: 20px;
+  }
+  .jobPeriod { font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.08em; color: var(--accent-text); margin: 0 0 10px; }
+  .jobCo { font-family: var(--font-display); font-size: 1.1875rem; font-weight: 600; letter-spacing: -0.015em; margin: 0 0 4px; color: var(--ink); }
+  .jobRole { margin: 0; font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+
+  /* ---- outro ------------------------------------------------------ */
+  .outro { padding-block: 120px 160px; }
+  .outroLine {
+    font-family: var(--font-display); font-size: clamp(2rem, 1.5rem + 2.4vw, 3.25rem);
+    font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; margin: 0 0 32px; color: var(--ink);
+  }
+  .mailto {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono); font-size: 0.875rem; color: var(--ink);
+    border-bottom: 1px solid var(--rule-2); padding-bottom: 4px;
+    transition: color 120ms var(--ease-out), border-color 120ms var(--ease-out);
+  }
+  .mailto:hover { color: var(--accent-text); border-color: var(--accent); }
+
+  .hint {
+    position: absolute; right: 24px; bottom: 20px; z-index: 50;
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--muted);
+    background: color-mix(in oklab, var(--paper-2) 86%, transparent);
+    border: 1px solid var(--rule); border-radius: 6px; padding: 7px 11px;
+    backdrop-filter: blur(6px);
+    animation: hintOut 900ms var(--ease-out) 4.5s both;
+  }
+  @keyframes hintOut { to { opacity: 0; transform: translateY(8px); } }
+  .hintArrow { animation: nudge 1600ms var(--ease-in-out) infinite; }
+  @keyframes nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .root *, .root *::before, .root *::after { animation: none !important; transition-duration: 1ms !important; }
+    .lineIn, .rev, .pinTitle span, .pinDesc, .mRow, .hlItem, .sRow { opacity: 1 !important; transform: none !important; }
+  }
+</style>
+</helmet>
+<div class="root">
+  <div class="scroller" id="sc">
+    <header class="bar">
+      <div class="barInner">
+        <span class="mark">정의현</span>
+        <span class="pct">SCROLL-DRIVEN · CSS TIMELINE</span>
+      </div>
+      <div class="pTrack"><div class="pFill"></div></div>
+    </header>
+
+    <div class="stage">
+      <aside class="rail">
+        <div class="railTrack">
+          <span class="railBar" aria-hidden="true"></span>
+          <ul class="chList">
+            <li class="ch on" data-ch="about"><span class="chNum">01</span>소개</li>
+            <li class="ch" data-ch="project"><span class="chNum">02</span>프로젝트</li>
+            <li class="ch" data-ch="skills"><span class="chNum">03</span>기술</li>
+            <li class="ch" data-ch="exp"><span class="chNum">04</span>경력</li>
+            <li class="ch" data-ch="contact"><span class="chNum">05</span>연락처</li>
+          </ul>
+        </div>
+      </aside>
+
+      <main>
+        <section class="sect" id="about">
+          <h2 class="h2"><span class="lineMask"><span class="lineIn">About Me</span></span></h2>
+          <p class="bio rev">온라인 게임 플랫폼의 프론트엔드 개발부터 다양한 웹 서비스 구축까지, 폭넓은 경험을 쌓아왔습니다.
+React, Next.js, TypeScript를 중심으로 사용자 중심의 인터페이스를 설계하고,
+성능 최적화와 접근성에 깊은 관심을 가지고 있습니다.</p>
+          <div class="stats">
+            <div class="stat">
+              <p class="statVal"><span class="c1"></span>+</p>
+              <p class="statLbl">년 웹 개발 경험</p>
+            </div>
+            <div class="stat">
+              <p class="statVal"><span class="c2"></span></p>
+              <p class="statLbl">개 언어 다국어 지원 경험</p>
+            </div>
+            <div class="stat">
+              <p class="statVal">E2E</p>
+              <p class="statLbl">테스트 자동화 구축</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="pin" id="project">
+          <div class="pinSticky">
+            <article class="pinCard">
+              <span class="pinFrame" aria-hidden="true"></span>
+              <p class="pinNum">01 / 프로젝트</p>
+              <h3 class="pinTitle"><span class="lineMask"><span>게임 플랫폼 로비 프론트엔드 v2</span></span></h3>
+              <p class="pinDesc">글로벌 온라인 게임 플랫폼의 차세대 로비 시스템. 레거시 v1의 기술 부채를 해소하고 성능·확장성·테스트 커버리지를 전면 개선한 리아키텍처링 프로젝트.</p>
+              <dl class="manifest">
+                <div class="mRow" style="animation-range: cover 30% cover 40%">
+                  <dt class="mKey">ROLE</dt>
+                  <dd class="mVal">프론트엔드 개발 리드</dd>
+                </div>
+                <div class="mRow" style="animation-range: cover 34% cover 44%">
+                  <dt class="mKey">STACK</dt>
+                  <dd class="mVal">Next.js · React · TypeScript · Jotai · TanStack Query · Playwright</dd>
+                </div>
+              </dl>
+              <ul class="hl">
+                <li class="hlItem" style="animation-range: cover 44% cover 54%">Jotai + TanStack Query 기반 상태 관리 아키텍처 설계로 서버/클라이언트 상태 분리 및 캐시 최적화</li>
+                <li class="hlItem" style="animation-range: cover 50% cover 60%">next-intl 기반 11개 언어 i18n 파이프라인 구축, 런타임 번역 누락 감지 시스템 도입</li>
+                <li class="hlItem" style="animation-range: cover 56% cover 66%">WebSocket 기반 실시간 게임 상태 동기화 및 자동 재연결 로직 구현</li>
+                <li class="hlItem" style="animation-range: cover 62% cover 72%">Playwright E2E + Vitest 유닛 테스트 체계 수립, CI 파이프라인에 자동화 테스트 통합</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="sect" id="skills">
+          <h2 class="h2"><span class="lineMask"><span class="lineIn">Skills</span></span></h2>
+          <dl class="sheet">
+            <div class="sRow">
+              <dt class="sKey">Frontend</dt>
+              <dd class="sVal">React · Next.js · TypeScript · JavaScript · HTML5</dd>
+              <span class="sNum">05</span>
+            </div>
+            <div class="sRow">
+              <dt class="sKey">Styling</dt>
+              <dd class="sVal">SCSS / Sass · CSS Modules · Responsive Design</dd>
+              <span class="sNum">03</span>
+            </div>
+            <div class="sRow">
+              <dt class="sKey">State Management</dt>
+              <dd class="sVal">Jotai · Recoil · TanStack Query · SWR</dd>
+              <span class="sNum">04</span>
+            </div>
+            <div class="sRow">
+              <dt class="sKey">Testing</dt>
+              <dd class="sVal">Vitest · Playwright · Jest · Testing Library</dd>
+              <span class="sNum">04</span>
+            </div>
+            <div class="sRow">
+              <dt class="sKey">Tools &amp; DevOps</dt>
+              <dd class="sVal">Git · Docker · GitHub Actions · Vercel · ESLint · Prettier</dd>
+              <span class="sNum">06</span>
+            </div>
+            <div class="sRow">
+              <dt class="sKey">Libraries</dt>
+              <dd class="sVal">Motion / React · react-hook-form · Zod · next-intl · WebSocket</dd>
+              <span class="sNum">05</span>
+            </div>
+          </dl>
+        </section>
+
+        <section class="sect" id="exp">
+          <h2 class="h2"><span class="lineMask"><span class="lineIn">Experience</span></span></h2>
+          <div class="strip">
+            <div class="stripTrack">
+              <article class="job"><p class="jobPeriod">2024.10 — 2026.03</p><h3 class="jobCo">(주)더블다운게임즈</h3><p class="jobRole">Frontend Developer</p></article>
+              <article class="job"><p class="jobPeriod">2017.12 — 2023.09</p><h3 class="jobCo">(주)다름</h3><p class="jobRole">Web Publisher</p></article>
+              <article class="job"><p class="jobPeriod">2014.08 — 2017.01</p><h3 class="jobCo">(주)헥사팩토리</h3><p class="jobRole">Web Publisher / Web Planner</p></article>
+              <article class="job"><p class="jobPeriod">2009.05 — 2010.08</p><h3 class="jobCo">(주)아이티라인</h3><p class="jobRole">Web Planner</p></article>
+              <article class="job"><p class="jobPeriod">2008.07 — 2009.02</p><h3 class="jobCo">아이에스이 시스템즈</h3><p class="jobRole">Web Planner</p></article>
+              <article class="job"><p class="jobPeriod">2008.02 — 2008.06</p><h3 class="jobCo">오피니티 에이피</h3><p class="jobRole">Web Planner</p></article>
+            </div>
+          </div>
+        </section>
+
+        <section class="outro" id="contact">
+          <h2 class="outroLine"><span class="lineMask"><span class="lineIn">새로운 기회나 협업에</span></span><span class="lineMask"><span class="lineIn">관심이 있으시다면.</span></span></h2>
+          <a class="mailto" href="#">uihyun.jung@gmail.com<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></a>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="hint" aria-hidden="true">
+    <svg class="hintArrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"></path></svg>
+    <span>이 프레임 안에서 스크롤</span>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    const scroller = document.getElementById('sc');
+    if (!scroller) return;
+    const chapters = Array.from(document.querySelectorAll('.ch'));
+    const ids = chapters.map((c) => c.getAttribute('data-ch'));
+    this._io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const idx = ids.indexOf(entry.target.id);
+          chapters.forEach((c, i) => c.classList.toggle('on', i === idx));
+        }
+      },
+      { root: scroller, rootMargin: '-40% 0px -55% 0px' },
+    );
+    for (const id of ids) {
+      const el = document.getElementById(id);
+      if (el) this._io.observe(el);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this._io) this._io.disconnect();
+  }
+
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

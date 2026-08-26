@@ -1,8 +1,8 @@
 /**
- * Anchor scrolling that honours prefers-reduced-motion.
+ * prefers-reduced-motion을 존중하는 앵커 스크롤.
  *
- * `scroll-behavior: smooth` in CSS is overridden for reduced-motion users,
- * but a hard-coded `behavior: 'smooth'` in JS silently defeats that.
+ * CSS의 `scroll-behavior: smooth`는 reduced-motion 사용자에게 무효화되지만,
+ * JS에 `behavior: 'smooth'`를 박아 두면 그 무효화를 조용히 되돌린다.
  */
 function prefersReducedMotion(): boolean {
   return (

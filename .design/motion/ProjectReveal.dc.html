@@ -1,0 +1,394 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Sans+KR:wght@300;400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; background: oklch(15% 0.014 258); }
+
+  .root {
+    --paper: oklch(15% 0.014 258);
+    --paper-2: oklch(18.5% 0.015 258);
+    --paper-3: oklch(22% 0.016 259);
+    --rule: oklch(28% 0.014 258);
+    --rule-2: oklch(36% 0.016 258);
+    --rule-strong: oklch(56% 0.016 258);
+    --ink: oklch(95% 0.006 250);
+    --ink-2: oklch(86% 0.01 252);
+    --muted: oklch(70% 0.014 254);
+    --accent: oklch(72% 0.16 256);
+    --accent-text: oklch(78% 0.14 256);
+    --accent-soft: oklch(26% 0.05 257);
+    --accent-ink: oklch(16% 0.02 258);
+
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --ease-spring: linear(0, 0.009, 0.035 2.1%, 0.141, 0.281 6.7%, 0.723 12.9%, 0.938 16.7%, 1.017, 1.077, 1.121, 1.149 24.3%, 1.159, 1.163, 1.161, 1.154 29.9%, 1.129 32.8%, 1.051 39.6%, 1.017 43.1%, 0.991, 0.977 51%, 0.974 53.8%, 0.975 57.1%, 0.997 69.8%, 1.003 76.9%, 1);
+
+    --font-display: 'Space Grotesk', 'Noto Sans KR', sans-serif;
+    --font-body: 'Noto Sans KR', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+    width: 100%; min-height: 900px; overflow: clip;
+    background: var(--paper); color: var(--ink);
+    font-family: var(--font-body); font-weight: 350;
+    -webkit-font-smoothing: antialiased;
+    padding: 48px;
+  }
+
+  a { color: var(--accent-text); text-decoration: none; }
+  a:hover { color: var(--accent); }
+
+  .lbl {
+    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0;
+  }
+
+  .head { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: 40px; }
+  .h1 {
+    font-family: var(--font-display); font-size: 2.5rem; font-weight: 600;
+    letter-spacing: -0.03em; line-height: 1.02; margin: 8px 0 0; color: var(--ink);
+  }
+  .headNote { margin: 0; max-width: 40ch; font-size: 0.9375rem; line-height: 1.7; color: var(--muted); text-wrap: pretty; }
+
+  .split { display: grid; grid-template-columns: 420px minmax(0, 1fr); gap: 56px; align-items: start; }
+
+  /* ---- index ------------------------------------------------------ */
+  .index { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+  .pRow {
+    position: relative; display: block; width: 100%; text-align: left;
+    border: 0; border-bottom: 1px solid var(--rule); background: none; cursor: pointer;
+    padding: 16px 12px; overflow: hidden;
+    transition: background-color 220ms var(--ease-out), padding-left 320ms var(--ease-out);
+  }
+  .pRow::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--accent);
+    transform: scaleY(0); transform-origin: top; transition: transform 320ms var(--ease-out);
+  }
+  .pRow.on { background: var(--accent-soft); padding-left: 22px; }
+  .pRow.on::before { transform: scaleY(1); }
+  .pTop { display: flex; align-items: baseline; gap: 12px; }
+  .pNum {
+    font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.08em; color: var(--muted);
+    font-variant-numeric: tabular-nums; transition: color 220ms var(--ease-out);
+  }
+  .pRow.on .pNum { color: var(--accent-text); }
+  .pTitle {
+    flex: 1; font-family: var(--font-body); font-size: 0.9375rem; font-weight: 500; color: var(--ink-2);
+    transition: color 220ms var(--ease-out);
+  }
+  .pRow.on .pTitle { color: var(--ink); }
+  .pType {
+    font-family: var(--font-mono); font-size: 0.625rem; letter-spacing: 0.08em; color: var(--muted);
+    border: 1px solid var(--rule-2); border-radius: 4px; padding: 2px 6px;
+  }
+  .pArrow {
+    color: var(--accent); opacity: 0; transform: translate(-8px, 8px);
+    transition: opacity 220ms var(--ease-out), transform 380ms var(--ease-spring);
+  }
+  .pRow.on .pArrow { opacity: 1; transform: none; }
+
+  /* ---- viewer ----------------------------------------------------- */
+  .viewer {
+    position: relative; min-height: 560px;
+    border: 1px solid var(--rule); border-radius: 10px; background: var(--paper-2);
+    padding: 32px 36px 36px; overflow: clip;
+  }
+  .vFrame {
+    position: absolute; inset: -1px; border-radius: 10px; pointer-events: none;
+    border: 2px solid var(--accent); clip-path: inset(0 100% 0 0);
+    transition: clip-path 620ms var(--ease-out);
+  }
+  .viewer.pinned .vFrame { clip-path: inset(0 0 0 0); }
+
+  .vEl { animation-duration: 620ms; animation-timing-function: var(--ease-out); animation-fill-mode: both; }
+  @keyframes swapA { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  @keyframes swapB { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+  .vHead { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-bottom: 4px; }
+  .vNum {
+    font-family: var(--font-display); font-size: 6rem; font-weight: 700;
+    letter-spacing: -0.04em; line-height: 0.9; color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    animation-duration: 700ms;
+  }
+  @keyframes rollA { from { opacity: 0; transform: translateY(-42%) scale(0.94); } to { opacity: 1; transform: none; } }
+  @keyframes rollB { from { opacity: 0; transform: translateY(-42%) scale(0.94); } to { opacity: 1; transform: none; } }
+
+  .vBadge {
+    font-family: var(--font-mono); font-size: 0.625rem; letter-spacing: 0.08em;
+    color: var(--accent-ink); background: var(--accent); border-radius: 4px; padding: 4px 8px;
+    animation-delay: 60ms;
+  }
+
+  .vTitle {
+    font-family: var(--font-display); font-size: 2rem; font-weight: 600;
+    letter-spacing: -0.03em; line-height: 1.12; margin: 0 0 14px; color: var(--ink);
+    animation-delay: 80ms;
+  }
+  .vDesc {
+    margin: 0 0 24px; max-width: 66ch; font-size: 1rem; line-height: 1.75; color: var(--ink-2); text-wrap: pretty;
+    animation-delay: 140ms;
+  }
+
+  .manifest { margin: 0 0 20px; border-top: 1px solid var(--rule); animation-delay: 200ms; }
+  .mRow {
+    display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 16px; align-items: baseline;
+    padding: 11px 0; border-bottom: 1px solid var(--rule);
+  }
+  .mKey { margin: 0; font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .mVal { margin: 0; font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.6; color: var(--ink); overflow-wrap: anywhere; }
+
+  .pinArea {
+    display: grid; grid-template-rows: 0fr;
+    transition: grid-template-rows 520ms var(--ease-out);
+  }
+  .viewer.pinned .pinArea { grid-template-rows: 1fr; }
+  .pinIn { overflow: hidden; }
+  .hl { list-style: none; margin: 0; padding: 6px 0 0; display: grid; gap: 11px; }
+  .hlItem {
+    position: relative; padding-left: 22px; font-size: 0.9375rem; line-height: 1.65; color: var(--ink-2);
+    opacity: 0; transform: translateX(20px);
+    transition: opacity 380ms var(--ease-out), transform 520ms var(--ease-out);
+  }
+  .hlItem::before { content: ''; position: absolute; left: 0; top: 0.66em; width: 10px; height: 1px; background: var(--accent); }
+  .viewer.pinned .hlItem { opacity: 1; transform: none; }
+  .viewer.pinned .hlItem:nth-child(1) { transition-delay: 120ms; }
+  .viewer.pinned .hlItem:nth-child(2) { transition-delay: 190ms; }
+  .viewer.pinned .hlItem:nth-child(3) { transition-delay: 260ms; }
+  .viewer.pinned .hlItem:nth-child(4) { transition-delay: 330ms; }
+
+  .vFoot { display: flex; align-items: center; gap: 16px; margin-top: 24px; animation-delay: 260ms; }
+  .pinBtn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 16px; border: 0; border-radius: 6px;
+    background: var(--accent); color: var(--accent-ink); cursor: pointer;
+    font-family: var(--font-body); font-size: 0.8125rem; font-weight: 600; white-space: nowrap;
+    transition: box-shadow 260ms var(--ease-out), transform 200ms var(--ease-out);
+  }
+  .pinBtn:hover { box-shadow: 0 0 0 7px color-mix(in oklab, var(--accent) 16%, transparent); }
+  .pinBtn:active { transform: translateY(1px) scale(0.985); }
+  .pinBtn svg { transition: transform 320ms var(--ease-spring); }
+  .viewer.pinned .pinBtn svg { transform: rotate(45deg); }
+  .hintTxt { font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.08em; color: var(--muted); }
+
+  /* stack marquee inside the viewer */
+  .stackRun {
+    margin-top: 22px; overflow: hidden; border-top: 1px solid var(--rule); padding-top: 14px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    animation-delay: 320ms;
+  }
+  .stackTrack { display: flex; width: max-content; animation: run 26s linear infinite; }
+  .stackRun:hover .stackTrack { animation-play-state: paused; }
+  @keyframes run { to { transform: translateX(-50%); } }
+  .runSeg {
+    display: flex; align-items: center; gap: 22px; padding-right: 22px; white-space: nowrap;
+    font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.08em; color: var(--muted);
+  }
+  .runSeg i { font-style: normal; color: var(--accent); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .root *, .root *::before, .root *::after { animation: none !important; transition-duration: 1ms !important; }
+    .hlItem { opacity: 1 !important; transform: none !important; }
+  }
+</style>
+</helmet>
+<div class="root">
+  <header class="head">
+    <div>
+      <p class="lbl">PROJECT INDEX → VIEWER</p>
+      <h1 class="h1">Projects</h1>
+    </div>
+    <p class="headNote">왼쪽 인덱스에 마우스를 올리면 뷰어가 즉시 교체되고, 상세 보기를 누르면 하이라이트가 순차로 열립니다.</p>
+  </header>
+
+  <div class="split">
+    <ul class="index">
+      <sc-for list="{{ items }}" as="p" hint-placeholder-count="6"><li><button type="button" class="{{ p.rowClass }}" onMouseEnter="{{ p.pick }}" onFocus="{{ p.pick }}" onClick="{{ p.open }}"><span class="pTop"><span class="pNum">{{ p.num }}</span><span class="pTitle">{{ p.title }}</span><span class="pType">{{ p.badge }}</span><svg class="pArrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"></path></svg></span></button></li></sc-for>
+    </ul>
+
+    <article class="{{ viewerClass }}">
+      <span class="vFrame" aria-hidden="true"></span>
+
+      <div class="vHead">
+        <span class="vNum vEl" style="animation-name: {{ rollName }}">{{ cur.num }}</span>
+        <span class="vBadge vEl" style="animation-name: {{ swapName }}">{{ cur.badge }}</span>
+      </div>
+
+      <h2 class="vTitle vEl" style="animation-name: {{ swapName }}">{{ cur.title }}</h2>
+      <p class="vDesc vEl" style="animation-name: {{ swapName }}">{{ cur.description }}</p>
+
+      <dl class="manifest vEl" style="animation-name: {{ swapName }}">
+        <div class="mRow">
+          <dt class="mKey">ROLE</dt>
+          <dd class="mVal">{{ cur.role }}</dd>
+        </div>
+        <div class="mRow">
+          <dt class="mKey">STACK</dt>
+          <dd class="mVal">{{ cur.stack }}</dd>
+        </div>
+      </dl>
+
+      <div class="pinArea">
+        <div class="pinIn">
+          <ul class="hl">
+            <sc-for list="{{ cur.highlights }}" as="h" hint-placeholder-count="4"><li class="hlItem">{{ h.text }}</li></sc-for>
+          </ul>
+        </div>
+      </div>
+
+      <div class="vFoot vEl" style="animation-name: {{ swapName }}">
+        <button type="button" class="pinBtn" onClick="{{ togglePin }}">{{ pinLabel }}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></button>
+        <span class="hintTxt">{{ hintText }}</span>
+      </div>
+
+      <div class="stackRun vEl" style="animation-name: {{ swapName }}">
+        <div class="stackTrack">
+          <span class="runSeg">{{ cur.run }}<i>·</i>{{ cur.run }}<i>·</i></span>
+          <span class="runSeg">{{ cur.run }}<i>·</i>{{ cur.run }}<i>·</i></span>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+const PROJECTS = [
+  {
+    num: '01',
+    badge: '업무',
+    title: '게임 플랫폼 로비 프론트엔드 v2',
+    description: '글로벌 온라인 게임 플랫폼의 차세대 로비 시스템. 레거시 v1의 기술 부채를 해소하고 성능·확장성·테스트 커버리지를 전면 개선한 리아키텍처링 프로젝트.',
+    role: '프론트엔드 개발 리드',
+    stack: 'Next.js · React · TypeScript · Jotai · TanStack Query · Playwright',
+    highlights: [
+      'Jotai + TanStack Query 기반 상태 관리 아키텍처 설계로 서버/클라이언트 상태 분리 및 캐시 최적화',
+      'next-intl 기반 11개 언어 i18n 파이프라인 구축, 런타임 번역 누락 감지 시스템 도입',
+      'WebSocket 기반 실시간 게임 상태 동기화 및 자동 재연결 로직 구현',
+      'Playwright E2E + Vitest 유닛 테스트 체계 수립, CI 파이프라인에 자동화 테스트 통합',
+    ],
+  },
+  {
+    num: '02',
+    badge: '업무',
+    title: '게임 플랫폼 로비 프론트엔드 v1',
+    description: '온라인 게임 플랫폼 로비의 초기 프론트엔드를 제로부터 구축. 다국어 지원과 인증 시스템, 실시간 통신 등 플랫폼의 핵심 인프라를 설계하고 운영까지 담당.',
+    role: '프론트엔드 개발',
+    stack: 'Next.js · React · Recoil · SWR · next-auth',
+    highlights: [
+      'Recoil + SWR 기반 전역 상태 관리 및 서버 데이터 페칭 아키텍처 설계',
+      'next-auth 기반 인증/인가 플로우 구현, 세션 관리 및 보안 미들웨어 설계',
+      '10개 언어 다국어 지원 체계 구축 및 지역별 콘텐츠 분기 로직 구현',
+    ],
+  },
+  {
+    num: '03',
+    badge: '업무',
+    title: '대규모 웹 퍼블리싱 프로젝트',
+    description: '6년간 다양한 기업·기관의 웹사이트와 서비스 UI를 퍼블리싱. 반응형 웹, 크로스 브라우저 호환, 웹 접근성(WCAG) 준수를 핵심 원칙으로 수십 건의 프로젝트를 수행.',
+    role: '웹 퍼블리셔 (리드)',
+    stack: 'HTML5 · SCSS / Sass · JavaScript · Responsive Design',
+    highlights: [
+      '시맨틱 마크업과 SCSS 기반 컴포넌트 스타일 아키텍처 설계, 재사용 가능한 UI 패턴 라이브러리 구축',
+      'IE11~최신 브라우저 크로스 브라우징 대응 및 모바일·태블릿·데스크톱 반응형 레이아웃 구현',
+      'WCAG 2.1 AA 기준 웹 접근성 준수, 키보드 네비게이션·스크린 리더 호환성 검증',
+    ],
+  },
+  {
+    num: '04',
+    badge: '개인',
+    title: 'Place Review Analyzer',
+    description: 'Google Maps 리뷰를 AI로 요약·분석해 주는 크롬 확장 프로그램. Claude Code와 페어 프로그래밍하며 기획·설계부터 배포까지 단독으로 완성한 AI 어시스턴트 개발 프로젝트.',
+    role: '풀스택 개발 (AI 페어 프로그래밍)',
+    stack: 'TypeScript · Cloudflare Workers · Supabase · Gemini API · Paddle',
+    highlights: [
+      'Claude Code에게 요구사항과 제약을 명확히 전달하고 설계 결정을 함께 검토하며, 확장·백엔드·결제 인프라를 AI 주도로 구현',
+      'TypeScript 기반 Google Maps 리뷰 스크레이퍼 설계 및 Vitest 픽스처 테스트로 DOM 구조 변경에 대응',
+      'Cloudflare Workers + Supabase + Gemini API로 분석 파이프라인 구축, 레이트 리밋·사용량 추적·프리미엄 권한 검증 로직 분리',
+      'Paddle Billing 기반 구독 결제 및 무료 티어 일일 한도 시스템, 90일 분석 히스토리 저장 구현',
+    ],
+  },
+  {
+    num: '05',
+    badge: '개인',
+    title: 'Stock Average Down Calculator',
+    description: '주식 물타기 평균단가를 계산해 주는 크롬 확장 프로그램. AI 코딩 어시스턴트를 활용해 바닐라 JS 확장부터 서버리스 백엔드·결제 연동까지 1인 개발로 스토어 출시까지 완료.',
+    role: '풀스택 개발 (AI 페어 프로그래밍)',
+    stack: 'Vanilla JS · Vite · Vercel Serverless · Upstash Redis · Paddle',
+    highlights: [
+      'Claude Code와 함께 요구사항 정리·코드 생성·리팩토링 사이클을 반복하며 의존성 없는 경량 Vanilla JS + Vite 확장 구현',
+      '8개 언어(EN/KO/JA/ZH-CN/ZH-TW/DE/ES/PT) 다국어 지원 및 다크모드 자동 대응',
+      'Vercel Serverless + Upstash Redis 기반 구독 상태 검증 백엔드 설계, Paddle Billing 연동',
+      'Pro 구독으로 추가 통화 잠금 해제 기능 구현 및 Chrome Web Store 정식 배포',
+    ],
+  },
+  {
+    num: '06',
+    badge: '개인',
+    title: 'Noopdaa Blog',
+    description: 'Turborepo 모노레포 기반의 풀스택 블로그 플랫폼. 공개 블로그와 관리자 대시보드를 독립 앱으로 분리하고, 공유 패키지를 통해 타입 안전성과 코드 재사용성을 확보.',
+    role: '풀스택 개발 (개인 프로젝트)',
+    stack: 'Turborepo · Next.js · Supabase · Recharts · TypeScript',
+    highlights: [
+      'Turborepo 모노레포 아키텍처로 블로그 앱 / 어드민 대시보드 / 공유 패키지(DB, UI, Config) 분리',
+      'Supabase RLS 정책 기반 보안 모델 설계, DB 트리거를 활용한 조회수 자동 집계 및 프로필 자동 생성',
+      '방문자 분석 대시보드 구축 — 디바이스, 브라우저, 리퍼러 추적 및 Recharts 기반 시각화',
+    ],
+  },
+];
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { i: 0, pinned: false, tick: 0 };
+  }
+
+  select(i) {
+    if (i === this.state.i) return;
+    this.setState({ i: i, pinned: false, tick: this.state.tick + 1 });
+  }
+
+  renderVals() {
+    const s = this.state;
+    const cur = PROJECTS[s.i];
+    const even = s.tick % 2 === 0;
+
+    return {
+      items: PROJECTS.map((p, i) => ({
+        num: p.num,
+        title: p.title,
+        badge: p.badge,
+        rowClass: 'pRow' + (i === s.i ? ' on' : ''),
+        pick: () => this.select(i),
+        open: () => this.setState({ i: i, pinned: i === s.i ? !s.pinned : true, tick: s.tick + 1 }),
+      })),
+      cur: {
+        num: cur.num,
+        badge: cur.badge,
+        title: cur.title,
+        description: cur.description,
+        role: cur.role,
+        stack: cur.stack,
+        run: cur.stack,
+        highlights: cur.highlights.map((t) => ({ text: t })),
+      },
+      viewerClass: 'viewer' + (s.pinned ? ' pinned' : ''),
+      swapName: even ? 'swapA' : 'swapB',
+      rollName: even ? 'rollA' : 'rollB',
+      togglePin: () => this.setState({ pinned: !s.pinned }),
+      pinLabel: s.pinned ? '접기' : '상세 보기',
+      hintText: s.pinned ? 'STAGGER 70MS · EASE-OUT' : 'HOVER TO SCRUB · CLICK TO OPEN',
+    };
+  }
+}
+</script>
+</body>
+</html>

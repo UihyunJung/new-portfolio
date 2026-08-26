@@ -1,0 +1,15 @@
+@use '../../assets/styles/@utilities/mixins' as *;
+
+@include line-keyframes;
+
+.heading {
+  @include section-heading;
+}
+
+.mask {
+  @include line-mask;
+}
+
+.line {
+  @include line-rise;
+}
