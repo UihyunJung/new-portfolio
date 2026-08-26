@@ -25,9 +25,12 @@
   inset-block: 2px;
   inset-inline-start: 2px;
   inline-size: 26px;
-  border: var(--rule-hair) solid var(--color-rule);
   border-radius: 4px;
-  background: var(--color-paper);
+  // A solid accent fill, no hairline. This is the one place the accent is
+  // allowed to carry a selection as a *fill*: the thumb is the only object
+  // on the header that moves, so the fill is what makes the move legible —
+  // and it is what lets the selected glyph invert onto `accent-ink`.
+  background: var(--color-accent);
   transform: translateX(calc(var(--thumb-index, 0) * 28px));
   // --dur-short, not --dur-long. The spring's overshoot is a fixed 16% of
   // the travel, and one lane here is only 28px — about 4.5px. Spread over
@@ -82,7 +85,10 @@
 // The scale is the baseline, shared by all three. The spin is not: each
 // glyph only survives the rotation that lands it back on itself.
 .isSelected {
-  color: var(--color-accent-text);
+  // Inverted onto the accent fill, not the accent itself — `accent-text` is
+  // the darkened variant for body copy *on paper*, and on a cobalt thumb it
+  // is close to invisible.
+  color: var(--color-accent-ink);
 
   svg {
     transform: rotate(0deg) scale(1.08);
