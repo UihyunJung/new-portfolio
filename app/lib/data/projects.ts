@@ -154,6 +154,9 @@ export const projects: Project[] = [
     shots: [
       { id: 'noopdaa-blog-1', width: 1000, height: 852 },
       { id: 'noopdaa-blog-2', width: 1000, height: 852 },
+      { id: 'noopdaa-blog-3', width: 1000, height: 615 },
+      { id: 'noopdaa-blog-4', width: 1000, height: 860 },
+      { id: 'noopdaa-blog-5', width: 1000, height: 856 },
     ],
     links: {
       github: 'https://github.com/UihyunJung/noopdaa-blog',

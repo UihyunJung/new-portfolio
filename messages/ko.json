@@ -169,7 +169,10 @@
         },
         "shots": {
           "noopdaa-blog-1": "블로그 홈",
-          "noopdaa-blog-2": "포스트 목록"
+          "noopdaa-blog-2": "포스트 목록",
+        "noopdaa-blog-3": "관리자 대시보드",
+        "noopdaa-blog-4": "포스트 에디터",
+        "noopdaa-blog-5": "방문자 통계"
         }
       }
     },

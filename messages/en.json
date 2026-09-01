@@ -169,7 +169,10 @@
         },
         "shots": {
           "noopdaa-blog-1": "Blog home",
-          "noopdaa-blog-2": "Post list"
+          "noopdaa-blog-2": "Post list",
+        "noopdaa-blog-3": "Admin dashboard",
+        "noopdaa-blog-4": "Post editor",
+        "noopdaa-blog-5": "Visitor analytics"
         }
       }
     },
