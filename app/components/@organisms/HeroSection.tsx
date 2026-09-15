@@ -1,11 +1,13 @@
 'use client';
 
+import { useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { ArrowRight } from 'lucide-react';
 import clsx from 'clsx';
 import { scrollToSection } from '@lib/scrollTo';
 import SplitText from '@components/@atoms/SplitText';
 import StatValue from '@components/@atoms/StatValue';
+import HeroCanvas from '@components/@atoms/HeroCanvas';
 import useMagnetic from '@hooks/useMagnetic';
 import usePointerField from '@hooks/usePointerField';
 import { SKILL_NAMES } from '@lib/data/skills';
@@ -44,10 +46,12 @@ export default function HeroSection() {
   // --pointer-y가 커서 밑에 남는다.
   const fieldRef = usePointerField<HTMLDivElement>();
   const ctaRef = useMagnetic<HTMLButtonElement>();
+  // 캔버스 리본의 진행률은 핀 컨테이너가 스크롤포트를 지나는 정도에서 온다.
+  const pinRef = useRef<HTMLDivElement>(null);
 
   return (
     <section id="hero" className={styles.hero}>
-      <div className={styles.pin}>
+      <div className={styles.pin} ref={pinRef}>
         <div className={styles.stage} ref={fieldRef}>
           {/* 분위기 층. 액센트 빛이 가로지르는 규칙선 밭 — 페이지에서 커서를
               따라가는 것이 있는 유일한 곳이다. */}
@@ -55,6 +59,7 @@ export default function HeroSection() {
             <span className={styles.grid} />
             <span className={styles.spot} />
             <span className={styles.sweep} />
+            <HeroCanvas subjectRef={pinRef} className={styles.canvas} />
           </div>
 
           <div className={styles.shell}>

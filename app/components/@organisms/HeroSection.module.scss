@@ -201,6 +201,15 @@
   }
 }
 
+// 제너레이티브 리본. 크기는 CSS가 정하고 백킹 스토어는 HeroCanvas가
+// ResizeObserver로 맞춘다. 격자 위, 스포트라이트 아래.
+.canvas {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
 // 커서를 따라간다. `--pointer-*`는 usePointerField가 쓰는데, coarse 포인터나
 // reduced-motion에서는 아예 붙지 않는다 — 그래서 opacity 기본값 0이 그
 // 사용자들에게는 영구 상태가 된다.
