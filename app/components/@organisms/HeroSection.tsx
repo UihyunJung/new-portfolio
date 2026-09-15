@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { ArrowRight } from 'lucide-react';
+import clsx from 'clsx';
 import { scrollToSection } from '@lib/scrollTo';
 import SplitText from '@components/@atoms/SplitText';
 import StatValue from '@components/@atoms/StatValue';
@@ -30,91 +31,112 @@ const NAME_STEP = 70;
 const ROLE_CUE = 470;
 const ROLE_STEP = 90;
 
+// 마크업은 세 겹이다 — 핀 컨테이너(.pin) > 스테이지(.stage) > 콘텐츠.
+// 스크롤 타임라인을 지원하는 브라우저에서 .pin이 300svh로 늘어나고 .stage가
+// 그 안에 sticky로 고정되어, 스크롤이 두 챕터와 스펙 행을 차례로 넘긴다.
+// 미지원·reduced-motion에서는 두 래퍼가 그냥 블록이라 지금 보이는 히어로
+// 그대로다. 티커는 .pin 바깥에 둔다 — 안에 두면 300svh 밖으로 밀려나
+// 히어로의 overflow: clip에 잘린다.
 export default function HeroSection() {
   const t = useTranslations('hero');
-  const fieldRef = usePointerField<HTMLElement>();
+  // 커서 스포트라이트의 기준은 섹션이 아니라 스테이지다. 핀 도중 섹션의
+  // top은 스크롤만큼 올라가지만 스테이지의 rect는 고정이라, 여기 걸어야
+  // --pointer-y가 커서 밑에 남는다.
+  const fieldRef = usePointerField<HTMLDivElement>();
   const ctaRef = useMagnetic<HTMLButtonElement>();
 
   return (
-    <section id="hero" className={styles.hero} ref={fieldRef}>
-      {/* 분위기 층. 액센트 빛이 가로지르는 규칙선 밭 — 페이지에서 커서를
-          따라가는 것이 있는 유일한 곳이다. */}
-      <div className={styles.field} aria-hidden="true">
-        <span className={styles.grid} />
-        <span className={styles.spot} />
-        <span className={styles.sweep} />
-      </div>
-
-      <div className={styles.shell}>
-        <div className={styles.lede}>
-          {/* 소제목이 아니라 인사말 — 문장 대소문자, 본문 서체, 자간 없음.
-              데이터시트를 건네기 전에 페이지가 먼저 인사해야 한다. */}
-          <p className={styles.greeting}>{t('greeting')}</p>
-
-          <h1 className={styles.name}>
-            <SplitText delay={NAME_CUE} step={NAME_STEP}>
-              {t('name')}
-            </SplitText>
-          </h1>
-
-          {/* 글자가 아니라 단어 단위로 나눈다. mono 디스플레이 크기에서 이 줄은
-              휴대폰 화면 하나 폭이라, 글자 마스크로 두면 브라우저가 단어
-              중간에서 줄을 바꾼다. */}
-          <p className={styles.role}>
-            <SplitText by="word" delay={ROLE_CUE} step={ROLE_STEP}>
-              {t('title')}
-            </SplitText>
-            <span className={styles.roleRule} aria-hidden="true" />
-          </p>
-
-          <p className={styles.description}>{t('description')}</p>
-
-          <div className={styles.actions}>
-            <button
-              type="button"
-              ref={ctaRef}
-              className={styles.primary}
-              onClick={() => scrollToSection('projects')}
-            >
-              {t('ctaProjects')}
-              <ArrowRight size={15} aria-hidden="true" />
-            </button>
-            <button
-              type="button"
-              className={styles.secondary}
-              onClick={() => scrollToSection('contact')}
-            >
-              {t('ctaContact')}
-            </button>
+    <section id="hero" className={styles.hero}>
+      <div className={styles.pin}>
+        <div className={styles.stage} ref={fieldRef}>
+          {/* 분위기 층. 액센트 빛이 가로지르는 규칙선 밭 — 페이지에서 커서를
+              따라가는 것이 있는 유일한 곳이다. */}
+          <div className={styles.field} aria-hidden="true">
+            <span className={styles.grid} />
+            <span className={styles.spot} />
+            <span className={styles.sweep} />
           </div>
-        </div>
 
-        {/* 아티팩트 슬롯. 타이포그래피 프레임 — 위 규칙선, 라벨, 아래 규칙선.
-            윈도우 크롬을 다시 그리지 않는다. 패널이 먼저 안착한 뒤 행을 차례로
-            돌린다. */}
-        <dl className={styles.spec}>
-          <div className={styles.specHead}>
-            <span className={styles.specTitle}>{t('specTitle')}</span>
-          </div>
-          {SPEC.map((row) => (
-            <div key={row.key} className={styles.specRow}>
-              <dt className={styles.specKey}>{row.key}</dt>
-              <dd className={styles.specValue}>
-                {'i18nKey' in row ? (
-                  <StatValue>{t(`spec.${row.i18nKey}`)}</StatValue>
-                ) : (
-                  row.value
-                )}
-              </dd>
+          <div className={styles.shell}>
+            {/* 두 챕터는 같은 자리에 겹친다(핀 모드에서만). 첫 챕터가 인사와
+                이름, 둘째가 설명과 CTA. 스크린 리더는 둘 다 DOM 순서대로
+                읽는다 — 숨김은 시각 층에서만 일어난다. */}
+            <div className={styles.lede}>
+              <div className={clsx(styles.chapter, styles.chapterOne)}>
+                {/* 소제목이 아니라 인사말 — 문장 대소문자, 본문 서체, 자간
+                    없음. 데이터시트를 건네기 전에 페이지가 먼저 인사해야
+                    한다. */}
+                <p className={styles.greeting}>{t('greeting')}</p>
+
+                <h1 className={styles.name}>
+                  <SplitText delay={NAME_CUE} step={NAME_STEP}>
+                    {t('name')}
+                  </SplitText>
+                </h1>
+
+                {/* 글자가 아니라 단어 단위로 나눈다. mono 디스플레이 크기에서
+                    이 줄은 휴대폰 화면 하나 폭이라, 글자 마스크로 두면
+                    브라우저가 단어 중간에서 줄을 바꾼다. */}
+                <p className={styles.role}>
+                  <SplitText by="word" delay={ROLE_CUE} step={ROLE_STEP}>
+                    {t('title')}
+                  </SplitText>
+                  <span className={styles.roleRule} aria-hidden="true" />
+                </p>
+              </div>
+
+              <div className={clsx(styles.chapter, styles.chapterTwo)}>
+                <p className={styles.description}>{t('description')}</p>
+
+                <div className={styles.actions}>
+                  <button
+                    type="button"
+                    ref={ctaRef}
+                    className={styles.primary}
+                    onClick={() => scrollToSection('projects')}
+                  >
+                    {t('ctaProjects')}
+                    <ArrowRight size={15} aria-hidden="true" />
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.secondary}
+                    onClick={() => scrollToSection('contact')}
+                  >
+                    {t('ctaContact')}
+                  </button>
+                </div>
+              </div>
             </div>
-          ))}
-        </dl>
-      </div>
 
-      <span className={styles.cue} aria-hidden="true">
-        <span className={styles.cueRail} />
-        SCROLL
-      </span>
+            {/* 아티팩트 슬롯. 타이포그래피 프레임 — 위 규칙선, 라벨, 아래
+                규칙선. 윈도우 크롬을 다시 그리지 않는다. 패널이 먼저 안착한
+                뒤 행을 차례로 돌린다. */}
+            <dl className={styles.spec}>
+              <div className={styles.specHead}>
+                <span className={styles.specTitle}>{t('specTitle')}</span>
+              </div>
+              {SPEC.map((row) => (
+                <div key={row.key} className={styles.specRow}>
+                  <dt className={styles.specKey}>{row.key}</dt>
+                  <dd className={styles.specValue}>
+                    {'i18nKey' in row ? (
+                      <StatValue>{t(`spec.${row.i18nKey}`)}</StatValue>
+                    ) : (
+                      row.value
+                    )}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          <span className={styles.cue} aria-hidden="true">
+            <span className={styles.cueRail} />
+            SCROLL
+          </span>
+        </div>
+      </div>
 
       {/* 흐르는 스택. 아래 스킬 시트의 장식적 반복이라, 두 번 읽히지 않도록
           읽기 순서에서 숨긴다. */}

@@ -51,6 +51,18 @@
   position: relative;
   isolation: isolate;
   overflow: clip;
+}
+
+// 핀 컨테이너. 기본 규칙에서는 아무것도 아닌 블록이다 — 스크롤 타임라인
+// 지원 브라우저에서만 300svh로 늘어나 스테이지를 붙든다.
+.pin {
+  position: relative;
+}
+
+// 스테이지. 밴드 패딩은 히어로가 아니라 여기 있다 — 분위기 층(.field)이
+// 스테이지 안에 살므로 패딩까지 덮어야 규칙선 밭이 위 여백에서 끊기지 않는다.
+.stage {
+  position: relative;
   @include band(var(--space-2xl), 0);
 
   @include wide {
@@ -186,6 +198,10 @@
 }
 
 .lede {
+  min-width: 0;
+}
+
+.chapter {
   min-width: 0;
 }
 
