@@ -21,6 +21,16 @@
     "specTitle": "PROFILE",
     "spec": {
       "years": "10년+"
+    },
+    "chapters": {
+      "approach": {
+        "title": "먼저 재고, 그다음 만듭니다",
+        "body": "성능과 접근성은 마지막에 붙이는 옵션이 아닙니다.\n서버 HTML로 완성되는 마크업, CSS로 움직이는 모션,\n스크린 리더로 확인한 흐름 — 이 페이지도 그렇게 만들었습니다."
+      },
+      "scale": {
+        "title": "11개 언어, 하나의 인터페이스",
+        "body": "글로벌 게임 플랫폼의 로비를 11개 언어로 운영하며,\n상태 관리부터 E2E 테스트까지 팀이 믿고 쓰는 기반을 만들어 왔습니다."
+      }
     }
   },
   "about": {
@@ -170,9 +180,9 @@
         "shots": {
           "noopdaa-blog-1": "블로그 홈",
           "noopdaa-blog-2": "포스트 목록",
-        "noopdaa-blog-3": "관리자 대시보드",
-        "noopdaa-blog-4": "포스트 에디터",
-        "noopdaa-blog-5": "방문자 통계"
+          "noopdaa-blog-3": "관리자 대시보드",
+          "noopdaa-blog-4": "포스트 에디터",
+          "noopdaa-blog-5": "방문자 통계"
         }
       }
     },

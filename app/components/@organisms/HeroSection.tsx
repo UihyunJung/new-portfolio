@@ -33,6 +33,12 @@ const NAME_STEP = 70;
 const ROLE_CUE = 470;
 const ROLE_STEP = 90;
 
+// 이름과 설명 뒤에 오는 두 장면. 문구는 메시지 파일에, 순서와 스타일은 여기에.
+const CHAPTERS = [
+  { key: 'approach', className: 'chapterThree' },
+  { key: 'scale', className: 'chapterFour' },
+] as const;
+
 // 마크업은 세 겹이다 — 핀 컨테이너(.pin) > 스테이지(.stage) > 콘텐츠.
 // 스크롤 타임라인을 지원하는 브라우저에서 .pin이 300svh로 늘어나고 .stage가
 // 그 안에 sticky로 고정되어, 스크롤이 두 챕터와 스펙 행을 차례로 넘긴다.
@@ -92,25 +98,43 @@ export default function HeroSection() {
 
               <div className={clsx(styles.chapter, styles.chapterTwo)}>
                 <p className={styles.description}>{t('description')}</p>
+              </div>
 
-                <div className={styles.actions}>
-                  <button
-                    type="button"
-                    ref={ctaRef}
-                    className={styles.primary}
-                    onClick={() => scrollToSection('projects')}
-                  >
-                    {t('ctaProjects')}
-                    <ArrowRight size={15} aria-hidden="true" />
-                  </button>
-                  <button
-                    type="button"
-                    className={styles.secondary}
-                    onClick={() => scrollToSection('contact')}
-                  >
-                    {t('ctaContact')}
-                  </button>
+              {/* 셋째·넷째 장면. 제목은 이름보다 두 단계 작은 디스플레이 —
+                  같은 자리에서 이름을 잇는 문장이지 새 섹션이 아니다. */}
+              {CHAPTERS.map((chapter) => (
+                <div
+                  key={chapter.key}
+                  className={clsx(styles.chapter, styles[chapter.className])}
+                >
+                  <h2 className={styles.chapterTitle}>
+                    {t(`chapters.${chapter.key}.title`)}
+                  </h2>
+                  <p className={styles.description}>
+                    {t(`chapters.${chapter.key}.body`)}
+                  </p>
                 </div>
+              ))}
+
+              {/* CTA는 장면에 속하지 않는다. 어느 장면에서든 한 자리에 있어야
+                  누를 수 있고, 탭 순서도 하나뿐이다. */}
+              <div className={styles.actions}>
+                <button
+                  type="button"
+                  ref={ctaRef}
+                  className={styles.primary}
+                  onClick={() => scrollToSection('projects')}
+                >
+                  {t('ctaProjects')}
+                  <ArrowRight size={15} aria-hidden="true" />
+                </button>
+                <button
+                  type="button"
+                  className={styles.secondary}
+                  onClick={() => scrollToSection('contact')}
+                >
+                  {t('ctaContact')}
+                </button>
               </div>
             </div>
 

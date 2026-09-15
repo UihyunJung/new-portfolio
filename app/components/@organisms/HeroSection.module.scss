@@ -51,9 +51,9 @@
 // 핀 스테이지
 // ============================================
 //
-// 스크롤 타임라인을 지원하는 브라우저에서 히어로는 세 장면짜리 무대가 된다.
-// .pin이 300svh로 늘어나고 .stage가 그 안에 sticky로 붙들리면, 스크롤 200svh
-// 동안 첫 챕터(인사·이름)가 물러나고 둘째 챕터(설명·CTA)가 들어오고 스펙
+// 스크롤 타임라인을 지원하는 브라우저에서 히어로는 네 장면짜리 무대가 된다.
+// .pin이 450svh로 늘어나고 .stage가 그 안에 sticky로 붙들리면, 스크롤 350svh
+// 동안 네 장면(인사·이름 → 설명 → 접근 → 규모)이 차례로 바뀌고 스펙
 // 패널의 행이 하나씩 들어온다. 전부 `--pin` 뷰 타임라인에 묶인 CSS다 —
 // 스크롤 리스너도 상태도 없다.
 //
@@ -71,12 +71,12 @@
 // (opacity 1)이 목록 뒤에 있어 들어옴의 from(opacity 0)을 덮고, 둘째 챕터가
 // 처음부터 보인다.
 //
-// 숨긴 챕터는 visibility가 아니라 pointer-events로 막는다. visibility는
+// 숨긴 장면은 visibility가 아니라 pointer-events로 막는다. visibility는
 // 접근성 트리에서도 빠지는데, 스크린 리더는 스크롤로 진행률을 바꾸지 않으니
-// 설명문과 CTA를 영영 못 만난다. opacity는 AT에 영향이 없어 DOM 순서대로
-// 전부 읽힌다. 키보드 포커스가 숨은 CTA에 닿으면 :focus-within이 그 챕터를
-// 연다 — !important는 애니메이션 값을 덮을 수 있는 유일한 캐스케이드 층이라
-// 여기서만 정당하다.
+// 뒤 장면을 영영 못 만난다. opacity는 AT에 영향이 없어 DOM 순서대로 전부
+// 읽힌다. CTA는 장면 밖에 두어 항상 한 자리에 있고, 좁은 폭에서 스펙 패널에
+// 덮일 때 키보드 포커스가 닿으면 :focus-within이 되살린다 — !important는
+// 애니메이션 값을 덮을 수 있는 유일한 캐스케이드 층이라 여기서만 정당하다.
 
 @mixin pinned {
   @include supports-scroll-timeline {
@@ -127,13 +127,13 @@
 }
 
 // 핀 컨테이너. 기본 규칙에서는 아무것도 아닌 블록이다 — 스크롤 타임라인
-// 지원 브라우저에서만 300svh로 늘어나 스테이지를 붙든다. 티커는 이 밖에
-// 있다. 안에 두면 300svh 아래로 밀려 히어로의 clip에 잘린다.
+// 지원 브라우저에서만 450svh로 늘어나 스테이지를 붙든다. 티커는 이 밖에
+// 있다. 안에 두면 450svh 아래로 밀려 히어로의 clip에 잘린다.
 .pin {
   position: relative;
 
   @include pinned {
-    block-size: 300svh;
+    block-size: 450svh;
     view-timeline-name: --pin;
     view-timeline-axis: block;
   }
@@ -297,7 +297,7 @@
     gap: var(--space-2xl);
   }
 
-  // 핀 모드의 좁은 폭에서는 스펙 패널이 셋째 챕터가 되어 리드와 같은 칸에
+  // 핀 모드의 좁은 폭에서는 스펙 패널이 마지막 장면이 되어 리드와 같은 칸에
   // 겹친다. 스테이지 한 화면에 리드와 패널을 같이 세울 높이가 없다.
   @include pinned {
     > * {
@@ -320,54 +320,44 @@
   }
 }
 
-// 두 챕터가 같은 칸에 겹친다. 가장 긴 챕터가 리드의 높이를 정하므로
+// 네 장면이 같은 칸에 겹친다. 가장 긴 장면이 리드의 높이를 정하므로
 // 스테이지 높이는 여전히 콘텐츠에서 온다 — 절대 배치였다면 0이 된다.
+// 장면 안에는 포커스 가능한 것이 없다. CTA는 장면 밖 .actions에 있다.
 .chapter {
   min-width: 0;
+
+  & + & {
+    margin-block-start: var(--space-lg);
+  }
 
   @include pinned {
     grid-area: 1 / 1;
     align-self: start;
 
-    &:focus-within {
-      opacity: 1 !important;
-      transform: none !important;
-      pointer-events: auto !important;
+    & + & {
+      margin-block-start: 0;
     }
   }
 }
 
-// 포커스로 열린 챕터가 있으면 나머지를 접는다. 안 그러면 두 챕터가 겹쳐 보인다.
-.lede:has(.chapter:focus-within) .chapter:not(:focus-within) {
-  @include pinned {
-    opacity: 0 !important;
-  }
-}
-
-// 좁은 폭에서는 스펙 패널도 같은 칸에 있으므로 함께 접는다. lg부터는 패널이
-// 제 열에 있어 접을 이유가 없다 — 사이트의 유일한 max-width 질의인 이유.
-.shell:has(.chapter:focus-within) .spec {
-  @include pinned {
-    @media (width < #{$breakpoint-lg}) {
-      opacity: 0 !important;
-    }
-  }
-}
+// ---- 장면 순서 --------------------------------------------------------
+// 스크럽 350svh를 넷이 나눠 갖는다. 전환 하나가 12%(약 42vh)이고 장면마다
+// 8%(약 28vh)를 머문다 — 한 휠 틱에 장면이 바뀌면 읽기 전에 지나간다.
+// 넓은 폭에서는 마지막 장면이 물러나지 않는다. 물러나면 남은 스크럽 동안
+// 왼쪽 열이 비고 스테이지가 풀리는 순간 글이 없다.
 
 .chapterOne {
   @include pinned {
     animation: chapter-out linear forwards;
     animation-timeline: --pin;
-    animation-range: contain 18% contain 28%;
+    animation-range: contain 6% contain 16%;
 
     @include lg {
-      animation-range: contain 22% contain 32%;
+      animation-range: contain 10% contain 22%;
     }
   }
 }
 
-// 넓은 폭에서는 둘째 챕터가 물러나지 않는다. 물러나면 남은 스크럽 동안
-// 왼쪽 열이 비고, 스테이지가 풀리는 순간 CTA가 화면에 없다.
 .chapterTwo {
   @include pinned {
     animation:
@@ -375,15 +365,58 @@
       chapter-out linear forwards;
     animation-timeline: --pin;
     animation-range:
-      contain 26% contain 36%,
-      contain 52% contain 60%;
+      contain 14% contain 24%,
+      contain 30% contain 38%;
+
+    @include lg {
+      animation-range:
+        contain 20% contain 32%,
+        contain 40% contain 52%;
+    }
+  }
+}
+
+.chapterThree {
+  @include pinned {
+    animation:
+      chapter-in linear both,
+      chapter-out linear forwards;
+    animation-timeline: --pin;
+    animation-range:
+      contain 36% contain 46%,
+      contain 50% contain 58%;
+
+    @include lg {
+      animation-range:
+        contain 50% contain 62%,
+        contain 70% contain 82%;
+    }
+  }
+}
+
+.chapterFour {
+  @include pinned {
+    animation:
+      chapter-in linear both,
+      chapter-out linear forwards;
+    animation-timeline: --pin;
+    animation-range:
+      contain 56% contain 66%,
+      contain 68% contain 74%;
 
     @include lg {
       animation: chapter-in linear both;
       animation-timeline: --pin;
-      animation-range: contain 32% contain 42%;
+      animation-range: contain 80% contain 90%;
     }
   }
+}
+
+// 이름보다 두 단계 작은 디스플레이. 같은 자리에서 이름을 잇는 문장이라
+// 섹션 제목의 여백(section-heading)은 쓰지 않는다.
+.chapterTitle {
+  @include display(var(--text-display-s));
+  margin-block-end: var(--space-sm);
 }
 
 .greeting {
@@ -455,6 +488,9 @@
   }
 }
 
+// 장면 스택 아래의 고정 행. 장면이 바뀌어도 CTA는 같은 자리에 있다.
+// 좁은 폭에서는 스펙 패널이 이 칸을 덮으므로 마지막 장면과 같이 물러나고,
+// 키보드 포커스가 닿으면 되살아난다(그때 패널은 아래에서 접힌다).
 .actions {
   display: flex;
   flex-wrap: wrap;
@@ -464,7 +500,31 @@
   @include enter(rise-in, var(--dur-long), 1.14s);
 
   @include pinned {
-    animation: none;
+    grid-area: 2 / 1;
+    animation: chapter-out linear forwards;
+    animation-timeline: --pin;
+    animation-range: contain 68% contain 74%;
+
+    &:focus-within {
+      opacity: 1 !important;
+      transform: none !important;
+      pointer-events: auto !important;
+    }
+
+    @include lg {
+      animation: none;
+    }
+  }
+}
+
+// 좁은 폭에서 CTA가 포커스로 되살아나면 같은 칸의 스펙 패널을 접는다.
+// lg부터는 패널이 제 열에 있어 접을 이유가 없다 — 사이트의 유일한 max-width
+// 질의인 이유.
+.shell:has(.actions:focus-within) .spec {
+  @include pinned {
+    @media (width < #{$breakpoint-lg}) {
+      opacity: 0 !important;
+    }
   }
 }
 
@@ -612,10 +672,10 @@
   @include pinned {
     animation: chapter-in linear both;
     animation-timeline: --pin;
-    animation-range: contain 56% contain 62%;
+    animation-range: contain 72% contain 78%;
 
     @include lg {
-      animation-range: contain 38% contain 46%;
+      animation-range: contain 26% contain 36%;
     }
   }
 }
@@ -668,10 +728,10 @@
     // 퍼센트 값을 먼저 변수에 담는다. `#{...}%` 보간은 뒤따르는 `contain`을
     // 나머지 연산으로 읽고, 식을 보간 안에 두면 Prettier가 여러 줄로 쪼갠다.
     @for $i from 1 through 5 {
-      $from: (60 + ($i - 1) * 5) * 1%;
-      $to: (66 + ($i - 1) * 5) * 1%;
-      $from-lg: (42 + ($i - 1) * 8) * 1%;
-      $to-lg: (50 + ($i - 1) * 8) * 1%;
+      $from: (74 + ($i - 1) * 3) * 1%;
+      $to: (80 + ($i - 1) * 3) * 1%;
+      $from-lg: (32 + ($i - 1) * 8) * 1%;
+      $to-lg: (40 + ($i - 1) * 8) * 1%;
 
       &:nth-child(#{$i + 1}) {
         animation-delay: 0ms;
