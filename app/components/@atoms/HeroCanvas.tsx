@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, type RefObject } from 'react';
+import { useCallback, useEffect, useRef, type RefObject } from 'react';
 import { drawRibbon, type RibbonPalette } from '@lib/ribbon';
 import useScrollProgress from '@hooks/useScrollProgress';
 
@@ -85,7 +85,13 @@ export default function HeroCanvas({ subjectRef, className }: HeroCanvasProps) {
     };
   }, []);
 
-  useScrollProgress(subjectRef, (next) => renderRef.current(next));
+  // 콜백 참조를 고정한다. 매 렌더 새 함수를 넘기면 진행률 훅이 리스너를
+  // 떼었다 붙이는데, 그 훅의 약속이 "스크롤 밖에서는 아무 일도 안 한다"다.
+  const handleProgress = useCallback((next: number) => {
+    renderRef.current(next);
+  }, []);
+
+  useScrollProgress(subjectRef, handleProgress);
 
   return <canvas ref={canvasRef} className={className} aria-hidden="true" />;
 }

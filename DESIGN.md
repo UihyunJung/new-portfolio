@@ -118,11 +118,20 @@ Wanted Sans가 받으므로 한영이 섞인 제목도 하나의 목소리로 �
    기록되므로, 페이드인 진입은 하이드레이션 전까지(실패하면 영구히) 콘텐츠를
    안 보이게 만든다. 히어로의 CTA가 실제로 그렇게 사라졌었다.
 
+같은 이유로 **스크롤이 넘기는 챕터는 `visibility`가 아니라 `opacity` +
+`pointer-events`로 숨긴다.** `visibility`는 접근성 트리에서도 빠지는데,
+스크린 리더는 스크롤로 진행률을 바꾸지 않으니 숨은 챕터를 영영 못 만난다.
+키보드 포커스가 숨은 컨트롤에 닿으면 `:focus-within`이 그 챕터를 연다.
+
 ### 층
 
 - **스크롤 연동** — `animation-timeline: view()` / `scroll(root)`.
-  `@utilities/_mixins.scss`의 스크롤 구동 믹스인을 쓴다. 스크롤 리스너도
-  IntersectionObserver도 없다.
+  `@utilities/_mixins.scss`의 스크롤 구동 믹스인을 쓴다. 히어로의 핀
+  스테이지(300svh, 세 챕터, 프로필 행, 진행 레일)도 `--pin` 뷰 타임라인에
+  묶인 CSS다. 스크롤 모션을 JS로 구동하는 곳은 **`HeroCanvas` 하나뿐**이다 —
+  CSS 타임라인이 canvas에 닿지 않아서이고, 그래서 상시 rAF 루프 없이 스크롤
+  프레임에만 그리며, 핀 여부는 CSS 가드가 정한 계산값을 읽기만 하고, 콘텐츠를
+  숨기지 않는다. 다른 곳에 복제하지 말 것.
 - **로드 진입** — 히어로만. `SplitText`의 글자 단위 상승과 블록 큐.
 - **포인터** — 자석 CTA(`useMagnetic`)와 커서 스포트라이트(`usePointerField`).
   둘 다 CSS 커스텀 프로퍼티만 쓰고 리렌더를 일으키지 않으며, coarse
