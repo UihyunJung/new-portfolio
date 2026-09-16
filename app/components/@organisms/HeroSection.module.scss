@@ -343,11 +343,38 @@
 // 넓은 폭에서는 마지막 장면이 물러나지 않는다. 물러나면 남은 스크럽 동안
 // 왼쪽 열이 비고 스테이지가 풀리는 순간 글이 없다.
 //
-// 들어옴과 나감, 애니메이션이 둘 붙는 요소는 `animation-duration: auto`를
-// 반드시 다시 쓴다. 빌드의 CSS 최소화가 다중 쇼트핸드를 펼치면서 지속시간
-// 기본값을 `auto`가 아니라 `0s`로 채우고, 스크롤 타임라인에서 0s는 범위를
-// 무시하고 즉시 끝나는 애니메이션이다 — 장면이 페이드 없이 확 나타났다
-// 사라진 원인. 애니메이션이 하나인 요소는 `auto`가 살아 있어 문제없다.
+// **요소 하나에 스크롤 애니메이션은 하나만.** 들어옴과 나감을 따로 붙였다가
+// 두 브라우저에서 두 번 깨졌다. 빌드의 CSS 최소화가 다중 `animation`
+// 쇼트핸드를 펼치면서 지속시간을 `auto`가 아니라 `0s`로 채우고(스크롤
+// 타임라인에서 0s는 범위를 무시하고 즉시 끝난다), 그걸 `animation-duration:
+// auto, auto`로 덮으니 Chrome은 살았지만 iOS WebKit은 `auto`를 거부해 `0s`가
+// 되살아나 장면 넷이 한꺼번에 겹쳐 보였다. 항목이 하나인 쇼트핸드는 최소화가
+// 지속시간을 건드리지 않아 어느 브라우저에서도 그대로 동작한다.
+//
+// 그래서 들어옴·유지·나감이 한 키프레임(scene-cycle)이고 범위 하나가 장면
+// 전체를 덮는다. 전환은 범위의 21%씩, 유지가 58%다 — 범위 38%(데스크톱)면
+// 전환 8%, 유지 22%가 된다.
+
+@keyframes scene-cycle {
+  0% {
+    opacity: 0;
+    transform: translateY(26px);
+    pointer-events: none;
+  }
+
+  21%,
+  79% {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-26px);
+    pointer-events: none;
+  }
+}
 
 .chapterOne {
   @include pinned {
@@ -363,56 +390,36 @@
 
 .chapterTwo {
   @include pinned {
-    animation:
-      chapter-in linear both,
-      chapter-out linear forwards;
-    animation-duration: auto, auto;
+    animation: scene-cycle linear both;
     animation-timeline: --pin;
-    animation-range:
-      contain 8% contain 14%,
-      contain 30% contain 36%;
+    animation-range: contain 8% contain 36%;
 
     @include lg {
-      animation-range:
-        contain 10% contain 18%,
-        contain 40% contain 48%;
+      animation-range: contain 10% contain 48%;
     }
   }
 }
 
 .chapterThree {
   @include pinned {
-    animation:
-      chapter-in linear both,
-      chapter-out linear forwards;
-    animation-duration: auto, auto;
+    animation: scene-cycle linear both;
     animation-timeline: --pin;
-    animation-range:
-      contain 34% contain 40%,
-      contain 56% contain 62%;
+    animation-range: contain 34% contain 62%;
 
     @include lg {
-      animation-range:
-        contain 46% contain 54%,
-        contain 76% contain 84%;
+      animation-range: contain 46% contain 84%;
     }
   }
 }
 
 .chapterFour {
   @include pinned {
-    animation:
-      chapter-in linear both,
-      chapter-out linear forwards;
-    animation-duration: auto, auto;
+    animation: scene-cycle linear both;
     animation-timeline: --pin;
-    animation-range:
-      contain 60% contain 66%,
-      contain 76% contain 81%;
+    animation-range: contain 60% contain 81%;
 
     @include lg {
       animation: chapter-in linear both;
-      animation-duration: auto;
       animation-timeline: --pin;
       animation-range: contain 82% contain 90%;
     }
@@ -785,18 +792,14 @@
     animation: none;
   }
 
-  // 스테이지 하단 행에 앉고, 스크럽이 끝나갈 때 물러난다.
+  // 스테이지 하단 행에 앉고, 스크럽이 끝나갈 때 물러난다. 로드 진입(cue-in)은
+  // 여기서 포기한다 — 스크롤 애니메이션과 한 목록에 두면 지속시간이 깨진다
+  // (장면 순서 주석). 레일의 틱과 라벨의 숨쉬기가 첫 화면의 움직임을 맡는다.
   @include pinned {
     margin-block-start: 0;
-    animation:
-      cue-in var(--dur-long) var(--ease-out) 1.6s both,
-      chapter-out linear forwards;
-    // 둘째 항목의 auto가 0s로 굳는 문제 — 장면 순서 주석 참고.
-    animation-duration: var(--dur-long), auto;
-    animation-timeline: auto, --pin;
-    animation-range:
-      normal,
-      contain 88% contain 96%;
+    animation: chapter-out linear forwards;
+    animation-timeline: --pin;
+    animation-range: contain 88% contain 96%;
   }
 }
 
