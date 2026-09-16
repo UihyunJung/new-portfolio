@@ -10,8 +10,9 @@ import { useEffect, type RefObject } from 'react';
  * 이 훅이 이 사이트에서 스크롤로 모션을 구동하는 유일한 JS다. 캔버스에는
  * CSS 타임라인이 닿지 않아서이고, 그래서 세 가지를 지킨다.
  *
- * - 상시 rAF 루프가 없다. scroll·resize 이벤트를 프레임 하나로 모아 그때만
- *   부른다(usePointerField와 같은 게이트). 스크롤이 멈추면 아무것도 안 한다.
+ * - 이 훅 자체는 루프를 돌리지 않는다. scroll·resize 이벤트를 프레임 하나로
+ *   모아 그때만 부른다(usePointerField와 같은 게이트). 캔버스의 앰비언트
+ *   루프는 HeroCanvas가 화면에 있을 때만 따로 돌린다.
  * - 핀 여부는 JS가 정하지 않는다. CSS 가드(@supports, reduced-motion,
  *   min-height)가 정한 결과를 `view-timeline-name` 계산값으로 읽을 뿐이다.
  *   핀이 아니면 p=0 한 번만 넘기고 끝난다.

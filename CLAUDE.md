@@ -86,9 +86,9 @@ npm run start      # 프로덕션 서버
    안 보이게 만든다
 
 유일한 JS 스크롤 모션은 히어로의 `HeroCanvas`(`useScrollProgress` +
-`app/lib/ribbon.ts`)다. 상시 rAF 루프 없이 스크롤 프레임에만 그리고, 핀
-여부는 CSS 가드의 계산값을 읽는다. 히어로 핀 스테이지의 규칙(contain 범위,
-both/forwards, pointer-events)은 `HeroSection.module.scss` 헤더 주석에 있다.
+`app/lib/ribbon.ts`)다. 스크롤 진행률·시간·커서로 그리는 rAF 루프가 있지만
+히어로가 화면에 있을 때만 돌고, 핀 여부는 CSS 가드의 계산값을 읽는다.
+히어로 핀 스테이지의 규칙(contain 범위, both/forwards, pointer-events)은 `HeroSection.module.scss` 헤더 주석에 있다.
 
 ### 데이터
 
