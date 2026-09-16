@@ -1,10 +1,6 @@
 @use '../../assets/styles/@utilities/mixins' as *;
 @use '../../assets/styles/@tokens/breakpoints' as *;
 
-// 큐 레일이 핀 모드에서 진행 표시가 될 때 쓰는 rail-draw. 같이 나오는
-// rule-draw는 이 모듈에서 쓰지 않는다.
-@include rule-keyframes;
-
 // ============================================
 // 로드 진입
 // ============================================
@@ -52,7 +48,7 @@
 // ============================================
 //
 // 스크롤 타임라인을 지원하는 브라우저에서 히어로는 네 장면짜리 무대가 된다.
-// .pin이 450svh로 늘어나고 .stage가 그 안에 sticky로 붙들리면, 스크롤 350svh
+// .pin이 500svh로 늘어나고 .stage가 그 안에 sticky로 붙들리면, 스크롤 400svh
 // 동안 네 장면(인사·이름 → 설명 → 접근성 → 지속성)이 차례로 바뀌고 스펙
 // 패널의 행이 하나씩 들어온다. 전부 `--pin` 뷰 타임라인에 묶인 CSS다 —
 // 스크롤 리스너도 상태도 없다.
@@ -127,13 +123,13 @@
 }
 
 // 핀 컨테이너. 기본 규칙에서는 아무것도 아닌 블록이다 — 스크롤 타임라인
-// 지원 브라우저에서만 450svh로 늘어나 스테이지를 붙든다. 티커는 이 밖에
-// 있다. 안에 두면 450svh 아래로 밀려 히어로의 clip에 잘린다.
+// 지원 브라우저에서만 500svh로 늘어나 스테이지를 붙든다. 티커는 이 밖에
+// 있다. 안에 두면 500svh 아래로 밀려 히어로의 clip에 잘린다.
 .pin {
   position: relative;
 
   @include pinned {
-    block-size: 450svh;
+    block-size: 500svh;
     view-timeline-name: --pin;
     view-timeline-axis: block;
   }
@@ -341,8 +337,9 @@
 }
 
 // ---- 장면 순서 --------------------------------------------------------
-// 스크럽 350svh를 넷이 나눠 갖는다. 전환 하나가 12%(약 42vh)이고 장면마다
-// 8%(약 28vh)를 머문다 — 한 휠 틱에 장면이 바뀌면 읽기 전에 지나간다.
+// 스크럽 400svh를 넷이 나눠 갖는다. 전환 하나가 10%(약 40vh)이고 장면마다
+// 14%(약 56vh)를 머문다 — 들어오자마자 나가면 읽을 시간이 없고, 한 휠 틱에
+// 장면이 바뀌면 읽기 전에 지나간다.
 // 넓은 폭에서는 마지막 장면이 물러나지 않는다. 물러나면 남은 스크럽 동안
 // 왼쪽 열이 비고 스테이지가 풀리는 순간 글이 없다.
 //
@@ -356,10 +353,10 @@
   @include pinned {
     animation: chapter-out linear forwards;
     animation-timeline: --pin;
-    animation-range: contain 6% contain 16%;
+    animation-range: contain 4% contain 12%;
 
     @include lg {
-      animation-range: contain 10% contain 22%;
+      animation-range: contain 4% contain 14%;
     }
   }
 }
@@ -372,13 +369,13 @@
     animation-duration: auto, auto;
     animation-timeline: --pin;
     animation-range:
-      contain 14% contain 24%,
-      contain 30% contain 38%;
+      contain 10% contain 18%,
+      contain 28% contain 36%;
 
     @include lg {
       animation-range:
-        contain 20% contain 32%,
-        contain 40% contain 52%;
+        contain 12% contain 22%,
+        contain 36% contain 46%;
     }
   }
 }
@@ -391,13 +388,13 @@
     animation-duration: auto, auto;
     animation-timeline: --pin;
     animation-range:
-      contain 36% contain 46%,
-      contain 50% contain 58%;
+      contain 34% contain 42%,
+      contain 52% contain 60%;
 
     @include lg {
       animation-range:
-        contain 50% contain 62%,
-        contain 70% contain 82%;
+        contain 44% contain 54%,
+        contain 68% contain 78%;
     }
   }
 }
@@ -410,14 +407,14 @@
     animation-duration: auto, auto;
     animation-timeline: --pin;
     animation-range:
-      contain 56% contain 66%,
-      contain 68% contain 74%;
+      contain 58% contain 66%,
+      contain 74% contain 80%;
 
     @include lg {
       animation: chapter-in linear both;
       animation-duration: auto;
       animation-timeline: --pin;
-      animation-range: contain 80% contain 90%;
+      animation-range: contain 76% contain 86%;
     }
   }
 }
@@ -525,7 +522,7 @@
     grid-area: 2 / 1;
     animation: chapter-out linear forwards;
     animation-timeline: --pin;
-    animation-range: contain 68% contain 74%;
+    animation-range: contain 74% contain 80%;
 
     &:focus-within {
       opacity: 1 !important;
@@ -694,10 +691,10 @@
   @include pinned {
     animation: chapter-in linear both;
     animation-timeline: --pin;
-    animation-range: contain 72% contain 78%;
+    animation-range: contain 78% contain 84%;
 
     @include lg {
-      animation-range: contain 26% contain 36%;
+      animation-range: contain 16% contain 24%;
     }
   }
 }
@@ -750,10 +747,10 @@
     // 퍼센트 값을 먼저 변수에 담는다. `#{...}%` 보간은 뒤따르는 `contain`을
     // 나머지 연산으로 읽고, 식을 보간 안에 두면 Prettier가 여러 줄로 쪼갠다.
     @for $i from 1 through 5 {
-      $from: (74 + ($i - 1) * 3) * 1%;
-      $to: (80 + ($i - 1) * 3) * 1%;
-      $from-lg: (32 + ($i - 1) * 8) * 1%;
-      $to-lg: (40 + ($i - 1) * 8) * 1%;
+      $from: (80 + ($i - 1) * 2.5) * 1%;
+      $to: (85 + ($i - 1) * 2.5) * 1%;
+      $from-lg: (22 + ($i - 1) * 8) * 1%;
+      $to-lg: (30 + ($i - 1) * 8) * 1%;
 
       &:nth-child(#{$i + 1}) {
         animation-delay: 0ms;
@@ -822,8 +819,9 @@
   }
 }
 
-// 핀 모드에서 레일은 안내가 아니라 진행 표시다 — 2rem 높이가 스크럽 전체이고
-// 액센트가 위에서부터 채워진다.
+// 레일은 핀 모드에서도 진행 표시가 아니라 안내다. 스크럽 진행률은 상단 바의
+// 문서 진행 바가 이미 보여 주고, 같은 정보를 두 곳에 두면 둘 다 흐려진다.
+// 틱이 2.2초에 한 번 위에서 아래로 흘러 "이 방향으로"를 말한다.
 .cueRail {
   position: relative;
   flex: none;
@@ -847,16 +845,16 @@
       inset-block-start: 0;
     }
   }
+}
 
-  @include pinned {
-    &::after {
-      inset-block-start: 0;
-      block-size: 100%;
-      transform-origin: top;
-      animation: rail-draw linear both;
-      animation-timeline: --pin;
-      animation-range: contain 0% contain 92%;
-    }
+// 라벨은 muted가 아니라 ink-2로 한 단계 올리고, 틱과 같은 박자로 숨을 쉰다.
+// 틱이 레일 아래에 닿는 순간 글자가 가장 밝다 — 둘이 한 몸으로 읽힌다.
+.cueText {
+  color: var(--color-ink-2);
+  animation: cue-breathe 2.2s var(--ease-in-out) infinite;
+
+  @include reduced-motion {
+    animation: none;
   }
 }
 
@@ -867,6 +865,17 @@
 
   to {
     transform: translateY(240%);
+  }
+}
+
+@keyframes cue-breathe {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+
+  60% {
+    opacity: 1;
   }
 }
 

@@ -164,7 +164,7 @@ export default function HeroSection() {
 
           <span className={styles.cue} aria-hidden="true">
             <span className={styles.cueRail} />
-            SCROLL
+            <span className={styles.cueText}>SCROLL</span>
           </span>
         </div>
       </div>
