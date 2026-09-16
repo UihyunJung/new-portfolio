@@ -48,7 +48,7 @@
 // ============================================
 //
 // 스크롤 타임라인을 지원하는 브라우저에서 히어로는 네 장면짜리 무대가 된다.
-// .pin이 500svh로 늘어나고 .stage가 그 안에 sticky로 붙들리면, 스크롤 400svh
+// .pin이 600svh로 늘어나고 .stage가 그 안에 sticky로 붙들리면, 스크롤 500svh
 // 동안 네 장면(인사·이름 → 설명 → 접근성 → 지속성)이 차례로 바뀌고 스펙
 // 패널의 행이 하나씩 들어온다. 전부 `--pin` 뷰 타임라인에 묶인 CSS다 —
 // 스크롤 리스너도 상태도 없다.
@@ -123,13 +123,13 @@
 }
 
 // 핀 컨테이너. 기본 규칙에서는 아무것도 아닌 블록이다 — 스크롤 타임라인
-// 지원 브라우저에서만 500svh로 늘어나 스테이지를 붙든다. 티커는 이 밖에
-// 있다. 안에 두면 500svh 아래로 밀려 히어로의 clip에 잘린다.
+// 지원 브라우저에서만 600svh로 늘어나 스테이지를 붙든다. 티커는 이 밖에
+// 있다. 안에 두면 600svh 아래로 밀려 히어로의 clip에 잘린다.
 .pin {
   position: relative;
 
   @include pinned {
-    block-size: 500svh;
+    block-size: 600svh;
     view-timeline-name: --pin;
     view-timeline-axis: block;
   }
@@ -337,8 +337,8 @@
 }
 
 // ---- 장면 순서 --------------------------------------------------------
-// 스크럽 400svh를 넷이 나눠 갖는다. 전환 하나가 10%(약 40vh)이고 장면마다
-// 14%(약 56vh)를 머문다 — 들어오자마자 나가면 읽을 시간이 없고, 한 휠 틱에
+// 스크럽 500svh를 넷이 나눠 갖는다. 전환 하나가 8%(약 40vh)이고 장면마다
+// 22%(약 110vh)를 머문다 — 들어오자마자 나가면 읽을 시간이 없고, 한 휠 틱에
 // 장면이 바뀌면 읽기 전에 지나간다.
 // 넓은 폭에서는 마지막 장면이 물러나지 않는다. 물러나면 남은 스크럽 동안
 // 왼쪽 열이 비고 스테이지가 풀리는 순간 글이 없다.
@@ -353,10 +353,10 @@
   @include pinned {
     animation: chapter-out linear forwards;
     animation-timeline: --pin;
-    animation-range: contain 4% contain 12%;
+    animation-range: contain 4% contain 10%;
 
     @include lg {
-      animation-range: contain 4% contain 14%;
+      animation-range: contain 4% contain 12%;
     }
   }
 }
@@ -369,13 +369,13 @@
     animation-duration: auto, auto;
     animation-timeline: --pin;
     animation-range:
-      contain 10% contain 18%,
-      contain 28% contain 36%;
+      contain 8% contain 14%,
+      contain 30% contain 36%;
 
     @include lg {
       animation-range:
-        contain 12% contain 22%,
-        contain 36% contain 46%;
+        contain 10% contain 18%,
+        contain 40% contain 48%;
     }
   }
 }
@@ -388,13 +388,13 @@
     animation-duration: auto, auto;
     animation-timeline: --pin;
     animation-range:
-      contain 34% contain 42%,
-      contain 52% contain 60%;
+      contain 34% contain 40%,
+      contain 56% contain 62%;
 
     @include lg {
       animation-range:
-        contain 44% contain 54%,
-        contain 68% contain 78%;
+        contain 46% contain 54%,
+        contain 76% contain 84%;
     }
   }
 }
@@ -407,27 +407,15 @@
     animation-duration: auto, auto;
     animation-timeline: --pin;
     animation-range:
-      contain 58% contain 66%,
-      contain 74% contain 80%;
+      contain 60% contain 66%,
+      contain 76% contain 81%;
 
     @include lg {
       animation: chapter-in linear both;
       animation-duration: auto;
       animation-timeline: --pin;
-      animation-range: contain 76% contain 86%;
+      animation-range: contain 82% contain 90%;
     }
-  }
-}
-
-// 둘째 장면의 설명문은 제목 없이 혼자 서므로 본문보다 한 단계 크게 —
-// 이름 다음에 오는 첫 문장이 본문 크기면 장면이 아니라 각주로 읽힌다.
-.lead {
-  font-size: var(--text-lg);
-  line-height: var(--leading-relaxed);
-  color: var(--color-ink);
-
-  @include md {
-    font-size: var(--text-xl);
   }
 }
 
@@ -522,7 +510,7 @@
     grid-area: 2 / 1;
     animation: chapter-out linear forwards;
     animation-timeline: --pin;
-    animation-range: contain 74% contain 80%;
+    animation-range: contain 76% contain 81%;
 
     &:focus-within {
       opacity: 1 !important;
@@ -691,10 +679,10 @@
   @include pinned {
     animation: chapter-in linear both;
     animation-timeline: --pin;
-    animation-range: contain 78% contain 84%;
+    animation-range: contain 79% contain 84%;
 
     @include lg {
-      animation-range: contain 16% contain 24%;
+      animation-range: contain 14% contain 22%;
     }
   }
 }
@@ -747,10 +735,10 @@
     // 퍼센트 값을 먼저 변수에 담는다. `#{...}%` 보간은 뒤따르는 `contain`을
     // 나머지 연산으로 읽고, 식을 보간 안에 두면 Prettier가 여러 줄로 쪼갠다.
     @for $i from 1 through 5 {
-      $from: (80 + ($i - 1) * 2.5) * 1%;
+      $from: (81 + ($i - 1) * 2.5) * 1%;
       $to: (85 + ($i - 1) * 2.5) * 1%;
-      $from-lg: (22 + ($i - 1) * 8) * 1%;
-      $to-lg: (30 + ($i - 1) * 8) * 1%;
+      $from-lg: (20 + ($i - 1) * 7) * 1%;
+      $to-lg: (27 + ($i - 1) * 7) * 1%;
 
       &:nth-child(#{$i + 1}) {
         animation-delay: 0ms;

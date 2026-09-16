@@ -97,9 +97,10 @@ export default function HeroSection() {
               </div>
 
               <div className={clsx(styles.chapter, styles.chapterTwo)}>
-                <p className={clsx(styles.description, styles.lead)}>
-                  {t('description')}
-                </p>
+                <h2 className={styles.chapterTitle}>
+                  {t('chapters.intro.title')}
+                </h2>
+                <p className={styles.description}>{t('description')}</p>
               </div>
 
               {/* 셋째·넷째 장면. 제목은 이름보다 두 단계 작은 디스플레이 —
