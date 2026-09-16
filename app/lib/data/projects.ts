@@ -159,7 +159,7 @@ export const projects: Project[] = [
       { id: 'noopdaa-blog-5', width: 1000, height: 856 },
     ],
     links: {
-      github: 'https://github.com/UihyunJung/noopdaa-blog',
+      live: 'https://noopdaa.com',
     },
   },
 ];
