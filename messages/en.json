@@ -24,12 +24,12 @@
     },
     "chapters": {
       "approach": {
-        "title": "Measure first, then build",
-        "body": "Performance and accessibility are not add-ons.\nMarkup complete as server HTML, motion that runs in CSS,\nflows checked with a screen reader — this page is built that way."
+        "title": "Fast, and within everyone’s reach",
+        "body": "Performance and accessibility are not add-ons.\nMarkup that arrives complete from the server, motion that runs in CSS,\nflows checked to the end with a keyboard and a screen reader — that is the baseline."
       },
       "scale": {
-        "title": "Eleven languages, one interface",
-        "body": "Running a global game platform lobby in 11 languages,\nI build the groundwork a team can trust, from state management to end-to-end tests."
+        "title": "Code that lasts",
+        "body": "From state-management architecture to end-to-end tests,\nI spend my time on foundations the next person can pick up without a wobble."
       }
     }
   },
