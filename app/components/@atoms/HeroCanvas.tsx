@@ -225,7 +225,10 @@ function readPalette(el: Element): RibbonPalette {
 let probe: OffscreenCanvasRenderingContext2D | null | undefined;
 
 function toRgb(css: string): Rgb {
-  probe ??= new OffscreenCanvas(1, 1).getContext('2d');
+  // 읽기 전용 프로브라 CPU 쪽에 두는 편이 빠르다. 없으면 Chrome이 콘솔에 힌트를 낸다.
+  probe ??= new OffscreenCanvas(1, 1).getContext('2d', {
+    willReadFrequently: true,
+  });
   const ctx = probe;
   if (!ctx) return [96, 128, 255];
   ctx.clearRect(0, 0, 1, 1);
