@@ -11,7 +11,8 @@
  * 모션 (Kinetic Cobalt)
  *   로드    히어로만. SplitText의 글자 단위 상승 + 블록 큐. 전부 CSS 키프레임.
  *   스크롤  animation-timeline: view() / scroll(root). @utilities/_mixins.scss의
- *           스크롤 구동 믹스인을 쓴다. 스크롤 리스너도 옵저버도 없다.
+ *           스크롤 구동 믹스인을 쓴다. 히어로 핀 스테이지도 --pin 뷰 타임라인의
+ *           CSS다. JS 모션은 히어로 캔버스 하나뿐(화면에 있을 때만 도는 루프).
  *   포인터  히어로의 자석 CTA와 커서 스포트라이트(fine 포인터에만), 인덱스 틱,
  *           도착하는 물체의 스프링.
  *   원칙    JS로 콘텐츠를 숨기지 않는다. reduced-motion이나 스크롤 타임라인

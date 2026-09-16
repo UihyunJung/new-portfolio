@@ -42,7 +42,8 @@ npm run start      # 프로덕션 서버
 
 ### 컴포넌트 구조 (Atomic Design)
 
-- `@atoms/` — ScrollToTop, SectionHeading, SectionWrapper, SplitText, StatValue
+- `@atoms/` — HeroCanvas, ScrollToTop, SectionHeading, SectionWrapper,
+  SplitText, StatValue
 - `@molecules/` — ExperienceCard, ProjectCard, ProjectShots, PublishingLedger
 - `@organisms/` — Hero / About / Skills / Experience / Projects / Contact 섹션
 - `@layout/` — Header, Footer, ThemeProvider, ThemeToggle, LocaleSwitcher
@@ -84,6 +85,11 @@ npm run start      # 프로덕션 서버
    기록되므로, 페이드인 진입은 하이드레이션 전까지(실패하면 영구히) 콘텐츠를
    안 보이게 만든다
 
+유일한 JS 스크롤 모션은 히어로의 `HeroCanvas`(`useScrollProgress` +
+`app/lib/ribbon.ts`)다. 스크롤 진행률·시간·커서로 그리는 rAF 루프가 있지만
+히어로가 화면에 있을 때만 돌고, 핀 여부는 CSS 가드의 계산값을 읽는다.
+히어로 핀 스테이지의 규칙(contain 범위, both/forwards, pointer-events)은 `HeroSection.module.scss` 헤더 주석에 있다.
+
 ### 데이터
 
 정적 데이터는 `app/lib/data/`에 TypeScript 인터페이스와 함께 정의 —
@@ -96,8 +102,8 @@ npm run start      # 프로덕션 서버
 ### 훅
 
 `useActiveSection`(스크롤 위치 → 활성 섹션), `useMagnetic`(자석 CTA),
-`usePointerField`(커서 스포트라이트). 뒤의 둘은 CSS 커스텀 프로퍼티만 쓰고
-리렌더를 일으키지 않는다.
+`usePointerField`(커서 스포트라이트), `useScrollProgress`(핀 컨테이너 진행률
+→ 캔버스). 뒤의 셋은 React 상태를 쓰지 않아 리렌더를 일으키지 않는다.
 
 ### 이미지
 
