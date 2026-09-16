@@ -123,8 +123,7 @@
 }
 
 // 핀 컨테이너. 기본 규칙에서는 아무것도 아닌 블록이다 — 스크롤 타임라인
-// 지원 브라우저에서만 600svh로 늘어나 스테이지를 붙든다. 티커는 이 밖에
-// 있다. 안에 두면 600svh 아래로 밀려 히어로의 clip에 잘린다.
+// 지원 브라우저에서만 600svh로 늘어나 스테이지를 붙든다.
 .pin {
   position: relative;
 
@@ -147,14 +146,19 @@
 
   // 상단 바 바로 아래에 붙는다. 바는 sticky라 흐름에 있고 높이가 --bar-h +
   // 헤어라인이므로 그만큼 비켜야 1px이 겹치지 않는다.
+  //
+  // 세 행 — 콘텐츠(남는 높이, 세로 중앙), 큐, 티커. 티커가 스테이지의 바닥이라
+  // 아래 패딩은 없다. 스테이지가 뷰포트 높이라 콘텐츠 아래가 비는데, 그 빈
+  // 공간이 스테이지 *안*에 있어야 한다. 티커를 밖에 두면 스테이지가 풀리며
+  // 올라갈 때 그 빈 절반이 티커 앞에 빈 띠로 드러난다.
   @include pinned {
     position: sticky;
     inset-block-start: calc(var(--bar-h) + var(--rule-hair));
     block-size: calc(100svh - var(--bar-h) - var(--rule-hair));
     display: grid;
-    grid-template-rows: minmax(0, 1fr) auto;
+    grid-template-rows: minmax(0, 1fr) auto auto;
     align-items: center;
-    padding-block: var(--space-lg) var(--space-md);
+    padding-block: var(--space-lg) 0;
   }
 }
 
@@ -873,6 +877,11 @@
 .ticker {
   margin-block-start: var(--space-lg);
   padding-block: var(--space-sm);
+  // 스테이지 그리드의 마지막 행. 큐와의 간격만 남기고 아래 여백은 없다.
+  @include pinned {
+    margin-block-start: var(--space-sm);
+    align-self: end;
+  }
   border-block: var(--rule-hair) solid var(--color-rule);
   background: var(--color-paper-2);
   overflow: hidden;
