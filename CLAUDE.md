@@ -17,6 +17,17 @@ npm run start      # 프로덕션 서버
 테스트 프레임워크는 아직 미설정. 빌드(`npm run build`)가 타입 체크를 겸한다.
 패키지 매니저는 npm 하나만 쓴다 — 락파일이 둘이면 의존성 트리가 갈린다.
 
+## Branches & Deploy
+
+- `main` → nooroong.com (Vercel Production)
+- `dev` → dev.nooroong.com (Vercel Preview, 브랜치 도메인). **스테이징.**
+- 작업은 `feat/*`에서 하고 `dev`에 먼저 병합해 실기기(특히 iPhone)로 확인한
+  뒤 `main`에 병합한다. 개발 서버는 CSS를 최소화하지 않아 프로덕션 빌드에서만
+  나는 문제(스크롤 타임라인 지속시간이 `0s`로 굳는 것 같은)를 못 잡고, Chrome
+  DevTools의 모바일 에뮬레이션은 WebKit이 아니다. 실제로 그 조합으로 히어로가
+  iPhone에서만 깨진 적이 있다.
+- 큰 병합 전에는 `backup/pre-<무엇>-merge-<날짜>` 태그를 main에 찍어 둔다.
+
 ## Architecture
 
 **Next.js 16 App Router** 기반 SPA 포트폴리오. 단일 페이지(`app/[locale]/page.tsx`)에 모든 섹션을 조합.

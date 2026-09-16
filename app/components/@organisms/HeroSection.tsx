@@ -167,22 +167,24 @@ export default function HeroSection() {
             <span className={styles.cueRail} />
             <span className={styles.cueText}>SCROLL</span>
           </span>
-        </div>
-      </div>
 
-      {/* 흐르는 스택. 아래 스킬 시트의 장식적 반복이라, 두 번 읽히지 않도록
-          읽기 순서에서 숨긴다. */}
-      <div className={styles.ticker} aria-hidden="true">
-        <div className={styles.tickerTrack}>
-          {[0, 1].map((copy) => (
-            <p key={copy} className={styles.tickerRun}>
-              {SKILL_NAMES.map((name) => (
-                <span key={name} className={styles.tickerItem}>
-                  {name}
-                </span>
+          {/* 흐르는 스택. 아래 스킬 시트의 장식적 반복이라, 두 번 읽히지 않도록
+              읽기 순서에서 숨긴다. 스테이지의 마지막 행이다 — 핀 동안 뷰포트
+              바닥에 붙어 있다가 스테이지와 함께 올라가야 히어로와 다음 섹션
+              사이에 빈 띠가 남지 않는다. */}
+          <div className={styles.ticker} aria-hidden="true">
+            <div className={styles.tickerTrack}>
+              {[0, 1].map((copy) => (
+                <p key={copy} className={styles.tickerRun}>
+                  {SKILL_NAMES.map((name) => (
+                    <span key={name} className={styles.tickerItem}>
+                      {name}
+                    </span>
+                  ))}
+                </p>
               ))}
-            </p>
-          ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
