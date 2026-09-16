@@ -21,19 +21,6 @@
     "specTitle": "PROFILE",
     "spec": {
       "years": "10+ years"
-    },
-    "chapters": {
-      "intro": {
-        "title": "It starts where the user stands"
-      },
-      "approach": {
-        "title": "Fast, and within everyone’s reach",
-        "body": "Performance and accessibility are not add-ons.\nMarkup that arrives complete from the server, motion that runs in CSS,\nflows checked to the end with a keyboard and a screen reader — that is the baseline."
-      },
-      "scale": {
-        "title": "Code that lasts",
-        "body": "From state-management architecture to end-to-end tests,\nI spend my time on foundations the next person can pick up without a wobble."
-      }
     }
   },
   "about": {
@@ -183,9 +170,9 @@
         "shots": {
           "noopdaa-blog-1": "Blog home",
           "noopdaa-blog-2": "Post list",
-          "noopdaa-blog-3": "Admin dashboard",
-          "noopdaa-blog-4": "Post editor",
-          "noopdaa-blog-5": "Visitor analytics"
+        "noopdaa-blog-3": "Admin dashboard",
+        "noopdaa-blog-4": "Post editor",
+        "noopdaa-blog-5": "Visitor analytics"
         }
       }
     },

@@ -21,19 +21,6 @@
     "specTitle": "PROFILE",
     "spec": {
       "years": "10년+"
-    },
-    "chapters": {
-      "intro": {
-        "title": "사용자의 자리에서 시작합니다"
-      },
-      "approach": {
-        "title": "빠르고, 누구에게나 닿는 화면",
-        "body": "성능과 접근성은 나중에 붙이는 옵션이 아닙니다.\n서버에서 완성되어 오는 마크업, CSS로 움직이는 모션,\n키보드와 스크린 리더로 끝까지 확인한 흐름을 기본으로 둡니다."
-      },
-      "scale": {
-        "title": "오래 가는 코드를 만듭니다",
-        "body": "상태 관리 설계부터 E2E 테스트까지,\n다음 사람이 이어받아도 흔들리지 않는 기반을 세우는 데 시간을 씁니다."
-      }
     }
   },
   "about": {
@@ -183,9 +170,9 @@
         "shots": {
           "noopdaa-blog-1": "블로그 홈",
           "noopdaa-blog-2": "포스트 목록",
-          "noopdaa-blog-3": "관리자 대시보드",
-          "noopdaa-blog-4": "포스트 에디터",
-          "noopdaa-blog-5": "방문자 통계"
+        "noopdaa-blog-3": "관리자 대시보드",
+        "noopdaa-blog-4": "포스트 에디터",
+        "noopdaa-blog-5": "방문자 통계"
         }
       }
     },

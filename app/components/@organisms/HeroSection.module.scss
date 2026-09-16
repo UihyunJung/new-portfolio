@@ -1,5 +1,4 @@
 @use '../../assets/styles/@utilities/mixins' as *;
-@use '../../assets/styles/@tokens/breakpoints' as *;
 
 // ============================================
 // 로드 진입
@@ -43,74 +42,6 @@
   }
 }
 
-// ============================================
-// 핀 스테이지
-// ============================================
-//
-// 스크롤 타임라인을 지원하는 브라우저에서 히어로는 네 장면짜리 무대가 된다.
-// .pin이 600svh로 늘어나고 .stage가 그 안에 sticky로 붙들리면, 스크롤 500svh
-// 동안 네 장면(인사·이름 → 설명 → 접근성 → 지속성)이 차례로 바뀌고 스펙
-// 패널의 행이 하나씩 들어온다. 전부 `--pin` 뷰 타임라인에 묶인 CSS다 —
-// 스크롤 리스너도 상태도 없다.
-//
-// 이 블록 전체가 `pinned` 가드 안에만 있다. 가드 밖(미지원, reduced-motion,
-// 짧은 뷰포트)에서는 위의 로드 진입만 남고 레이아웃은 지금 보이는 히어로
-// 그대로다. 숨김 상태는 키프레임 안에만 있고 기본 규칙에는 없다.
-//
-// 범위는 cover가 아니라 contain이다. 히어로가 페이지 최상단이고 스크롤포트보다
-// 크므로 contain 0%가 scrollY≈헤더 높이, contain 100%가 sticky가 풀리는
-// 순간이다. cover면 앞 1/4이 도달할 수 없는 구간이 된다. 모바일 툴바가
-// 접히면 svh와 스크롤포트가 어긋나 끝부분이 스테이지가 풀린 뒤에 진행되므로,
-// 의미 있는 움직임은 전부 92% 안에서 끝낸다.
-//
-// 들어옴은 `both`, 나감은 `forwards`. 둘 다 both면 나감의 backward fill
-// (opacity 1)이 목록 뒤에 있어 들어옴의 from(opacity 0)을 덮고, 둘째 챕터가
-// 처음부터 보인다.
-//
-// 숨긴 장면은 visibility가 아니라 pointer-events로 막는다. visibility는
-// 접근성 트리에서도 빠지는데, 스크린 리더는 스크롤로 진행률을 바꾸지 않으니
-// 뒤 장면을 영영 못 만난다. opacity는 AT에 영향이 없어 DOM 순서대로 전부
-// 읽힌다. CTA는 장면 밖에 두어 항상 한 자리에 있고, 좁은 폭에서 스펙 패널에
-// 덮일 때 키보드 포커스가 닿으면 :focus-within이 되살린다 — !important는
-// 애니메이션 값을 덮을 수 있는 유일한 캐스케이드 층이라 여기서만 정당하다.
-
-@mixin pinned {
-  @include supports-scroll-timeline {
-    // 가로 모드 폰은 스펙 패널이 스테이지에 들어가지 않는다.
-    @media (min-height: 32rem) {
-      @content;
-    }
-  }
-}
-
-@keyframes chapter-in {
-  from {
-    opacity: 0;
-    transform: translateY(26px);
-    pointer-events: none;
-  }
-
-  to {
-    opacity: 1;
-    transform: none;
-    pointer-events: auto;
-  }
-}
-
-@keyframes chapter-out {
-  from {
-    opacity: 1;
-    transform: none;
-    pointer-events: auto;
-  }
-
-  to {
-    opacity: 0;
-    transform: translateY(-26px);
-    pointer-events: none;
-  }
-}
-
 // 좌측 리드(7) + 우측 아티팩트(5)의 분할 구성. 가운데 정렬도, 전체 화면
 // 높이도 아니다 — 히어로의 높이는 담고 있는 것의 높이다.
 //
@@ -120,48 +51,17 @@
   position: relative;
   isolation: isolate;
   overflow: clip;
-}
-
-// 핀 컨테이너. 기본 규칙에서는 아무것도 아닌 블록이다 — 스크롤 타임라인
-// 지원 브라우저에서만 600svh로 늘어나 스테이지를 붙든다. 티커는 이 밖에
-// 있다. 안에 두면 600svh 아래로 밀려 히어로의 clip에 잘린다.
-.pin {
-  position: relative;
-
-  @include pinned {
-    block-size: 600svh;
-    view-timeline-name: --pin;
-    view-timeline-axis: block;
-  }
-}
-
-// 스테이지. 밴드 패딩은 히어로가 아니라 여기 있다 — 분위기 층(.field)이
-// 스테이지 안에 살므로 패딩까지 덮어야 규칙선 밭이 위 여백에서 끊기지 않는다.
-.stage {
-  position: relative;
   @include band(var(--space-2xl), 0);
 
   @include wide {
     @include band(var(--space-3xl), 0);
-  }
-
-  // 상단 바 바로 아래에 붙는다. 바는 sticky라 흐름에 있고 높이가 --bar-h +
-  // 헤어라인이므로 그만큼 비켜야 1px이 겹치지 않는다.
-  @include pinned {
-    position: sticky;
-    inset-block-start: calc(var(--bar-h) + var(--rule-hair));
-    block-size: calc(100svh - var(--bar-h) - var(--rule-hair));
-    display: grid;
-    grid-template-rows: minmax(0, 1fr) auto;
-    align-items: center;
-    padding-block: var(--space-lg) var(--space-md);
   }
 }
 
 // ============================================
 // 분위기 층
 // ============================================
-// 스테이지 자체 쌓임 맥락에서 콘텐츠 뒤에 깔린다. 완전히 장식이라
+// 히어로 자체 쌓임 맥락에서 콘텐츠 뒤에 깔린다. 완전히 장식이라
 // 어떤 상태도 여기에 의존하지 않고 낭독되지도 않는다.
 
 .field {
@@ -199,15 +99,6 @@
   }
 }
 
-// 제너레이티브 리본. 크기는 CSS가 정하고 백킹 스토어는 HeroCanvas가
-// ResizeObserver로 맞춘다. 격자 위, 스포트라이트 아래.
-.canvas {
-  position: absolute;
-  inset: 0;
-  inline-size: 100%;
-  block-size: 100%;
-}
-
 // 커서를 따라간다. `--pointer-*`는 usePointerField가 쓰는데, coarse 포인터나
 // reduced-motion에서는 아예 붙지 않는다 — 그래서 opacity 기본값 0이 그
 // 사용자들에게는 영구 상태가 된다.
@@ -223,10 +114,10 @@
   transition: opacity var(--dur-long) var(--ease-out);
 }
 
-// 11초에 한 번 스테이지를 훑는 헤어라인.
+// 11초에 한 번 히어로를 훑는 헤어라인.
 //
-// 요소가 스테이지의 전체 높이이고 선이 그 위쪽 모서리를 타므로 translateY(100%)가
-// 정확히 스테이지 높이만큼 이동한다. `vh` 같은 고정 거리는 두 줄짜리 영문
+// 요소가 밴드의 전체 높이이고 선이 그 위쪽 모서리를 타므로 translateY(100%)가
+// 정확히 히어로 높이만큼 이동한다. `vh` 같은 고정 거리는 두 줄짜리 영문
 // 히어로에서 모자라고 짧은 화면에서는 넘친다. transform과 opacity만 쓰므로
 // 컴포지터에서 처리된다.
 .sweep {
@@ -292,138 +183,10 @@
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
     gap: var(--space-2xl);
   }
-
-  // 핀 모드의 좁은 폭에서는 스펙 패널이 마지막 장면이 되어 리드와 같은 칸에
-  // 겹친다. 스테이지 한 화면에 리드와 패널을 같이 세울 높이가 없다.
-  @include pinned {
-    > * {
-      grid-area: 1 / 1;
-    }
-
-    @include lg {
-      .spec {
-        grid-area: 1 / 2;
-      }
-    }
-  }
 }
 
 .lede {
   min-width: 0;
-
-  @include pinned {
-    display: grid;
-  }
-}
-
-// 네 장면이 같은 칸에 겹친다. 가장 긴 장면이 리드의 높이를 정하므로
-// 스테이지 높이는 여전히 콘텐츠에서 온다 — 절대 배치였다면 0이 된다.
-// 장면 안에는 포커스 가능한 것이 없다. CTA는 장면 밖 .actions에 있다.
-.chapter {
-  min-width: 0;
-
-  & + & {
-    margin-block-start: var(--space-lg);
-  }
-
-  @include pinned {
-    grid-area: 1 / 1;
-    align-self: start;
-
-    & + & {
-      margin-block-start: 0;
-    }
-  }
-}
-
-// ---- 장면 순서 --------------------------------------------------------
-// 스크럽 500svh를 넷이 나눠 갖는다. 전환 하나가 8%(약 40vh)이고 장면마다
-// 22%(약 110vh)를 머문다 — 들어오자마자 나가면 읽을 시간이 없고, 한 휠 틱에
-// 장면이 바뀌면 읽기 전에 지나간다.
-// 넓은 폭에서는 마지막 장면이 물러나지 않는다. 물러나면 남은 스크럽 동안
-// 왼쪽 열이 비고 스테이지가 풀리는 순간 글이 없다.
-//
-// 들어옴과 나감, 애니메이션이 둘 붙는 요소는 `animation-duration: auto`를
-// 반드시 다시 쓴다. 빌드의 CSS 최소화가 다중 쇼트핸드를 펼치면서 지속시간
-// 기본값을 `auto`가 아니라 `0s`로 채우고, 스크롤 타임라인에서 0s는 범위를
-// 무시하고 즉시 끝나는 애니메이션이다 — 장면이 페이드 없이 확 나타났다
-// 사라진 원인. 애니메이션이 하나인 요소는 `auto`가 살아 있어 문제없다.
-
-.chapterOne {
-  @include pinned {
-    animation: chapter-out linear forwards;
-    animation-timeline: --pin;
-    animation-range: contain 4% contain 10%;
-
-    @include lg {
-      animation-range: contain 4% contain 12%;
-    }
-  }
-}
-
-.chapterTwo {
-  @include pinned {
-    animation:
-      chapter-in linear both,
-      chapter-out linear forwards;
-    animation-duration: auto, auto;
-    animation-timeline: --pin;
-    animation-range:
-      contain 8% contain 14%,
-      contain 30% contain 36%;
-
-    @include lg {
-      animation-range:
-        contain 10% contain 18%,
-        contain 40% contain 48%;
-    }
-  }
-}
-
-.chapterThree {
-  @include pinned {
-    animation:
-      chapter-in linear both,
-      chapter-out linear forwards;
-    animation-duration: auto, auto;
-    animation-timeline: --pin;
-    animation-range:
-      contain 34% contain 40%,
-      contain 56% contain 62%;
-
-    @include lg {
-      animation-range:
-        contain 46% contain 54%,
-        contain 76% contain 84%;
-    }
-  }
-}
-
-.chapterFour {
-  @include pinned {
-    animation:
-      chapter-in linear both,
-      chapter-out linear forwards;
-    animation-duration: auto, auto;
-    animation-timeline: --pin;
-    animation-range:
-      contain 60% contain 66%,
-      contain 76% contain 81%;
-
-    @include lg {
-      animation: chapter-in linear both;
-      animation-duration: auto;
-      animation-timeline: --pin;
-      animation-range: contain 82% contain 90%;
-    }
-  }
-}
-
-// 이름보다 두 단계 작은 디스플레이. 같은 자리에서 이름을 잇는 문장이라
-// 섹션 제목의 여백(section-heading)은 쓰지 않는다.
-.chapterTitle {
-  @include display(var(--text-display-s));
-  margin-block-end: var(--space-sm);
 }
 
 .greeting {
@@ -477,8 +240,6 @@
   }
 }
 
-// 핀 모드에서는 챕터 래퍼가 등장을 맡으므로 설명문과 CTA의 로드 진입을 끈다.
-// 켜 두면 첫 1초 동안 래퍼의 opacity 0 위에 자기 페이드가 겹쳐 이중으로 든다.
 .description {
   font-size: var(--text-md);
   line-height: var(--leading-relaxed);
@@ -489,15 +250,8 @@
   @include md {
     white-space: pre-line;
   }
-
-  @include pinned {
-    animation: none;
-  }
 }
 
-// 장면 스택 아래의 고정 행. 장면이 바뀌어도 CTA는 같은 자리에 있다.
-// 좁은 폭에서는 스펙 패널이 이 칸을 덮으므로 마지막 장면과 같이 물러나고,
-// 키보드 포커스가 닿으면 되살아난다(그때 패널은 아래에서 접힌다).
 .actions {
   display: flex;
   flex-wrap: wrap;
@@ -505,34 +259,6 @@
   gap: var(--space-md);
   margin-block-start: var(--space-lg);
   @include enter(rise-in, var(--dur-long), 1.14s);
-
-  @include pinned {
-    grid-area: 2 / 1;
-    animation: chapter-out linear forwards;
-    animation-timeline: --pin;
-    animation-range: contain 76% contain 81%;
-
-    &:focus-within {
-      opacity: 1 !important;
-      transform: none !important;
-      pointer-events: auto !important;
-    }
-
-    @include lg {
-      animation: none;
-    }
-  }
-}
-
-// 좁은 폭에서 CTA가 포커스로 되살아나면 같은 칸의 스펙 패널을 접는다.
-// lg부터는 패널이 제 열에 있어 접을 이유가 없다 — 사이트의 유일한 max-width
-// 질의인 이유.
-.shell:has(.actions:focus-within) .spec {
-  @include pinned {
-    @media (width < #{$breakpoint-lg}) {
-      opacity: 0 !important;
-    }
-  }
 }
 
 // 시스템에서 유일한 단색 신호 버튼. 반경 6px — 자로 그은 값이지 알약이 아니다.
@@ -664,9 +390,6 @@
 // 아티팩트 슬롯
 // ============================================
 
-// 핀 모드에서는 패널도 스크롤이 들여온다. 로드 진입으로 먼저 세워 두면
-// 행이 들어오기 전까지 제목만 있는 빈 틀이 화면에 남아 로딩처럼 읽힌다.
-// 첫 장면의 오른쪽은 캔버스 리본의 자리다.
 .spec {
   min-width: 0;
   border: var(--rule-hair) solid var(--color-rule);
@@ -675,16 +398,6 @@
   // 행들이 뒤에서 미끄러져 들어올 때 잘리는 경계이기도 하다.
   overflow: clip;
   @include enter(panel-in, 520ms, 420ms);
-
-  @include pinned {
-    animation: chapter-in linear both;
-    animation-timeline: --pin;
-    animation-range: contain 79% contain 84%;
-
-    @include lg {
-      animation-range: contain 14% contain 22%;
-    }
-  }
 }
 
 .specHead {
@@ -702,9 +415,6 @@
 
 // 패널이 먼저 안착한 뒤 행을 차례로 돌린다. `.specHead`가 첫 자식이라
 // 행은 nth-child(2)부터 시작한다.
-//
-// 핀 모드에서는 지연 대신 범위로 차례를 만든다. nth-child 규칙이 기본
-// 브랜치의 지연을 (0,2,0) 특이도로 들고 있어, 같은 특이도로 되돌려야 한다.
 .specRow {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -726,29 +436,6 @@
     grid-template-columns: 6.5rem minmax(0, 1fr);
     gap: var(--space-sm);
     align-items: baseline;
-  }
-
-  @include pinned {
-    animation: row-in linear both;
-    animation-timeline: --pin;
-
-    // 퍼센트 값을 먼저 변수에 담는다. `#{...}%` 보간은 뒤따르는 `contain`을
-    // 나머지 연산으로 읽고, 식을 보간 안에 두면 Prettier가 여러 줄로 쪼갠다.
-    @for $i from 1 through 5 {
-      $from: (81 + ($i - 1) * 2.5) * 1%;
-      $to: (85 + ($i - 1) * 2.5) * 1%;
-      $from-lg: (20 + ($i - 1) * 7) * 1%;
-      $to-lg: (27 + ($i - 1) * 7) * 1%;
-
-      &:nth-child(#{$i + 1}) {
-        animation-delay: 0ms;
-        animation-range: contain $from contain $to;
-
-        @include lg {
-          animation-range: contain $from-lg contain $to-lg;
-        }
-      }
-    }
   }
 }
 
@@ -784,20 +471,6 @@
   @include reduced-motion {
     animation: none;
   }
-
-  // 스테이지 하단 행에 앉고, 스크럽이 끝나갈 때 물러난다.
-  @include pinned {
-    margin-block-start: 0;
-    animation:
-      cue-in var(--dur-long) var(--ease-out) 1.6s both,
-      chapter-out linear forwards;
-    // 둘째 항목의 auto가 0s로 굳는 문제 — 장면 순서 주석 참고.
-    animation-duration: var(--dur-long), auto;
-    animation-timeline: auto, --pin;
-    animation-range:
-      normal,
-      contain 88% contain 96%;
-  }
 }
 
 @keyframes cue-in {
@@ -807,9 +480,6 @@
   }
 }
 
-// 레일은 핀 모드에서도 진행 표시가 아니라 안내다. 스크럽 진행률은 상단 바의
-// 문서 진행 바가 이미 보여 주고, 같은 정보를 두 곳에 두면 둘 다 흐려진다.
-// 틱이 2.2초에 한 번 위에서 아래로 흘러 "이 방향으로"를 말한다.
 .cueRail {
   position: relative;
   flex: none;
@@ -835,17 +505,6 @@
   }
 }
 
-// 라벨은 muted가 아니라 ink-2로 한 단계 올리고, 틱과 같은 박자로 숨을 쉰다.
-// 틱이 레일 아래에 닿는 순간 글자가 가장 밝다 — 둘이 한 몸으로 읽힌다.
-.cueText {
-  color: var(--color-ink-2);
-  animation: cue-breathe 2.2s var(--ease-in-out) infinite;
-
-  @include reduced-motion {
-    animation: none;
-  }
-}
-
 @keyframes cue-run {
   from {
     transform: translateY(-100%);
@@ -853,17 +512,6 @@
 
   to {
     transform: translateY(240%);
-  }
-}
-
-@keyframes cue-breathe {
-  0%,
-  100% {
-    opacity: 0.45;
-  }
-
-  60% {
-    opacity: 1;
   }
 }
 
