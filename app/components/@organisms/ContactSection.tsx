@@ -12,6 +12,7 @@ const EMAIL = 'uihyun.jung@gmail.com';
 
 export default function ContactSection() {
   const t = useTranslations('contact');
+  const a11y = useTranslations('a11y');
   const [copied, setCopied] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
@@ -50,6 +51,11 @@ export default function ContactSection() {
           </span>
           {copied ? t('copied') : t('copy')}
         </button>
+        {/* 버튼 글자만 바뀌면 스크린 리더는 성공을 모른다. 상태 리전은 항상
+            있어야 하고 내용만 바뀌어야 고지된다. */}
+        <span role="status" className="sr-only">
+          {copied ? t('copied') : ''}
+        </span>
       </div>
 
       <ul className={styles.links}>
@@ -64,6 +70,7 @@ export default function ContactSection() {
                 rel="noopener noreferrer"
               >
                 {t(`links.${link.key}`)}
+                <span className="sr-only"> {a11y('newWindow')}</span>
               </a>
             </li>
           ))}

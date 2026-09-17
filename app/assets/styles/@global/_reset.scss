@@ -109,6 +109,20 @@ section[id] {
   color: var(--color-accent-ink);
 }
 
+// 스크린 리더에만 주는 텍스트. 새 창 예고, 상태 고지, 아이콘 옆 이름처럼
+// 눈에는 이미 있는 정보를 읽기 순서에 넣을 때 쓴다.
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 // 본문 바로가기
 .skip-to-content {
   position: absolute;

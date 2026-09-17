@@ -144,23 +144,26 @@ export default function HeroSection() {
             {/* 아티팩트 슬롯. 타이포그래피 프레임 — 위 규칙선, 라벨, 아래
                 규칙선. 윈도우 크롬을 다시 그리지 않는다. 패널이 먼저 안착한
                 뒤 행을 차례로 돌린다. */}
-            <dl className={styles.spec}>
-              <div className={styles.specHead}>
+            <div className={styles.spec}>
+              {/* 제목은 dl 밖에. dl의 직접 자식은 dt/dd 그룹뿐이어야 한다. */}
+              <p className={styles.specHead}>
                 <span className={styles.specTitle}>{t('specTitle')}</span>
-              </div>
-              {SPEC.map((row) => (
-                <div key={row.key} className={styles.specRow}>
-                  <dt className={styles.specKey}>{row.key}</dt>
-                  <dd className={styles.specValue}>
-                    {'i18nKey' in row ? (
-                      <StatValue>{t(`spec.${row.i18nKey}`)}</StatValue>
-                    ) : (
-                      row.value
-                    )}
-                  </dd>
-                </div>
-              ))}
-            </dl>
+              </p>
+              <dl>
+                {SPEC.map((row) => (
+                  <div key={row.key} className={styles.specRow}>
+                    <dt className={styles.specKey}>{row.key}</dt>
+                    <dd className={styles.specValue}>
+                      {'i18nKey' in row ? (
+                        <StatValue>{t(`spec.${row.i18nKey}`)}</StatValue>
+                      ) : (
+                        row.value
+                      )}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
           </div>
 
           <span className={styles.cue} aria-hidden="true">

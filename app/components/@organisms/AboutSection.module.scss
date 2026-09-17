@@ -72,12 +72,15 @@
   }
 }
 
+// DOM은 항목명(dt) → 수치(dd)이고 눈에는 수치가 먼저다.
 .value {
+  order: 1;
   @include display(var(--text-2xl));
   @include tnum;
 }
 
 .label {
+  order: 2;
   font-size: var(--text-sm);
   color: var(--color-muted);
 }
