@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { getMessages, getTranslations } from 'next-intl/server';
 import localFont from 'next/font/local';
 import { Space_Grotesk, JetBrains_Mono } from 'next/font/google';
 import ThemeProvider from '@/components/@layout/ThemeProvider';
@@ -100,6 +100,7 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
   const messages = await getMessages();
+  const a11y = await getTranslations('a11y');
 
   return (
     <html
@@ -134,7 +135,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           </noscript>
         )}
         <a href="#main-content" className="skip-to-content">
-          Skip to content
+          {a11y('skip')}
         </a>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>

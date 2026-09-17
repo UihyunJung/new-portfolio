@@ -21,10 +21,11 @@ export default function AboutSection() {
       <dl className={styles.strip}>
         {HIGHLIGHTS.map((key) => (
           <div key={key} className={styles.stat}>
-            <dt className={styles.value}>
+            {/* 항목명이 dt, 수치가 dd. 시각 순서(수치가 위)는 CSS order로. */}
+            <dt className={styles.label}>{t(`${key}.label`)}</dt>
+            <dd className={styles.value}>
               <StatValue>{t(`${key}.value`)}</StatValue>
-            </dt>
-            <dd className={styles.label}>{t(`${key}.label`)}</dd>
+            </dd>
           </div>
         ))}
       </dl>

@@ -18,6 +18,8 @@ export default function SectionWrapper({
   return (
     <section
       id={id}
+      // 인덱스에서 이동해 올 때 포커스를 받는 자리. scrollTo.ts가 쓴다.
+      tabIndex={-1}
       className={clsx(styles.section, surface && styles.surface, className)}
     >
       <div className={styles.shell}>{children}</div>

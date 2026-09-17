@@ -6,6 +6,12 @@
 .section {
   position: relative;
   @include band(var(--space-2xl), var(--space-3xl));
+
+  // 프로그램으로 포커스를 받는 자리일 뿐 조작 대상이 아니다. 섹션 전체를
+  // 두르는 링은 신호가 아니라 소음이다.
+  &:focus {
+    outline: none;
+  }
 }
 
 // 줄무늬가 아니라 색조 한 단계. 밀도 높은 표 형태 콘텐츠에만 쓴다.

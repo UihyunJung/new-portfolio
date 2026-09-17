@@ -5,6 +5,7 @@ const SOURCE_URL = 'https://github.com/UihyunJung';
 
 export default function Footer() {
   const t = useTranslations('footer');
+  const a11y = useTranslations('a11y');
   const year = new Date().getFullYear();
 
   return (
@@ -30,6 +31,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
               >
                 github.com/UihyunJung
+                <span className="sr-only"> {a11y('newWindow')}</span>
               </a>
             </dd>
           </div>
