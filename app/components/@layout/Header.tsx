@@ -20,8 +20,23 @@ const NAV_ITEMS = [
 
 export default function Header() {
   const t = useTranslations('nav');
+  const a11y = useTranslations('a11y');
   const activeSection = useActiveSection();
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuBtnRef = useRef<HTMLButtonElement>(null);
+
+  // 열린 시트는 Esc로 닫히고 포커스는 연 버튼으로 돌아간다. 시트는 닫히면
+  // inert라 포커스를 돌려주지 않으면 body로 떨어진다.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      setMenuOpen(false);
+      menuBtnRef.current?.focus();
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [menuOpen]);
 
   // 인덱스의 틱은 다섯 개가 페이드하는 게 아니라 항목 사이를 움직이는 바
   // 하나다. 읽는 위치는 단일한 물체이므로 하나처럼 보여야 한다. 인덱스에
@@ -97,6 +112,7 @@ export default function Header() {
         <div className={styles.inner}>
           <a href="#hero" className={styles.mark} onClick={home}>
             UJ
+            <span className="sr-only"> {a11y('home')}</span>
           </a>
 
           {/* 링크 줄이 아니라 번호가 붙은 섹션 인덱스. 사이드 레일이 하던 것처럼
@@ -144,6 +160,7 @@ export default function Header() {
             <LocaleSwitcher />
             <button
               type="button"
+              ref={menuBtnRef}
               className={styles.menuBtn}
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label={menuOpen ? t('closeMenu') : t('openMenu')}

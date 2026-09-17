@@ -1,4 +1,9 @@
 {
+  "a11y": {
+    "skip": "Skip to content",
+    "home": "Home",
+    "newWindow": "(opens in a new window)"
+  },
   "nav": {
     "about": "About",
     "skills": "Skills",

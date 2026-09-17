@@ -38,6 +38,7 @@ export default function ProjectCard({
   links,
 }: ProjectCardProps) {
   const t = useTranslations('projects');
+  const a11y = useTranslations('a11y');
   const hasLinks = Boolean(links?.github || links?.live);
 
   return (
@@ -65,6 +66,7 @@ export default function ProjectCard({
                   rel="noopener noreferrer"
                 >
                   {t('linkGithub')}
+                  <span className="sr-only"> {a11y('newWindow')}</span>
                   <ArrowUpRight size={13} aria-hidden="true" />
                 </a>
               )}
@@ -76,6 +78,7 @@ export default function ProjectCard({
                   rel="noopener noreferrer"
                 >
                   {t('linkLive')}
+                  <span className="sr-only"> {a11y('newWindow')}</span>
                   <ArrowUpRight size={13} aria-hidden="true" />
                 </a>
               )}
@@ -104,10 +107,14 @@ export default function ProjectCard({
 
         {shots && shots.length > 0 && (
           <section className={styles.group}>
-            <h4 className={styles.groupKey}>
-              {t('shotsLabel')} · {shots.length}
+            {/* 힌트는 제목 밖에 둔다. 안에 두면 제목 목록에 "눌러서 크게
+                보기"까지 제목으로 읽힌다. */}
+            <div className={styles.groupKey}>
+              <h4>
+                {t('shotsLabel')} · {shots.length}
+              </h4>
               <span className={styles.hint}>{t('shotsHint')}</span>
-            </h4>
+            </div>
             <ProjectShots projectKey={projectKey} shots={shots} />
           </section>
         )}

@@ -711,8 +711,8 @@
   @include label;
 }
 
-// 패널이 먼저 안착한 뒤 행을 차례로 돌린다. `.specHead`가 첫 자식이라
-// 행은 nth-child(2)부터 시작한다.
+// 패널이 먼저 안착한 뒤 행을 차례로 돌린다. 행은 제목과 형제가 아니라
+// 자체 dl의 자식이라 nth-child(1)부터 센다.
 //
 // 핀 모드에서는 지연 대신 범위로 차례를 만든다. nth-child 규칙이 기본
 // 브랜치의 지연을 (0,2,0) 특이도로 들고 있어, 같은 특이도로 되돌려야 한다.
@@ -724,7 +724,7 @@
   @include enter(row-in, var(--dur-long), 0ms);
 
   @for $i from 1 through 5 {
-    &:nth-child(#{$i + 1}) {
+    &:nth-child(#{$i}) {
       animation-delay: #{760 + ($i - 1) * 60}ms;
     }
   }
@@ -751,7 +751,7 @@
       $from-lg: (20 + ($i - 1) * 7) * 1%;
       $to-lg: (27 + ($i - 1) * 7) * 1%;
 
-      &:nth-child(#{$i + 1}) {
+      &:nth-child(#{$i}) {
         animation-delay: 0ms;
         animation-range: contain $from contain $to;
 
