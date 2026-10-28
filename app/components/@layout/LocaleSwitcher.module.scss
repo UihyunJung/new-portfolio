@@ -1,5 +1,12 @@
 @use '../../assets/styles/@utilities/mixins' as *;
 
+// CSS Modules가 이름을 해싱하므로 이 모듈에서 직접 내보낸다.
+@keyframes switcher-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
 .switcher {
   display: flex;
   align-items: center;
@@ -37,5 +44,29 @@
 
   &:focus-visible {
     @include focus-ring;
+  }
+
+  // 대기 중: 라벨은 흐려지고 아이콘이 돈다. 클릭은 JS가 무시하지만 커서도
+  // 같이 바꿔 "지금은 안 눌린다"를 보이게 한다.
+  &.isPending {
+    cursor: progress;
+
+    .code {
+      opacity: 0.55;
+    }
+  }
+}
+
+.code {
+  transition: opacity var(--dur-micro) var(--ease-out);
+}
+
+.spinner {
+  color: var(--color-accent);
+  animation: switcher-spin 900ms linear infinite;
+
+  // 회전 대신 아이콘 교체와 라벨 투명도만으로 대기 상태를 알린다.
+  @include reduced-motion {
+    animation: none;
   }
 }
