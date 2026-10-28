@@ -1,38 +1,16 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import { NextIntlClientProvider } from 'next-intl';
+import { NextIntlClientProvider, hasLocale } from 'next-intl';
+import { notFound } from 'next/navigation';
 import { getMessages, getTranslations } from 'next-intl/server';
-import localFont from 'next/font/local';
-import { Space_Grotesk, JetBrains_Mono } from 'next/font/google';
 import ThemeProvider from '@/components/@layout/ThemeProvider';
 import Header from '@/components/@layout/Header';
 import Footer from '@/components/@layout/Footer';
 import ScrollToTop from '@/components/@atoms/ScrollToTop';
 import { SITE_URL, GTM_ID } from '@lib/constants';
+import { routing } from '@i18n/routing';
+import { fontClassName } from '@/fonts/fonts';
 import '@/assets/styles/globals.scss';
-
-const wantedSans = localFont({
-  src: '../fonts/WantedSansVariable.woff2',
-  variable: '--font-wanted-sans',
-  display: 'swap',
-  weight: '100 900',
-});
-
-// 2+1 조합. 라틴 디스플레이는 Space Grotesk가, 한글은 같은 스택의
-// Wanted Sans가 받아 한영이 섞인 제목도 하나의 목소리로 유지된다.
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-space-grotesk',
-  display: 'swap',
-  weight: ['500', '600', '700'],
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-jetbrains-mono',
-  display: 'swap',
-  weight: ['400', '500'],
-});
 
 // 애널리틱스는 프로덕션 배포에만 붙는다. Vercel이 VERCEL_ENV를
 // 'production' | 'preview' | 'development'로 설정하고 로컬에는 없으므로
@@ -99,6 +77,15 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  // 미들웨어 matcher가 점(.)이 든 경로를 건너뛰어 `/la.html` 같은 요청이
+  // locale="la.html"로 여기까지 온다. 검증 없이는 기본 로케일 내용이 200으로
+  // 나가므로 알 수 없는 세그먼트는 404로 끊는다. 루트 레이아웃 경계에서
+  // 던지는 notFound()라 Next는 404 상태와 빈 셸을 보내고 `app/not-found.tsx`를
+  // 클라이언트에서 그린다(next-intl 문서의 구성과 같다). dynamicParams=false로
+  // 라우팅 단계에서 끊어 봤지만 결과가 같아 단순한 쪽을 남겼다.
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
   const messages = await getMessages();
   const a11y = await getTranslations('a11y');
 
@@ -109,7 +96,7 @@ export default async function LocaleLayout({
       // 처리를 켠다. 앵커 이동은 부드럽게 유지되고, 라우트 변경(언어 전환
       // 포함)은 즉시 이동한다.
       data-scroll-behavior="smooth"
-      className={`${wantedSans.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
+      className={fontClassName}
       suppressHydrationWarning
     >
       <head>
